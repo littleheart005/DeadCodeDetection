@@ -40,6 +40,13 @@ public class Main {
         book3.setPublisher("Dumont Buchverlag");
         bookList.add(book3);
 
+        var book4 = new Book();
+        book4.setIsbn("978-0060554736");
+        book4.setName("The Game");
+        book4.setAuthor("Neil Strauss");
+        book4.setPublisher("Harpercollins");
+        bookList.add(book4);
+
         // create bookstore, assign books
         var bookstore = new BookStore();
         bookstore.setName("Fraport Bookstore");
@@ -50,7 +57,6 @@ public class Main {
         Xml_writer writer = new Xml_writer();
 
         writer.testJAXB(bookstore);
-
     }
 
     /* Next Step:
