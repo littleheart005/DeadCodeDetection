@@ -11,14 +11,14 @@ public class Main {
     public static void main(String[] args) throws JAXBException {
 
         // Working portion
-
+        /*
         String source = "D:\\work\\src";
         List<String> paths = new ArrayList<>();
         Reader reader = new Reader();
 
         //paths = reader.readPath(source);
         reader.readPath(source);
-        reader.readFile();
+        reader.readFile(); */
 
         // Testing portion
 
@@ -60,9 +60,9 @@ public class Main {
         bookstore.setBookList(bookList);
 
         // Create writer
-        //Xml_writer writer = new Xml_writer();
+        Xml_writer writer = new Xml_writer();
 
-        //writer.testJAXB(bookstore);
+        writer.write_xml(bookstore);
     }
 
     /* Next Step:
