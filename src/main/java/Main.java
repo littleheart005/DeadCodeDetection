@@ -12,12 +12,13 @@ public class Main {
 
         // Working portion
 
-        /*String source = "D:\\work\\src";
+        String source = "D:\\work\\src";
         List<String> paths = new ArrayList<>();
         Reader reader = new Reader();
 
-        paths = reader.readPath(source);
-        reader.readFile();*/
+        //paths = reader.readPath(source);
+        reader.readPath(source);
+        reader.readFile();
 
         // Testing portion
 
@@ -57,10 +58,6 @@ public class Main {
         bookstore.setName("Fraport Bookstore");
         bookstore.setLocation("Livres belles");
         bookstore.setBookList(bookList);
-
-        for (Book b : bookList){
-           System.out.println(b.toString());
-        }
 
         // Create writer
         //Xml_writer writer = new Xml_writer();
