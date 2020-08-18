@@ -1,3 +1,6 @@
+import DeadClass_Interface.Book;
+import DeadClass_Interface.BookStore;
+
 import javax.xml.bind.JAXBException;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,13 +10,14 @@ public class Main {
     public static void main(String[] args) throws JAXBException {
 
         // Working portion
-
-        String source = "D:\\Year 3\\Software Design\\PreTest\\src";
+        /*
+        String source = "D:\\work\\src";
         List<String> paths = new ArrayList<>();
         Reader reader = new Reader();
 
-        paths = reader.readPath(source);
-        reader.readFile();
+        //paths = reader.readPath(source);
+        reader.readPath(source);
+        reader.readFile(); */
 
         // Testing portion
 
@@ -54,10 +58,10 @@ public class Main {
         bookstore.setLocation("Livres belles");
         bookstore.setBookList(bookList);
 
-        // Create writer
-       // Xml_writer writer = new Xml_writer();
+        //Xml_writer writer = new Xml_writer();
 
-        //writer.testJAXB(bookstore);
+        //writer.write_xml(bookstore);
+
     }
 
     /* Next Step:

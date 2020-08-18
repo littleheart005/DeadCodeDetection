@@ -7,26 +7,28 @@ import java.util.Scanner;
 public class Reader {
     private List<String> paths = new ArrayList<>();
 
-    public List<String> readPath(String source){
+    public void readPath(String source){
 
         File folder = new File(source);
         File[] files = folder.listFiles();
-        for(File file : files){
-            if(file.isDirectory()){
+        for (File file : files) {
+            if (file.isDirectory()) {
                 String path = file.getAbsolutePath();
                 readPath(path);
-            }else {
+            } else {
                 paths.add(file.getAbsolutePath());
             }
         }
-        return this.getPaths();
 
     }
 
     public void readFile(){
+        /* Next step, this method should return a list 'word' to caller
+        * for using in various method */
+
         for(String p : paths){
             File file = new File(p);
-            ArrayList<String> words = new ArrayList<String>(); // create array to store all words in file
+            List<String> words = new ArrayList<>(); // create array to store all words in file
             try {
                 Scanner sc = new Scanner(file);
                 while (sc.hasNext()){
@@ -39,12 +41,12 @@ public class Reader {
             }
         }
     }
-    public void searchClassName(ArrayList<String> words){
+    public void searchClassName(List<String> words){
         String name = search(words);
         System.out.println("Class/Interface name is : " + name);
     }
 
-    private String search(ArrayList<String> words) {
+    private String search(List<String> words) {
         String Name = " ";
         for (int i = 0; i < words.size(); i++) {
             if (words.get(i).contentEquals("class") || words.get(i).contentEquals("interface")) {
@@ -52,10 +54,6 @@ public class Reader {
             }
         }
         return Name;
-    }
-
-    public List<String> getPaths() {
-        return paths;
     }
 }
 

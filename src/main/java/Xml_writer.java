@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Xml_writer<T> {
 
 
-    public <E> void testJAXB(T object_token) throws JAXBException {
+    public <E> void write_xml(T object_token) throws JAXBException {
 
         String XML_OUTPUT = "src/main/resources/"+object_token.getClass().getName()+".xml";
 
