@@ -1,5 +1,6 @@
 import javax.xml.bind.JAXBException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -7,12 +8,12 @@ public class Main {
 
         // Working portion
 
-        /*String source = "D:\\Year 3\\Software Design\\PreTest\\src";
+        String source = "D:\\Year 3\\Software Design\\PreTest\\src";
         List<String> paths = new ArrayList<>();
         Reader reader = new Reader();
 
         paths = reader.readPath(source);
-        reader.readFile(); */
+        reader.readFile();
 
         // Testing portion
 
@@ -54,9 +55,9 @@ public class Main {
         bookstore.setBookList(bookList);
 
         // Create writer
-        Xml_writer writer = new Xml_writer();
+       // Xml_writer writer = new Xml_writer();
 
-        writer.testJAXB(bookstore);
+        //writer.testJAXB(bookstore);
     }
 
     /* Next Step:
