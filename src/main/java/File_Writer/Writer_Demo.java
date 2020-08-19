@@ -1,8 +1,5 @@
 package File_Writer;
 
-import DeadClass_Interface.Book;
-import DeadClass_Interface.BookStore;
-
 import javax.xml.bind.JAXBException;
 import java.util.ArrayList;
 

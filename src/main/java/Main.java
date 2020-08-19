@@ -1,10 +1,6 @@
-import DeadClass_Interface.Book;
-import DeadClass_Interface.BookStore;
 import File_Writer.Writer_Demo;
-import File_Writer.Xml_writer;
 
 import javax.xml.bind.JAXBException;
-import java.util.ArrayList;
 
 
 public class Main {
