@@ -1,31 +1,22 @@
+package Files_Reader;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Reader {
-    private List<String> paths = new ArrayList<>();
+public class Dead_Class_Reader extends File_Reader{
 
-    public void readPath(String source){
-
-        File folder = new File(source);
-        File[] files = folder.listFiles();
-        for (File file : files) {
-            if (file.isDirectory()) {
-                String path = file.getAbsolutePath();
-                readPath(path);
-            } else {
-                paths.add(file.getAbsolutePath());
-            }
-        }
-
+    @Override
+    public List<String> readPath(String source) {
+        return super.readPath(source);
     }
 
-    public void readFile(){
+    @Override
+    public void readFile(List<String> paths) {
         /* Next step, this method should return a list 'word' to caller
-        * for using in various method */
-
+         * for using in various method */
         for(String p : paths){
             File file = new File(p);
             List<String> words = new ArrayList<>(); // create array to store all words in file
@@ -41,6 +32,7 @@ public class Reader {
             }
         }
     }
+
     public void searchClassName(List<String> words){
         String name = search(words);
         System.out.println("Class/Interface name is : " + name);
@@ -56,4 +48,3 @@ public class Reader {
         return Name;
     }
 }
-
