@@ -29,7 +29,8 @@ public class Reader {
         for(String p : paths){
             File file = new File(p);
             List<String> words = new ArrayList<>(); // create array to store all words in file
-            try {
+            System.out.println();
+            /*try {
                 Scanner sc = new Scanner(file);
                 while (sc.hasNext()){
                     String word = sc.next();
@@ -38,7 +39,7 @@ public class Reader {
                 searchClassName(words);
             }catch (FileNotFoundException e){
                 e.printStackTrace();
-            }
+            }*/
         }
     }
     public void searchClassName(List<String> words){

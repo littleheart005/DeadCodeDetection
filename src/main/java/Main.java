@@ -10,14 +10,14 @@ public class Main {
     public static void main(String[] args) throws JAXBException {
 
         // Working portion
-        /*
-        String source = "D:\\work\\src";
-        List<String> paths = new ArrayList<>();
+
+        String source = "D:\\Year 3\\Software Design\\PreTest\\src";
+        //List<String> paths = new ArrayList<>();
         Reader reader = new Reader();
 
         //paths = reader.readPath(source);
         reader.readPath(source);
-        reader.readFile(); */
+        reader.readFile();
 
         // Testing portion
 
