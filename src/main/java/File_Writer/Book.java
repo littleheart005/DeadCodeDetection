@@ -1,4 +1,4 @@
-package DeadClass_Interface;
+package File_Writer;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -51,7 +51,7 @@ public class Book {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("DeadClass_Interface.Book{");
+        final StringBuilder sb = new StringBuilder("File_Writer.Book{");
         sb.append("name='").append(name).append('\'');
         sb.append(", author='").append(author).append('\'');
         sb.append(", publisher='").append(publisher).append('\'');
