@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class File_Reader {
+    private List<String> paths = new ArrayList<>();
 
     public List<String> readPath(String source){
 
-        List<String> paths = new ArrayList<>();
         File folder = new File(source);
         File[] files = folder.listFiles();
 
@@ -22,7 +22,7 @@ public class File_Reader {
                 paths.add(file.getAbsolutePath());
             }
         }
-        return paths;
+        return this.getPaths();
     }
 
     public void readFile(List<String> paths){
@@ -37,12 +37,17 @@ public class File_Reader {
 
                 // Override and edit this part to match each dead code type.
 
+                sc.close();
                 }
             }catch (FileNotFoundException e){
                 e.printStackTrace();
             }
+
         }
     }
 
+    public List<String> getPaths() {
+        return paths;
+    }
 }
 

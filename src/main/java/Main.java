@@ -1,32 +1,44 @@
+import DeadClass.DeadClass_Detector;
 import File_Writer.Writer_Demo;
+import Files_Reader.Dead_Class_Reader;
 
 import javax.xml.bind.JAXBException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
     public static void main(String[] args) throws JAXBException {
 
-        // Working portion
-        /*
-        String source = "D:\\work\\src";
-        List<String> paths = new ArrayList<>();
-        Reader reader = new Reader();
+        //========================== Working portion ==============================
 
-        //paths = reader.readPath(source);
-        reader.readPath(source);
-        reader.readFile(); */
+        String source = "D:\\Year 3\\Software Design\\PreTest\\src";
 
-        // Testing portion
+        DeadClass_Detector detector = new DeadClass_Detector(source);
+
+
+
+        /* Testing writer
         Writer_Demo demo = new Writer_Demo();
-        demo.write();
+        demo.write(); */
+
+        // =========================  Testing portion ===============================
+
+        /*Map<String, Boolean> map = new HashMap<>();
+        map.put("Duck",false);
+        map.put("Chicken",false);
+        map.put("Cat",true);
+
+
+        // Map traversal
+        for(Map.Entry<String ,Boolean> m : map.entrySet()){
+            System.out.print(m.getKey()+" : ");
+            System.out.println(m.getValue());
+        } */
+
+
+
+
     }
-
-    /* Next Step:
-    *   - Create method for storing data in XML file.
-    *   - Create method/class for storing classes name ( or create class by deadcode types ).
-    *   - Search for the name in class to detect dead class/interface.
-    *       -> Check that if no. when counting name in file is more than 1 or not. If count is 1 then dead,else not.
-    * */
-
 
 }

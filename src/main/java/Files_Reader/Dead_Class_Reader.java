@@ -20,8 +20,8 @@ public class Dead_Class_Reader extends File_Reader{
         for(String p : paths){
             File file = new File(p);
             List<String> words = new ArrayList<>(); // create array to store all words in file
-            System.out.println();
-            /*try {
+
+            try {
                 Scanner sc = new Scanner(file);
                 while (sc.hasNext()){
                     String word = sc.next();
@@ -30,7 +30,8 @@ public class Dead_Class_Reader extends File_Reader{
                 searchClassName(words);
             }catch (FileNotFoundException e){
                 e.printStackTrace();
-            }*/
+            }
+
         }
     }
 
@@ -48,4 +49,5 @@ public class Dead_Class_Reader extends File_Reader{
         }
         return Name;
     }
+
 }
