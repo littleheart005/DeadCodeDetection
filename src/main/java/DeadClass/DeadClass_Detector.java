@@ -1,16 +1,15 @@
 package DeadClass;
 
 import Files_Reader.Dead_Class_Reader;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class DeadClass_Detector {
 
     /* Steps for detecting dead class/interface
-     - read file
-     - get class/interface name ( Except "main" )
+     - read file --> Done !!
+     - get class/interface name ( Except "main" ) --> Done !!
+     - create map for storing result <(String)Class_name, (Boolean)Deadcode?> --> Done !!
+
      - check through every file except itself :
         case I : if count = 0 --> Dead!
         case II : if count >= 1 --> Alive.
@@ -19,46 +18,48 @@ public class DeadClass_Detector {
     */
 
     private List<String> paths;
-    private List<String> name;
+    private List<String> names;
+    private Map<String, Boolean> maps;
 
     public DeadClass_Detector(String source){
 
+        // Create reader
         Dead_Class_Reader reader = new Dead_Class_Reader();
 
-        System.out.println("============== Path from Reader ===============");
-
+        // Store path
         paths = reader.readPath(source);
 
-        //name = getClassName();
+        // Store name
+        names = reader.readFile_Name(paths);
 
-        System.out.println("************** Path in detector ******************");
-        for(String p : paths){
+        System.out.println("************** Classes name ******************");
+        for(String p : names){
             System.out.println(p);
         }
 
+        // Map name from String to map
+        maps = toMap(names);
+
     }
 
-    public List<String> getClassName(){
-        List<String> tmpName = new ArrayList<>();
-        for(String p : paths) {
-            File file = new File(p);
-            String tmp;
-            tmp = getFileName(file);
-            tmpName.add(tmp);
+    public Map<String, Boolean> toMap(List<String> strings){
+
+        Map<String, Boolean> maps = new LinkedHashMap<>();
+        for(int i=0;i<strings.size();i++){
+            maps.put(strings.get(i),false);
         }
-        return tmpName;
+
+        System.out.println("========== Linked Hash Maps ========");
+        for(Map.Entry<String ,Boolean> m : maps.entrySet()) {
+            System.out.print(m.getKey() + " : ");
+            System.out.println(m.getValue());
+        }
+
+        return maps;
     }
 
-    public String getFileName(File file){
-        return removeExtension(file.getName());
-    }
+    public void detect(){
 
-    public static String removeExtension(String file){
-        return file.replaceFirst("[.][^.]+$", "");
-    }
-
-    public List<String> getName() {
-        return name;
     }
 
 }
