@@ -17,20 +17,16 @@ public class DeadClass_Detector {
         *** don't count when the name is after word "import" or "package"
     */
 
-    private List<String> paths;
-    private List<String> names;
-    private Map<String, Boolean> maps;
-
     public DeadClass_Detector(String source){
 
         // Create reader
         Dead_Class_Reader reader = new Dead_Class_Reader();
 
         // Store path
-        paths = reader.readPath(source);
+        List<String> paths = reader.readPath(source);
 
         // Store name
-        names = reader.readFile_Name(paths);
+        List<String> names = reader.readFile_Name(paths);
 
         System.out.println("************** Classes name ******************");
         for(String p : names){
@@ -38,15 +34,15 @@ public class DeadClass_Detector {
         }
 
         // Map name from String to map
-        maps = toMap(names);
+        Map<String, Boolean> maps = toMap(names);
 
     }
 
     public Map<String, Boolean> toMap(List<String> strings){
 
         Map<String, Boolean> maps = new LinkedHashMap<>();
-        for(int i=0;i<strings.size();i++){
-            maps.put(strings.get(i),false);
+        for (String string : strings) {
+            maps.put(string, false);
         }
 
         System.out.println("========== Linked Hash Maps ========");
