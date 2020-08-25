@@ -14,7 +14,7 @@ public class Main {
 
         String source = "D:\\Year 3\\Software Design\\PreTest\\src";
 
-        DeadClass_Detector detector = new DeadClass_Detector(source);
+        //DeadClass_Detector detector = new DeadClass_Detector(source);
 
 
 
@@ -35,8 +35,6 @@ public class Main {
             System.out.print(m.getKey()+" : ");
             System.out.println(m.getValue());
         } */
-
-
 
 
     }

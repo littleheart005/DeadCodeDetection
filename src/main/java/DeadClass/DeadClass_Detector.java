@@ -1,6 +1,9 @@
 package DeadClass;
 
 import Files_Reader.Dead_Class_Reader;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class DeadClass_Detector {
@@ -17,16 +20,20 @@ public class DeadClass_Detector {
         *** don't count when the name is after word "import" or "package"
     */
 
+    private final List<String> paths;
+    private final List<String> names;
+    private final Map<String, Boolean> maps;
+
     public DeadClass_Detector(String source){
 
         // Create reader
         Dead_Class_Reader reader = new Dead_Class_Reader();
 
-        // Store path
-        List<String> paths = reader.readPath(source);
+        // Store file paths
+        paths = reader.readPath(source);
 
-        // Store name
-        List<String> names = reader.readFile_Name(paths);
+        // Store class/interface names
+        names = reader.readFile_Name(paths);
 
         System.out.println("************** Classes name ******************");
         for(String p : names){
@@ -34,7 +41,7 @@ public class DeadClass_Detector {
         }
 
         // Map name from String to map
-        Map<String, Boolean> maps = toMap(names);
+        maps = toMap(names);
 
     }
 
@@ -55,6 +62,35 @@ public class DeadClass_Detector {
     }
 
     public void detect(){
+
+        for(String p : paths){
+
+            File file = new File(p);
+            try {
+                Scanner sc = new Scanner(file);
+                while (sc.hasNextLine()){
+                    String line = sc.nextLine();
+                    if (line.contains("import") || line.contains("package") ||
+                            line.contains("class") || line.contains("interface")){
+                        line = sc.nextLine();
+                    }
+                    searchForName(line);
+                    // words.add(word); // add words to array
+                    //searchClassName(words);
+
+                }
+                sc.close();
+            }catch (FileNotFoundException e){
+                System.out.print("Error file not found!! : ");
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    private void searchForName(String line){
+        List<Integer> count = new ArrayList<>();
+
 
     }
 

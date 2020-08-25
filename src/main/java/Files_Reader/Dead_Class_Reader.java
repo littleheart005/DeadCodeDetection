@@ -35,27 +35,6 @@ public class Dead_Class_Reader extends File_Reader{
         return file.replaceFirst("[.][^.]+$", "");
     }
 
-    @Override
-    public void readFile(List<String> paths) {
-        for(String p : paths){
-            File file = new File(p);
-            try {
-                Scanner sc = new Scanner(file);
-                while (sc.hasNext()){
-                    /*Scanner sc = new Scanner(file);
-                    while (sc.hasNext()){
-                    String word = sc.next();
-                    words.add(word); // add words to array */
-                    //searchClassName(words);
-                    sc.close();
-                }
-            }catch (FileNotFoundException e){
-                e.printStackTrace();
-            }
-        }
-    }
-
-
 
     // Search the names by convert the file to txt and then search for name after the word
     // "Class" or "Interface" in the file.
