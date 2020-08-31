@@ -1,12 +1,10 @@
-package Files_Reader;
+package Path_Reader;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class File_Reader {
+public class Path_Reader {
     private List<String> paths = new ArrayList<>();
 
     public List<String> readPath(String source){
@@ -25,26 +23,6 @@ public class File_Reader {
         return this.getPaths();
     }
 
-    public void readFile(List<String> paths){
-
-        for(String p : paths){
-
-            File file = new File(p);
-
-            try {
-                Scanner sc = new Scanner(file);
-                while (sc.hasNext()){
-
-                // Override and edit this part to match each dead code type.
-
-                sc.close();
-                }
-            }catch (FileNotFoundException e){
-                e.printStackTrace();
-            }
-
-        }
-    }
 
     public List<String> getPaths() {
         return paths;

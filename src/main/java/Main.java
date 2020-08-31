@@ -1,10 +1,6 @@
 import DeadClass.DeadClass_Detector;
-import File_Writer.Writer_Demo;
-import Files_Reader.Dead_Class_Reader;
 
 import javax.xml.bind.JAXBException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Main {
 
@@ -14,7 +10,7 @@ public class Main {
 
         String source = "D:\\Year 3\\Software Design\\PreTest\\src";
 
-        //DeadClass_Detector detector = new DeadClass_Detector(source);
+        DeadClass_Detector detector = new DeadClass_Detector(source);
 
 
 
