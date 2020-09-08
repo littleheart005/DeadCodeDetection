@@ -84,23 +84,42 @@ public class DeadClass_Detector {
     }
 
 
+    private int[] count;
+    private List<String> result;
+
+    private LineResult lineResult;
+
     public void detect(){
 
-        for(String p : paths){
+        // initialize count size and value
+        count = new int[names.size()];
+        for (int i : count){
+            i = 0;
+        }
 
+        // initialize result
+        result = new ArrayList<>();
+
+        // initialize object for storing data
+        lineResult = new LineResult();
+
+        // Looping
+        for(String p : paths){ // Loop through each file
             File file = new File(p);
             try {
                 Scanner sc = new Scanner(file);
-                while (sc.hasNextLine()){
-                    String line = sc.nextLine();
-                    if (line.contains("import") || line.contains("package") ||
-                            line.contains("class") || line.contains("interface")){
-                        line = sc.nextLine();
-                    }
-                    searchForName(line);
-                    // words.add(word); // add words to array
-                    //searchClassName(words);
+                String line;
 
+                var className = new ClassName(); // create object for storing result
+
+                while (sc.hasNextLine()){
+                    line = sc.nextLine();
+                    for (int i=0;i<names.size();i++){
+                        if(line.contains(names.get(i))){
+                            count[i]++;
+                            result.add(names.get(i)+" --> "+line+" --> "+file.getName());
+                        }
+                    }
                 }
                 sc.close();
             }catch (FileNotFoundException e){
@@ -111,10 +130,15 @@ public class DeadClass_Detector {
 
     }
 
-    private void searchForName(String line){
-        List<Integer> count = new ArrayList<>();
-
-
+    public List<String> getNames() {
+        return names;
     }
 
+    public int[] getCount() {
+        return count;
+    }
+
+    public List<String> getResult() {
+        return result;
+    }
 }
