@@ -85,9 +85,8 @@ public class DeadClass_Detector {
 
 
     private int[] count;
-    private List<String> result;
-
-    private LineResult lineResult;
+    private List<String> tmpResult;
+    private List<String> tmpPathName;
 
     public void detect(){
 
@@ -97,11 +96,9 @@ public class DeadClass_Detector {
             i = 0;
         }
 
-        // initialize result
-        result = new ArrayList<>();
-
-        // initialize object for storing data
-        lineResult = new LineResult();
+        // initialize tmpResult and tmpPathName for storing first search results
+        tmpResult = new ArrayList<>();
+        tmpPathName = new ArrayList<>();
 
         // Looping
         for(String p : paths){ // Loop through each file
@@ -109,25 +106,53 @@ public class DeadClass_Detector {
             try {
                 Scanner sc = new Scanner(file);
                 String line;
-
-                var className = new ClassName(); // create object for storing result
-
                 while (sc.hasNextLine()){
                     line = sc.nextLine();
-                    for (int i=0;i<names.size();i++){
-                        if(line.contains(names.get(i))){
-                            count[i]++;
-                            result.add(names.get(i)+" --> "+line+" --> "+file.getName());
-                        }
-                    }
+                    tmpResult.add(line); // Store line
+                    tmpPathName.add(p); // Store path
                 }
                 sc.close();
+                searchLines(); // Search in each line again to check for exactly name match
             }catch (FileNotFoundException e){
                 System.out.print("Error file not found!! : ");
                 e.printStackTrace();
             }
         }
+    }
 
+    // Method for finding exactly class/interface name in each line that are founded in detect()
+    private void searchLines(){
+        Scanner sc;
+        for (String line : tmpResult){ // Loop through each line
+            try {
+                sc = new Scanner(line);
+                List<String> allStrInLine = new ArrayList<>();
+                // Split words in line into single word which is classified by space
+                while (sc.hasNext()){
+                    allStrInLine.add(sc.next());
+                }
+
+                // Checking the word
+                for (String s : allStrInLine){
+                    System.out.println(s);
+                }
+
+                // Search for the name in each string in the line
+                for (String s : allStrInLine){
+                    for (String n : names){
+                        if (s.matches(n)){
+                            System.out.println("Found : "+n+"   in : "+line);
+                            count[names.indexOf(n)]++;
+                        }
+                    }
+                }
+
+            }catch (StringIndexOutOfBoundsException e){
+                System.out.println("Error");
+                e.printStackTrace();
+            }
+            //System.out.println("=================================");
+        }
     }
 
     public List<String> getNames() {
@@ -138,7 +163,9 @@ public class DeadClass_Detector {
         return count;
     }
 
-    public List<String> getResult() {
-        return result;
+    public List<String> getTmpResult() {
+        return tmpResult;
     }
+
+
 }

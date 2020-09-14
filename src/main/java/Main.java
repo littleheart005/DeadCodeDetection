@@ -11,7 +11,7 @@ public class Main {
 
         //========================== Working portion ==============================
 
-        String source = "D:\\Year 3\\Software Design\\PreTest\\src\\FactoryPattern";
+        String source = "D:\\Year 3\\Software Design\\PreTest\\src\\FactoryPattern\\New folder";
 
         DeadClass_Detector detector = new DeadClass_Detector(source);
         detector.detect();
@@ -26,12 +26,6 @@ public class Main {
         for(int i=0;i<names.size();i++){
             System.out.println("Class name: "+names.get(i)+" -> count : "+count[i]);
         }
-        System.out.println();
-        List<String> result = detector.getResult();
-        for(String re : result){
-            System.out.println(re);
-        }
-
 
         // =========================  Testing portion ===============================
 
