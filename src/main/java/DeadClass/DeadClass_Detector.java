@@ -108,11 +108,9 @@ public class DeadClass_Detector {
                 String line;
                 while (sc.hasNextLine()){
                     line = sc.nextLine();
-                    tmpResult.add(line); // Store line
-                    tmpPathName.add(p); // Store path
+                    searchLines(line); // Search in each line again to check for exactly name match
                 }
                 sc.close();
-                searchLines(); // Search in each line again to check for exactly name match
             }catch (FileNotFoundException e){
                 System.out.print("Error file not found!! : ");
                 e.printStackTrace();
@@ -121,38 +119,48 @@ public class DeadClass_Detector {
     }
 
     // Method for finding exactly class/interface name in each line that are founded in detect()
-    private void searchLines(){
-        Scanner sc;
-        for (String line : tmpResult){ // Loop through each line
-            try {
-                sc = new Scanner(line);
-                List<String> allStrInLine = new ArrayList<>();
-                // Split words in line into single word which is classified by space
-                while (sc.hasNext()){
-                    allStrInLine.add(sc.next());
-                }
+    private void searchLines(String line){
 
-                // Checking the word
-                for (String s : allStrInLine){
-                    System.out.println(s);
-                }
+        // split line into a word
+        List<String> words = new ArrayList<>();
+        try{
+            Scanner sc = new Scanner(line);
+            while (sc.hasNext()){
+                words.add(sc.next());
+            }
+        }catch (StringIndexOutOfBoundsException e){
+            e.printStackTrace();
+        }
 
-                // Search for the name in each string in the line
-                for (String s : allStrInLine){
-                    for (String n : names){
-                        if (s.matches(n)){
-                            System.out.println("Found : "+n+"   in : "+line);
-                            count[names.indexOf(n)]++;
+        // Search for class/interface name in words
+        for(String name : names){
+            String obj = name+"();";
+            for (int i=0;i<words.size();i++){
+                if(i==0){ // Check if the first word of the line is a class/interfaec name?
+                    if(words.get(i).matches(name)){
+                        count[names.indexOf(name)]++;
+                        System.out.println(name + " in line ->  "+line+"  i = "+i+" --> if i=0");
+                    }
+                }
+                else{ // Check the rest words of the line
+                    // Check if it is a class or interface declaration
+                    if (words.get(i).matches(name)){
+                        if(!words.get(i-1).matches("class") && !words.get(i-1).matches("interface")){
+                            count[names.indexOf(name)]++;
+                            System.out.println(name + " in line ->  "+line+"  i = "+i+" -> if class/interface");
+                        }
+                    }
+                    // Check for the object declarlation
+                    if (words.get(i-1).matches("new")){
+                        if(words.get(i).contains(name)){
+                            count[names.indexOf(name)]++;
+                            System.out.println(name + " in line ->  "+line+"  i = "+i+" -> if object");
                         }
                     }
                 }
-
-            }catch (StringIndexOutOfBoundsException e){
-                System.out.println("Error");
-                e.printStackTrace();
             }
-            //System.out.println("=================================");
         }
+
     }
 
     public List<String> getNames() {

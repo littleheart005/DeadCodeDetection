@@ -11,7 +11,7 @@ public class Main {
 
         //========================== Working portion ==============================
 
-        String source = "D:\\Year 3\\Software Design\\PreTest\\src\\FactoryPattern\\New folder";
+        String source = "D:\\Year 3\\Software Design\\PreTest\\src\\FactoryPattern";
 
         DeadClass_Detector detector = new DeadClass_Detector(source);
         detector.detect();
