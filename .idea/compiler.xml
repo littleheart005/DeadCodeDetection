@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="DeadcodeDetection" />
         <module name="SeniorProject" />
+        <module name="DeadCodeDetection Git" />
       </profile>
     </annotationProcessing>
   </component>

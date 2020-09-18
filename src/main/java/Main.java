@@ -1,13 +1,15 @@
 import DeadClass.DeadClass_Detector;
+import DeadVariable.DeadVariableDetector;
 import File_Writer.Writer_Demo;
 
 import javax.xml.bind.JAXBException;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) throws JAXBException {
+    public static void main(String[] args) throws JAXBException, FileNotFoundException {
 
         //========================== Working portion ==============================
 
@@ -26,6 +28,14 @@ public class Main {
         for(int i=0;i<names.size();i++){
             System.out.println("Class name: "+names.get(i)+" -> count : "+count[i]);
         }
+
+
+        //========================== Working portion ==============================
+
+        String source1 = "D:\\intelliJ\\TestProject\\src";
+        DeadVariableDetector detector1 = new DeadVariableDetector(source1);
+        System.out.println("Variable name after reading all files in directory");
+        System.out.println(detector1.getVariableName());
 
         // =========================  Testing portion ===============================
 
