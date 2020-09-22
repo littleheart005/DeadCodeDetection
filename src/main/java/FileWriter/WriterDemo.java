@@ -1,9 +1,9 @@
-package File_Writer;
+package FileWriter;
 
 import javax.xml.bind.JAXBException;
 import java.util.ArrayList;
 
-public class Writer_Demo {
+public class WriterDemo {
 
     public void write() throws JAXBException {
 
@@ -45,7 +45,7 @@ public class Writer_Demo {
         bookstore.setBookList(bookList);
 
         // Create writer
-        Xml_writer writer = new Xml_writer();
+        XmlWriter writer = new XmlWriter();
 
         writer.write_xml(bookstore);
     }

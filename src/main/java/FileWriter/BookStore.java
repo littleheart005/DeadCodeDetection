@@ -1,4 +1,4 @@
-package File_Writer;
+package FileWriter;
 
 import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlElement;

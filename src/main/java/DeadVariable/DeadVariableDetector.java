@@ -1,6 +1,6 @@
 package DeadVariable;
 
-import Path_Reader.Path_Reader;
+import PathReader.PathReader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,7 +15,7 @@ public class DeadVariableDetector {
     private List<String> variableName = new ArrayList<>();
 
     public DeadVariableDetector(String source) throws FileNotFoundException {
-        Path_Reader pathReader = new Path_Reader();
+        PathReader pathReader = new PathReader();
         paths = pathReader.readPath(source);
         files = readFile(paths);
 

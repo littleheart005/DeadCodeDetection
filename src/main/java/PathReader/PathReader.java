@@ -1,10 +1,10 @@
-package Path_Reader;
+package PathReader;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Path_Reader {
+public class PathReader {
     private List<String> paths = new ArrayList<>();
 
     public List<String> readPath(String source){

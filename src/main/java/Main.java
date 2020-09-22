@@ -1,10 +1,7 @@
-import DeadClass.DeadClass_Detector;
-import DeadVariable.DeadVariableDetector;
-import File_Writer.Writer_Demo;
+import DeadClass.DeadClassDetector;
 
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -15,7 +12,7 @@ public class Main {
 
         String source = "D:\\Year 3\\Software Design\\PreTest\\src\\FactoryPattern";
 
-        DeadClass_Detector detector = new DeadClass_Detector(source);
+        DeadClassDetector detector = new DeadClassDetector(source);
         detector.detect();
 
 
@@ -32,10 +29,10 @@ public class Main {
 
         //========================== Working portion ==============================
 
-        String source1 = "D:\\intelliJ\\TestProject\\src";
-        DeadVariableDetector detector1 = new DeadVariableDetector(source1);
+        /*String source1 = "D:\\intelliJ\\TestProject\\src";
+        DeadVariableDetector detector1 = new DeadVariableDetector(source);
         System.out.println("Variable name after reading all files in directory");
-        System.out.println(detector1.getVariableName());
+        System.out.println(detector1.getVariableName());*/
 
         // =========================  Testing portion ===============================
 

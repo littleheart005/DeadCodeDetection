@@ -1,13 +1,12 @@
-package File_Writer;// Import JAXB dependencies
+package FileWriter;// Import JAXB dependencies
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import java.io.File;
-import java.util.ArrayList;
 
 
-public class Xml_writer<T> {
+public class XmlWriter<T> {
 
 
     public <E> void write_xml(T object_token) throws JAXBException {

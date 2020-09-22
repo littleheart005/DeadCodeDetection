@@ -1,12 +1,12 @@
 package DeadClass;
 
-import Path_Reader.Path_Reader;
+import PathReader.PathReader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class DeadClass_Detector {
+public class DeadClassDetector {
 
     /* Steps for detecting dead class/interface
      - read file --> Done !!
@@ -24,10 +24,10 @@ public class DeadClass_Detector {
     private  List<String> names;
     private  Map<String, Boolean> maps;
 
-    public DeadClass_Detector(String source){
+    public DeadClassDetector(String source){
 
         // Create reader
-        Path_Reader reader = new Path_Reader();
+        PathReader reader = new PathReader();
 
         // Store file paths
         paths = reader.readPath(source);
