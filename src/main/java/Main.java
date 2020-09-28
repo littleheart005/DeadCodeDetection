@@ -1,4 +1,5 @@
 import DeadClass.DeadClassDetector;
+import DeadClass.RegexDetector;
 import DeadVariable.DeadVariableDetector;
 
 import javax.xml.bind.JAXBException;
@@ -27,12 +28,17 @@ public class Main {
             System.out.println("Class name: "+names.get(i)+" -> count : "+count[i]);
         }*/
 
+        RegexDetector regex = new RegexDetector(source);
+
+        regex.detect();
+
+
         //========================== Working portion ==============================
 
-        String source1 = "D:\\intelliJ\\TestProject\\src";
+        /*String source1 = "D:\\intelliJ\\TestProject\\src";
         DeadVariableDetector detector1 = new DeadVariableDetector(source);
         System.out.println("Variable name after reading all files in directory");
-        System.out.println(detector1.getVariableName());
+        System.out.println(detector1.getVariableName()); */
 
         // =========================  Testing portion ===============================
 
