@@ -1,4 +1,5 @@
 import DeadClass.DeadClassDetector;
+import DeadVariable.DeadVariableDetector;
 
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
@@ -12,7 +13,7 @@ public class Main {
 
         String source = "D:\\Year 3\\Software Design\\PreTest\\src\\FactoryPattern";
 
-        DeadClassDetector detector = new DeadClassDetector(source);
+        /*DeadClassDetector detector = new DeadClassDetector(source);
         detector.detect();
 
 
@@ -24,15 +25,14 @@ public class Main {
 
         for(int i=0;i<names.size();i++){
             System.out.println("Class name: "+names.get(i)+" -> count : "+count[i]);
-        }
-
+        }*/
 
         //========================== Working portion ==============================
 
-        /*String source1 = "D:\\intelliJ\\TestProject\\src";
+        String source1 = "D:\\intelliJ\\TestProject\\src";
         DeadVariableDetector detector1 = new DeadVariableDetector(source);
         System.out.println("Variable name after reading all files in directory");
-        System.out.println(detector1.getVariableName());*/
+        System.out.println(detector1.getVariableName());
 
         // =========================  Testing portion ===============================
 
@@ -40,6 +40,8 @@ public class Main {
         map.put("Duck",false);
         map.put("Chicken",false);
         map.put("Cat",true);
+
+
 
 
         // Map traversal

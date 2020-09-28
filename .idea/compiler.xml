@@ -6,9 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="DeadCodeDetection Git" />
         <module name="DeadcodeDetection" />
         <module name="SeniorProject" />
-        <module name="DeadCodeDetection Git" />
       </profile>
     </annotationProcessing>
   </component>
