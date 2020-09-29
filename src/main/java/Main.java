@@ -12,7 +12,7 @@ public class Main {
 
         //========================== Working portion ==============================
 
-        String source = "D:\\Year 3\\Software Design\\PreTest\\src\\FactoryPattern";
+        String source = "D:\\Year 3\\Software Design\\Patterns\\Factory_Pattern";
 
         /*DeadClassDetector detector = new DeadClassDetector(source);
         detector.detect();
@@ -32,6 +32,8 @@ public class Main {
 
         regex.detect();
 
+        regex.printResult();
+
 
         //========================== Working portion ==============================
 
@@ -46,8 +48,6 @@ public class Main {
         map.put("Duck",false);
         map.put("Chicken",false);
         map.put("Cat",true);
-
-
 
 
         // Map traversal
