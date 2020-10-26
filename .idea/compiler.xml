@@ -9,6 +9,7 @@
         <module name="DeadCodeDetection Git" />
         <module name="DeadcodeDetection" />
         <module name="SeniorProject" />
+        <module name="DeadCodeDetection" />
       </profile>
     </annotationProcessing>
   </component>

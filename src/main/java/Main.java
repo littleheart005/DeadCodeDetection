@@ -1,10 +1,7 @@
-import DeadClass.DeadClassDetector;
-import DeadClass.RegexDetector;
-import DeadVariable.DeadVariableDetector;
+import DeadClass.Detector;
 
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
-import java.util.List;
 
 public class Main {
 
@@ -12,7 +9,7 @@ public class Main {
 
         //========================== Working portion ==============================
 
-        String source = "D:\\Year 3\\Software Design\\Patterns\\Factory_Pattern";
+        String source = "D:\\work\\PreTest\\src\\Observer";
 
         /*DeadClassDetector detector = new DeadClassDetector(source);
         detector.detect();
@@ -27,12 +24,19 @@ public class Main {
         for(int i=0;i<names.size();i++){
             System.out.println("Class name: "+names.get(i)+" -> count : "+count[i]);
         }*/
+       /* RegexDetector regex = new RegexDetector(source);
 
-        RegexDetector regex = new RegexDetector(source);
+        regex.detect();*/
 
-        regex.detect();
+        //regex.printResult();
 
-        regex.printResult();
+        Detector detector = new Detector(source);
+
+        /*detector.detect();
+
+        detector.printMap();*/
+
+        detector.testLoc();
 
 
         //========================== Working portion ==============================
@@ -48,7 +52,6 @@ public class Main {
         map.put("Duck",false);
         map.put("Chicken",false);
         map.put("Cat",true);
-
 
         // Map traversal
         for(Map.Entry<String ,Boolean> m : map.entrySet()){

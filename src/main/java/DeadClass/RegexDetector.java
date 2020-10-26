@@ -2,11 +2,11 @@ package DeadClass;
 
 import PathReader.PathReader;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Scanner;
 import java.util.regex.*;
 
 public class RegexDetector {
@@ -14,6 +14,10 @@ public class RegexDetector {
     private final List<String> paths;
     private final List<String> names;
     private final int[] counts;
+
+    private final List<String> className = new ArrayList<>();
+    private final List<String> interfaceName = new ArrayList<>();
+
 
     public RegexDetector(String source){
         // Create reader
@@ -28,8 +32,7 @@ public class RegexDetector {
     }
 
     private List<String> readFile_Name(List<String> paths) {
-        /* Next step, this method should return a list 'word' to caller
-         * for using in various method */
+
         List<String> names = new ArrayList<>();
         for(String p : paths){
 
@@ -64,6 +67,16 @@ public class RegexDetector {
                 e.printStackTrace();
             }
         }
+
+        Map<String,Integer> tmp = new HashMap<>();
+        for (int i=0;i<counts.length;i++){
+            tmp.put(names.get(i),counts[i]);
+        }
+        for(Map.Entry<String ,Integer> m : tmp.entrySet()) {
+            System.out.print(m.getKey() + " : ");
+            System.out.println(m.getValue());
+        }
+
     }
 
     private void searchLines(String line){
@@ -153,12 +166,31 @@ public class RegexDetector {
         }
     }
 
+
     public void printResult(){
-        // Print detection result
-        System.out.println("\n");
-        for(int i=0;i<names.size();i++){
-            System.out.println("Class name: "+names.get(i)+" -> count : "+counts[i]);
+        System.out.println("Classes ");
+        for (String c : className){
+            System.out.println(c);
         }
+        System.out.println("================================");
+        System.out.println("Intefaces ");
+        for (String i : interfaceName){
+            System.out.println(i);
+        }
+    }
+
+
+    // put this method in path's for loop in detect()
+
+    public void getClassInterfaceName(String line, File file){
+
+        if(line.contains("class")){
+            this.className.add(getFileName(file));
+        }
+        if(line.contains("interface")){
+            this.interfaceName.add(getFileName(file));
+        }
+
     }
 
 }
