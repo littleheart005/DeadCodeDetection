@@ -16,7 +16,9 @@ public class Detector {
     private final Map<String,Integer> classResult = new HashMap<>();
     private final Map<String,Integer> interfaceResult = new HashMap<>();
 
-    // Map for storing number of line and line
+    //
+    private final Map<String,Integer> classDeclareLine = new HashMap<>();
+    private final Map<String,Integer> interfaceDeclareLine = new HashMap<>();
 
 
     public Detector(String source) {
@@ -43,32 +45,11 @@ public class Detector {
         }
     }
 
-    public void  detect() {
-        // Read files using paths
+
+    public void detect(){
         for (String path : paths){
             File file = new File(path); // create a file
-            try {
-                Scanner sc = new Scanner(file);
-                while (sc.hasNext()){   // read a line
-                    //Working portion
-                    String line = sc.nextLine();
-                    searchDeadClass(line);
-                    searchDeadInterface(line);
-                }
-                sc.close();
-            }catch (FileNotFoundException e){
-                e.printStackTrace();
-            }
-        }
 
-    }
-
-    // =======================================================================================
-
-    public void testLoc(){
-        for (String path : paths){
-            File file = new File(path); // create a file
-            System.out.println(path+"\n");
             try {
                 Scanner sc = new Scanner(file);
                 int i = 1;
@@ -77,55 +58,56 @@ public class Detector {
 
                     Map<Integer,String> loc = new HashMap<>();
                     loc.put(i,sc.nextLine());
-                    i = i+1;
 
-                    for(Map.Entry<Integer,String> m : loc.entrySet()){
-                        System.out.println("line : "+m.getKey()+" --> "+m.getValue());
-                    }
+                    getClassInt(sc.nextLine(),i);
+
+                    searchClass(i,loc.get(i),path); // sending no.of line ,line and path to searching method
+                    searchInterface(i,loc.get(i),path);
+                    i = i+1;
                 }
                 sc.close();
             }catch (FileNotFoundException e){
                 e.printStackTrace();
             }
-            System.out.println();
         }
+
     }
 
-    // =============================================================================================
-
-    private void searchDeadClass(String line) {
-        // Checking a line with 3 cases condition
+    private void searchClass(int number,String line,String path) {
+        // Checking a line with 5 cases condition
         for (Map.Entry<String,Integer> map : classResult.entrySet()) {
-            // Case I : implements or extends
-            caseI(map.getKey(),line,classResult);
 
-            caseII(map.getKey(),line,classResult);
+            caseI(map.getKey(),number,line,classResult,path);
 
-            caseIII(map.getKey(),line,classResult);
+            caseII(map.getKey(),number,line,classResult,path);
+
+            caseIII(map.getKey(),number,line,classResult,path);
+
+            caseIV(map.getKey(),number,line,classResult,path);
+
+            caseV(map.getKey(),number,line,classResult,path);
+
         }
     }
 
-    private void searchDeadInterface(String line) {
-        // Checking a line with 3 cases condition
+    private void searchInterface(int number,String line,String path) {
+        // Checking a line with 5 cases condition
         for (Map.Entry<String,Integer> map : interfaceResult.entrySet()) {
-            // Case I : implements or extends
-            caseI(map.getKey(),line,interfaceResult);
 
-            caseII(map.getKey(),line,interfaceResult);
+            caseI(map.getKey(),number,line,interfaceResult,path);
 
-            caseIII(map.getKey(),line,interfaceResult);
+            caseII(map.getKey(),number,line,interfaceResult,path);
+
+            caseIII(map.getKey(),number,line,interfaceResult,path);
+
+            caseIV(map.getKey(),number,line,interfaceResult,path);
+
+            caseV(map.getKey(),number,line,interfaceResult,path);
+
         }
     }
 
-
-    /* Additional cases to be count
-    --> private Subject weatherData; --> Subject
-    --> public CurrentCondition(Subject Weather) --> Subject
-    --> private ArrayList<Observer>observers;  --> Observer
-     */
-
-
-    private void caseI(String name, String line,Map<String,Integer> map){
+    private void caseI(String name, int number,String line,Map<String,Integer> map,String path){
         /*
             Case I : Checking for using name as a implementation ex. implements , extends
         */
@@ -137,7 +119,8 @@ public class Detector {
         Pattern pattern = Pattern.compile(extendPattern); // create pattern object to use regex
         Matcher matcher = pattern.matcher(line); // create matcher object to match regex with line
         while (matcher.find()){
-            System.out.println("Case I --> Found "+name+" at : "+line);
+            /*System.out.println("Case I (Extend) --> Found "+name+" at line : "+number+" in "+path);
+            System.out.println(line);*/
             increaseCount(map,name);
         }
 
@@ -145,29 +128,32 @@ public class Detector {
         pattern = Pattern.compile(implementPattern);
         matcher = pattern.matcher(line);
         while (matcher.find()){
-            System.out.println("Case I --> Found "+name+" at : "+line);
+            /*System.out.println("Case I (Implement) --> Found "+name+" at line : "+number+" in "+path);
+            System.out.println(line);*/
             increaseCount(map,name);
         }
     }
 
-    private void caseII(String name, String line,Map<String,Integer> map){
+    private void caseII(String name,int number, String line,Map<String,Integer> map,String path){
         /*
             Case II:
             - Checking if the name is used for type declaration ex. Pizza pizza;
             - Checking if the name is used to create method ex. public Pizza orderPizza();
         */
 
-       // PizzaStore ny = new NYPizzaStore();
+        // PizzaStore ny = new NYPizzaStore();
 
         // Define regex patterns
-        String typePattern = "^[\\s]*[^/]*"+name+"\\s.+;";     // pattern for type declaration
+        String typePattern = "^[\\s]*[^/]*"+name+"\\s[^)]+;";     // pattern for type declaration
         String methodPattern = name+".+\\(.*\\)";       // pattern for method creation
+
 
         // Checking Type declaration
         Pattern pattern = Pattern.compile(typePattern);
         Matcher matcher = pattern.matcher(line);
         while (matcher.find() && !line.contains("abstract")){
-            System.out.println("Case II (Type) --> Found "+name+" at : "+line);
+           /* System.out.println("Case II (Type) --> Found "+name+" at Line : "+number+" in "+path);
+            System.out.println(line);*/
             increaseCount(map,name);
         }
 
@@ -176,25 +162,72 @@ public class Detector {
         matcher = pattern.matcher(line);
         // Checking if the line contains "class" or "="
         while (matcher.find() && !line.contains("class") && !line.contains("=")) {
-            System.out.println("Case II (Method) --> Found " + name + " at : " + line);
+           /* System.out.println("Case II (Method) --> Found "+name+" at Line : "+number+" in "+path);
+            System.out.println(line);*/
             increaseCount(map,name);
         }
+
     }
 
-    private void caseIII(String name, String line,Map<String,Integer> map){
+    private void caseIII(String name,int number, String line,Map<String,Integer> map,String path){
         /*
             Case III : Checking object creation ex. Pizza pizza = new Pizza();
         */
+        // PizzaStore ny = new NYPizzaStore();
 
         // Define pattern
-        String objPattern = "=\\s*new\\s*"+name+"(.*);";
-
+        String objPattern = "=\\s*new\\s*"+name+"(.*);"; //ex. Pizza pizza = new Pizza();
+        String objAssPattern = "^[\\s]*"+name+"\\s+.+\\s*=\\s*.+\\(.*\\);"; // ex. Pizza pizza = ny.orderPizza("cheese");
 
         // Checking for object creation
         Pattern pattern = Pattern.compile(objPattern);
         Matcher matcher = pattern.matcher(line);
+        while (matcher.find() && line.contains("new")){
+           /* System.out.println("Case III (Object) --> Found "+name+" at Line : "+number+" in "+path);
+            System.out.println(line);*/
+            increaseCount(map,name);
+        }
+
+        pattern = Pattern.compile(objAssPattern);
+        matcher = pattern.matcher(line);
+        while (matcher.find() && !line.contains("return")){
+           /* System.out.println("Case III (Object with Initialize) --> Found "+name+" at Line : "+number+" in "+path);
+            System.out.println(line);*/
+            increaseCount(map,name);
+        }
+    }
+
+    private void caseIV(String name,int number, String line,Map<String,Integer> map,String path) {
+        /* Case IV
+            - Checking if the name is used for parameter's type.  ex. public CurrentCondition(Subject Weather)
+        */
+
+        String paraTypePattern = ".*\\("+name+".+\\)"; //pattern for parameter's type
+
+        // Checking parameter type
+        Pattern pattern = Pattern.compile(paraTypePattern);
+        Matcher matcher = pattern.matcher(line);
         while (matcher.find()){
-            System.out.println("Case III --> Found "+name+" at : "+line);
+           /* System.out.println("Case IV (Parameter) --> Found "+name+" at Line : "+number+" in "+path);
+            System.out.println(line);*/
+            increaseCount(map,name);
+        }
+    }
+
+    private void caseV(String name,int number, String line,Map<String,Integer> map,String path) {
+        /* Case IV
+            - Checking if the name is used for Array,List or other data collections.
+                ex. private ArrayList<Observer>observers;
+        */
+
+        String arrayPattern = ".+<"+name+">.+;"; //pattern for parameter's type
+
+        // Checking parameter type
+        Pattern pattern = Pattern.compile(arrayPattern);
+        Matcher matcher = pattern.matcher(line);
+        while (matcher.find()){
+           /* System.out.println("Case V (DataCollection) --> Found "+name+" at Line : "+number+" in "+path);
+            System.out.println(line);*/
             increaseCount(map,name);
         }
     }
@@ -221,25 +254,48 @@ public class Detector {
 
         System.out.println("\n ========== Classes ===========");
         for(Map.Entry<String ,Integer> m : classResult.entrySet()) {
-            //System.out.print(m.getKey() + " : "+m.getValue());
+            System.out.print(m.getKey() + " : "+m.getValue());
             if(m.getValue()==0){
-                System.out.println("Class "+m.getKey()+" has no reference.");
+                System.out.print("\t\tClass "+m.getKey()+" has no reference.");
             }
+            System.out.println();
         }
-
         System.out.println("\n ========== Interfaces ===========");
         for(Map.Entry<String ,Integer> m : interfaceResult.entrySet()) {
-            //System.out.print(m.getKey() + " : "+m.getValue());
+            System.out.print(m.getKey() + " : "+m.getValue());
             if(m.getValue()==0){
-                System.out.println("Interface "+m.getKey()+" has no reference.");
+                System.out.print("\t\tInterface "+m.getKey()+" has no reference.");
             }
+            System.out.println();
         }
-
     }
 
     private void increaseCount(Map<String,Integer> map, String key){
         map.put(key,map.get(key)+1);
     }
 
+    // ===========================================================================
+
+    private void getClassInt(String line, int number){
+
+        String classPattern = "^[\\s]*.+class\\s+.+";
+        String interfacePattern = "^[\\s]*.+interface\\s+.+";
+
+        Pattern pattern = Pattern.compile(classPattern); // create pattern object to use regex
+        Matcher matcher = pattern.matcher(line); // create matcher object to match regex with line
+
+        while (matcher.find()){
+            classDeclareLine.put(line,number);
+        }
+
+        pattern = Pattern.compile(interfacePattern);
+        matcher = pattern.matcher(line);
+        while (matcher.find()){
+            interfaceDeclareLine.put(line,number);
+        }
+
+    }
+
+    // ===========================================================================
 
 }
