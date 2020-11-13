@@ -1,8 +1,7 @@
-package DeadClass;
+package DeadClass_Interface;
 
 import PathReader.PathReader;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;

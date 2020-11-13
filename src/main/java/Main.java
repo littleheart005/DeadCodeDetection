@@ -1,17 +1,17 @@
-import DeadClass.Detector;
+import DeadClass_Interface.Detector;
 
-import javax.xml.bind.JAXBException;
-import java.io.FileNotFoundException;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-    public static void main(String[] args) throws JAXBException, FileNotFoundException {
+    public static void main(String[] args) {
 
-        String source = "D:\\work\\PreTest\\src\\FactoryPattern";
+        String source = "C:\\Users\\Punch\\Desktop\\DeadCode_workspace\\run_test\\src\\strategypattern";
 
         Detector detector = new Detector(source);
-
         detector.detect();
+        detector.createReport("StrategyPattern");
+
 
     }
 
