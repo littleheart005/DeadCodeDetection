@@ -77,7 +77,7 @@ public class ClassDB {
     public void print(){
         for (int i=0;i<className.size();i++){
                 System.out.print("Class : "+className.get(i)+
-                        "path : "+classPath.get(i)+
+                        " path : "+classPath.get(i)+
                         " : line  "+lineNumber.get(i)+
                         " : "+declareLine.get(i)+
                         " : count = "+counts.get(i)+"\n");

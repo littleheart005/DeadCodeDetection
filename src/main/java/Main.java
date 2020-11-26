@@ -6,11 +6,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String source = "C:\\Users\\Punch\\Desktop\\DeadCode_workspace\\run_test\\src\\strategypattern";
+        String source = "C:\\Users\\Punch\\Desktop\\DeadCode_workspace\\run_test\\src\\CasesTest";
 
         Detector detector = new Detector(source);
         detector.detect();
-        detector.createReport("StrategyPattern");
+        detector.createReport("CasesTest");
+
+
 
 
     }

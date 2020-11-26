@@ -160,15 +160,16 @@ public class Detector {
         /*Case I : Checking for using name as a implementation ex. implements , extends*/
 
         // Define regex patterns
-        String extendPattern = ".*extends\\s"+name+"\\s.*";
-        String implementPattern = ".*implements.*"+name+"\\s.*";
+        String extendPattern = "(.*extends.+)"+name+"(\\s.*)";
+        String implementPattern = "(.*implements.+)"+name+"(\\s.*)";
 
         // Checking for extends
         Pattern pattern = Pattern.compile(extendPattern); // create pattern object to use regex
         Matcher matcher = pattern.matcher(line); // create matcher object to match regex with line
         while (matcher.find()){
             /*System.out.println("Case I (Extend) --> Found "+name+" at line : "+number+" in "+path);
-            System.out.println(line);*/
+            System.out.println(line);
+            System.out.print("Found case I ");*/
             if (type == 'C'){
                 classes.increaseCount(index);
             }else if (type == 'I'){
@@ -181,7 +182,8 @@ public class Detector {
         matcher = pattern.matcher(line);
         while (matcher.find()){
             /*System.out.println("Case I (Implement) --> Found "+name+" at line : "+number+" in "+path);
-            System.out.println(line);*/
+            System.out.println(line);
+            System.out.print("Found case I ");*/
             if (type == 'C'){
                 classes.increaseCount(index);
             }else if (type == 'I'){
@@ -198,8 +200,8 @@ public class Detector {
         */
 
         // Define regex patterns
-        String typePattern = "^[\\s]*[^/]*"+name+"\\s[^)]+;";     // pattern for type declaration
-        String methodPattern = name+".+\\(.*\\)";       // pattern for method creation
+        String typePattern = "(^[\\s]*[^/]*)"+name+"(\\s[^)]+;)";     // pattern for type declaration
+        String methodPattern = name+"(.+\\(.*\\))";       // pattern for method creation
 
 
         // Checking Type declaration
@@ -207,7 +209,8 @@ public class Detector {
         Matcher matcher = pattern.matcher(line);
         while (matcher.find() && !line.contains("abstract")){
            /* System.out.println("Case II (Type) --> Found "+name+" at Line : "+number+" in "+path);
-            System.out.println(line);*/
+            System.out.println(line);
+            System.out.print("Found case II ");*/
             if (type == 'C'){
                 classes.increaseCount(index);
             }else if (type == 'I'){
@@ -221,7 +224,8 @@ public class Detector {
         // Checking if the line contains "class" or "="
         while (matcher.find() && !line.contains("class") && !line.contains("=")) {
            /* System.out.println("Case II (Method) --> Found "+name+" at Line : "+number+" in "+path);
-            System.out.println(line);*/
+            System.out.println(line);
+            System.out.print("Found case II ");*/
             if (type == 'C'){
                 classes.increaseCount(index);
             }else if (type == 'I'){
@@ -238,15 +242,16 @@ public class Detector {
         // PizzaStore ny = new NYPizzaStore();
 
         // Define pattern
-        String objPattern = "=\\s*new\\s*"+name+"(.*);"; //ex. Pizza pizza = new Pizza();
-        String objAssPattern = "^[\\s]*"+name+"\\s+.+\\s*=\\s*.+\\(.*\\);"; // ex. Pizza pizza = ny.orderPizza("cheese");
+        String objPattern = "(=\\s*new\\s*)"+name+"((.*);)"; //ex. Pizza pizza = new Pizza();
+        String objAssPattern = "(^[\\s]*)"+name+"(\\s+.+\\s*=\\s*.+\\(.*\\);)"; // ex. Pizza pizza = ny.orderPizza("cheese");
 
         // Checking for object creation
         Pattern pattern = Pattern.compile(objPattern);
         Matcher matcher = pattern.matcher(line);
         while (matcher.find() && line.contains("new")){
            /* System.out.println("Case III (Object) --> Found "+name+" at Line : "+number+" in "+path);
-            System.out.println(line);*/
+            System.out.println(line);
+            System.out.print("Found case III ");*/
             if (type == 'C'){
                 classes.increaseCount(index);
             }else if (type == 'I'){
@@ -258,7 +263,8 @@ public class Detector {
         matcher = pattern.matcher(line);
         while (matcher.find() && !line.contains("return")){
            /* System.out.println("Case III (Object with Initialize) --> Found "+name+" at Line : "+number+" in "+path);
-            System.out.println(line);*/
+            System.out.println(line);
+            System.out.print("Found case III ");*/
             if (type == 'C'){
                 classes.increaseCount(index);
             }else if (type == 'I'){
@@ -273,14 +279,15 @@ public class Detector {
         - Checking if the name is used for parameter's type.  ex. public CurrentCondition(Subject Weather)
         */
 
-        String paraTypePattern = ".*\\("+name+".+\\)"; //pattern for parameter's type
+        String paraTypePattern = "(.*\\()"+name+"(.+\\))"; //pattern for parameter's type
 
         // Checking parameter type
         Pattern pattern = Pattern.compile(paraTypePattern);
         Matcher matcher = pattern.matcher(line);
         while (matcher.find()){
            /* System.out.println("Case IV (Parameter) --> Found "+name+" at Line : "+number+" in "+path);
-            System.out.println(line);*/
+            System.out.println(line);
+            System.out.print("Found case IV ");*/
             if (type == 'C'){
                 classes.increaseCount(index);
             }else if (type == 'I'){
@@ -296,14 +303,15 @@ public class Detector {
         ex. private ArrayList<Observer>observers;
         */
 
-        String arrayPattern = ".+<"+name+">.+;"; //pattern for parameter's type
+        String arrayPattern = "(.+<)"+name+"(>.+;)"; //pattern for parameter's type
 
         // Checking parameter type
         Pattern pattern = Pattern.compile(arrayPattern);
         Matcher matcher = pattern.matcher(line);
         while (matcher.find()){
            /* System.out.println("Case V (DataCollection) --> Found "+name+" at Line : "+number+" in "+path);
-            System.out.println(line);*/
+            System.out.println(line)
+            System.out.print("Found case V ");*/
             if (type == 'C'){
                 classes.increaseCount(index);
             }else if (type == 'I'){

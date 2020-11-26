@@ -57,7 +57,7 @@ public class InterfaceDB {
     public void print(){
         for (int i=0;i<interfaceName.size();i++){
             System.out.print("Interface : "+interfaceName.get(i)+
-                    "path : "+interfacePath.get(i)+
+                    " path : "+interfacePath.get(i)+
                     " : line  "+lineNumber.get(i)+
                     " : "+declareLine.get(i)+
                     " : count = "+counts.get(i)+"\n");
