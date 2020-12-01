@@ -5,10 +5,7 @@ import PathReader.PathReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -155,25 +152,24 @@ public class Detector {
         }
     }
 
+    private List<String> foundResult = new ArrayList<>();
+
+    // case I -> extend/implement
     private void caseI(String name,int index,int number,String line,String path,Character type){
 
         /*Case I : Checking for using name as a implementation ex. implements , extends*/
 
         // Define regex patterns
-        String extendPattern = "(.*extends.+)"+name+"(\\s.*)";
-        String implementPattern = "(.*implements.+)"+name+"(\\s.*)";
+        String extendPattern = "(.*extends.+)"+name+"(.*)";
+        String implementPattern = "(.*implements.+)"+name+"(.*)";
 
         // Checking for extends
         Pattern pattern = Pattern.compile(extendPattern); // create pattern object to use regex
         Matcher matcher = pattern.matcher(line); // create matcher object to match regex with line
         while (matcher.find()){
-            /*System.out.println("Case I (Extend) --> Found "+name+" at line : "+number+" in "+path);
-            System.out.println(line);
-            System.out.print("Found case I ");*/
             if (type == 'C'){
                 classes.increaseCount(index);
-            }else if (type == 'I'){
-                interfaces.increaseCount(index);
+                foundResult.add("class : "+name+" founded case : extend");
             }
         }
 
@@ -181,17 +177,14 @@ public class Detector {
         pattern = Pattern.compile(implementPattern);
         matcher = pattern.matcher(line);
         while (matcher.find()){
-            /*System.out.println("Case I (Implement) --> Found "+name+" at line : "+number+" in "+path);
-            System.out.println(line);
-            System.out.print("Found case I ");*/
-            if (type == 'C'){
-                classes.increaseCount(index);
-            }else if (type == 'I'){
+            if (type == 'I'){
                 interfaces.increaseCount(index);
+                foundResult.add("interface : "+name+" founded case : implement");
             }
         }
     }
 
+    // case II -> type&method declaration
     private void caseII(String name,int index,int number, String line,String path,Character type){
        /*
         Case II:
@@ -200,7 +193,7 @@ public class Detector {
         */
 
         // Define regex patterns
-        String typePattern = "(^[\\s]*[^/]*)"+name+"(\\s[^)]+;)";     // pattern for type declaration
+        String typePattern = "(^[\\s]*[^/\"]*)"+name+"(\\s[^)]+;)";     // pattern for type declaration
         String methodPattern = name+"(.+\\(.*\\))";       // pattern for method creation
 
 
@@ -213,8 +206,10 @@ public class Detector {
             System.out.print("Found case II ");*/
             if (type == 'C'){
                 classes.increaseCount(index);
+                foundResult.add("class : "+name+" founded case : type declaration");
             }else if (type == 'I'){
                 interfaces.increaseCount(index);
+                foundResult.add("interface : "+name+" founded case : type declaration");
             }
         }
 
@@ -228,13 +223,16 @@ public class Detector {
             System.out.print("Found case II ");*/
             if (type == 'C'){
                 classes.increaseCount(index);
+                foundResult.add("class : "+name+" founded case : method declaration");
             }else if (type == 'I'){
                 interfaces.increaseCount(index);
+                foundResult.add("interface : "+name+" founded case : method declaration");
             }
         }
 
     }
 
+    // case III -> object creation
     private void caseIII(String name,int index,int number, String line,String path,Character type){
         /*
         Case III : Checking object creation ex. Pizza pizza = new Pizza();
@@ -242,38 +240,36 @@ public class Detector {
         // PizzaStore ny = new NYPizzaStore();
 
         // Define pattern
-        String objPattern = "(=\\s*new\\s*)"+name+"((.*);)"; //ex. Pizza pizza = new Pizza();
+        String objPattern = "(new\\s*)"+name+"(.*)"; //ex. Pizza pizza = new Pizza();
         String objAssPattern = "(^[\\s]*)"+name+"(\\s+.+\\s*=\\s*.+\\(.*\\);)"; // ex. Pizza pizza = ny.orderPizza("cheese");
 
         // Checking for object creation
         Pattern pattern = Pattern.compile(objPattern);
         Matcher matcher = pattern.matcher(line);
         while (matcher.find() && line.contains("new")){
-           /* System.out.println("Case III (Object) --> Found "+name+" at Line : "+number+" in "+path);
-            System.out.println(line);
-            System.out.print("Found case III ");*/
             if (type == 'C'){
                 classes.increaseCount(index);
+                foundResult.add("class : "+name+" founded case : object creation");
             }else if (type == 'I'){
                 interfaces.increaseCount(index);
+                foundResult.add("interface : "+name+" founded case : object creation");
             }
         }
 
         pattern = Pattern.compile(objAssPattern);
         matcher = pattern.matcher(line);
         while (matcher.find() && !line.contains("return")){
-           /* System.out.println("Case III (Object with Initialize) --> Found "+name+" at Line : "+number+" in "+path);
-            System.out.println(line);
-            System.out.print("Found case III ");*/
             if (type == 'C'){
                 classes.increaseCount(index);
+                foundResult.add("class : "+name+" founded case : object assignment");
             }else if (type == 'I'){
                 interfaces.increaseCount(index);
+                foundResult.add("interface : "+name+" founded case : object assignment");
             }
-
         }
     }
 
+    // case IV -> parameter
     private void caseIV(String name,int index,int number, String line,String path,Character type) {
         /* Case IV
         - Checking if the name is used for parameter's type.  ex. public CurrentCondition(Subject Weather)
@@ -285,18 +281,17 @@ public class Detector {
         Pattern pattern = Pattern.compile(paraTypePattern);
         Matcher matcher = pattern.matcher(line);
         while (matcher.find()){
-           /* System.out.println("Case IV (Parameter) --> Found "+name+" at Line : "+number+" in "+path);
-            System.out.println(line);
-            System.out.print("Found case IV ");*/
             if (type == 'C'){
                 classes.increaseCount(index);
+                foundResult.add("class : "+name+" founded case : parameter");
             }else if (type == 'I'){
                 interfaces.increaseCount(index);
+                foundResult.add("interface : "+name+" founded case : parameter");
             }
-
         }
     }
 
+    // case V -> array
     private void caseV(String name,int index,int number, String line,String path,Character type) {
         /* Case IV
         - Checking if the name is used for Array,List or other data collections.
@@ -314,14 +309,16 @@ public class Detector {
             System.out.print("Found case V ");*/
             if (type == 'C'){
                 classes.increaseCount(index);
+                foundResult.add("class : "+name+" founded case : array");
             }else if (type == 'I'){
                 interfaces.increaseCount(index);
+                foundResult.add("interface : "+name+" founded case : array");
             }
         }
     }
 
     // Object for create output
-    Output output = new Output();
+    private Output output = new Output();
 
     // Create text output file
     public void createReport(String fileName){
@@ -329,5 +326,11 @@ public class Detector {
         output.write(classes,interfaces);
     }
 
+    public void printFound(){
+        for (String found : foundResult){
+            System.out.println(found);
+        }
+        System.out.println("");
+    }
 
 }

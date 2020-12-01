@@ -10,6 +10,8 @@ public class ClassDB {
     private final List<String> declareLine = new ArrayList<>();
     private final List<Integer> counts = new ArrayList<>();
 
+
+
     public void addClassName(String name){
         this.className.add(name);
     }
@@ -46,16 +48,16 @@ public class ClassDB {
         return this.lineNumber.get(index);
     }
 
-    public String getDeclare(int index){
-        return this.declareLine.get(index);
-    }
-
     public int getCount(int index){
         return this.counts.get(index);
     }
 
     public List<String> getClassName() {
         return className;
+    }
+
+    /* public String getDeclare(int index){
+        return this.declareLine.get(index);
     }
 
     public List<String> getClassPath() {
@@ -83,6 +85,6 @@ public class ClassDB {
                         " : count = "+counts.get(i)+"\n");
 
         }
-    }
+    }*/
 
 }

@@ -10,7 +10,8 @@ public class Main {
 
         Detector detector = new Detector(source);
         detector.detect();
-        detector.createReport("CasesTest");
+        detector.printFound();
+        detector.createReport("CasesTester");
 
 
 

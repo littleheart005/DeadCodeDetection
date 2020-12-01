@@ -40,10 +40,22 @@ public class Output {
             }
             bw.close();
         }catch (IOException e){
-            System.out.print("Error occurse");
+            System.out.print("Print Error!");
             e.printStackTrace();
         }
     }
+
+    public void write(String text){
+        bw = new BufferedWriter(f);
+       try {
+            bw.write(text+"\n");
+            System.out.println(text);
+       }catch (IOException e){
+           System.out.println("Print find result error!");
+       }
+    }
+
+
 
 
 }

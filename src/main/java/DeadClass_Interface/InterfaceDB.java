@@ -10,6 +10,7 @@ public class InterfaceDB {
     private final List<String> declareLine = new ArrayList<>();
     private final List<Integer> counts = new ArrayList<>();
 
+
     public void addInterfaceName(String name){
         this.interfaceName.add(name);
     }
@@ -46,12 +47,17 @@ public class InterfaceDB {
         return this.lineNumber.get(index);
     }
 
-    public String getDeclare(int index){
-        return this.declareLine.get(index);
-    }
-
     public int getCount(int index){
         return this.counts.get(index);
+    }
+
+    public List<String> getInterfaceName() {
+        return interfaceName;
+    }
+
+
+   /* public String getDeclare(int index){
+        return this.declareLine.get(index);
     }
 
     public void print(){
@@ -62,10 +68,6 @@ public class InterfaceDB {
                     " : "+declareLine.get(i)+
                     " : count = "+counts.get(i)+"\n");
         }
-    }
-
-    public List<String> getInterfaceName() {
-        return interfaceName;
     }
 
     public List<String> getInterfacePath() {
@@ -82,5 +84,5 @@ public class InterfaceDB {
 
     public List<Integer> getCounts() {
         return counts;
-    }
+    }*/
 }
