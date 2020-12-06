@@ -26,10 +26,10 @@ public class Detector {
         // Store files paths
         paths = reader.readPath(source);
 
-        readFile_Name(paths);
+        readFileName(paths);
     }
 
-    private void readFile_Name(List<String> paths) {
+    private void readFileName(List<String> paths) {
         for(String path : paths){
             File file = new File(path);
             try {
@@ -326,6 +326,7 @@ public class Detector {
         output.write(classes,interfaces);
     }
 
+    // Printing founded result with cases
     public void printFound(){
         for (String found : foundResult){
             System.out.println(found);

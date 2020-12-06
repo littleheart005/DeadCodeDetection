@@ -10,7 +10,7 @@ public class Output {
     private BufferedWriter bw;
 
     public void createFile(String name) {
-        fileName = "C:\\Users\\Punch\\Desktop\\DeadCode_workspace\\output\\" + name + ".txt";
+        fileName = "src/main/resources/deadclass_interface/" + name + ".txt";
         try {
             f = new FileWriter(fileName);
         } catch (IOException e) {
@@ -54,8 +54,6 @@ public class Output {
            System.out.println("Print find result error!");
        }
     }
-
-
 
 
 }

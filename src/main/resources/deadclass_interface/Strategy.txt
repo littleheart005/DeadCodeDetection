@@ -1,0 +1,4 @@
+Class ; Class FakeQuack has 0 references ; C:\Users\Punch\Desktop\DeadCode_workspace\DesignPatternCode\HF_DP\src\headfirst\strategy\FakeQuack.java line 3 ; dead class
+Class ; Class MiniDuckSimulator has 0 references ; C:\Users\Punch\Desktop\DeadCode_workspace\DesignPatternCode\HF_DP\src\headfirst\strategy\MiniDuckSimulator.java line 3 ; dead class
+Class ; Class MiniDuckSimulator1 has 0 references ; C:\Users\Punch\Desktop\DeadCode_workspace\DesignPatternCode\HF_DP\src\headfirst\strategy\MiniDuckSimulator1.java line 3 ; dead class
+Class ; Class RedHeadDuck has 0 references ; C:\Users\Punch\Desktop\DeadCode_workspace\DesignPatternCode\HF_DP\src\headfirst\strategy\RedHeadDuck.java line 3 ; dead class

@@ -1,0 +1,4 @@
+Class ; Class AlternatingDinerMenuIterator has 0 references ; C:\Users\Punch\Desktop\DeadCode_workspace\DesignPatternCode\HF_DP\src\headfirst\iterator\dinermerger\AlternatingDinerMenuIterator.java line 5 ; dead class
+Class ; Class ArrayIterator has 0 references ; C:\Users\Punch\Desktop\DeadCode_workspace\DesignPatternCode\HF_DP\src\headfirst\iterator\dinermerger\ArrayIterator.java line 3 ; dead class
+Class ; Class ArrayListIterator has 0 references ; C:\Users\Punch\Desktop\DeadCode_workspace\DesignPatternCode\HF_DP\src\headfirst\iterator\dinermerger\ArrayListIterator.java line 5 ; dead class
+Class ; Class MenuTestDrive has 0 references ; C:\Users\Punch\Desktop\DeadCode_workspace\DesignPatternCode\HF_DP\src\headfirst\iterator\dinermerger\MenuTestDrive.java line 5 ; dead class
