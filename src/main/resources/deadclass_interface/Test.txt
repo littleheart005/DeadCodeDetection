@@ -1,0 +1,1 @@
+Class ; Class main has 0 references ; C:\Users\birdn\Desktop\Project\Test Project\Decorator\main.java line 3 ; dead class

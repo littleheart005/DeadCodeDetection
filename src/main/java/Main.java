@@ -6,12 +6,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String source = "C:\\Users\\Punch\\Desktop\\DeadCode_workspace\\DesignPatternCode\\HF_DP\\src\\headfirst\\strategy";
+        String source = "C:\\Users\\birdn\\Desktop\\Project\\Test Project\\Decorator";
 
         Detector detector = new Detector(source);
         detector.detect();
         //detector.printFound();
-        detector.createReport("Strategy");
+        detector.createReport("Test");
 
     }
 
