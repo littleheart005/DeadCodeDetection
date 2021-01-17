@@ -1,21 +1,29 @@
-import DeadClass_Interface.Detector;
-import DeadVariable.DeadVariableDetector;
-
 import java.io.FileNotFoundException;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.List;
+
+import DeadReturn.DeadReturnDetector;
 
 public class Main {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args){
 
-        String source = "C:\\Users\\birdn\\Desktop\\Project\\Test Project\\Decorator";
+        String source = "/Users/Peeradon/Documents/DesignPatternCode/HF_DP/src/headfirst/command/party/Light.java";
 
-        DeadVariableDetector deadVariableDetector = new DeadVariableDetector(source);
-        Detector detector = new Detector(source);
-        detector.detect();
-        System.out.println();
-        System.out.println(" ================ Dead Class/Interface =============");
-        detector.createReport("Test");
+        DeadReturnDetector deadReturnDetector = new DeadReturnDetector(source);
+
+        deadReturnDetector.printMethodName();
+
+
+
+//        DeadVariableDetector deadVariableDetector = new DeadVariableDetector(source);
+//        Detector detector = new Detector(source);
+//        detector.detect();
+//        System.out.println();
+//        System.out.println(" ================ Dead Class/Interface =============");
+//        detector.createReport("Test");
+
+
 
     }
 

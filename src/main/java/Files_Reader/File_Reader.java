@@ -12,6 +12,12 @@ public class File_Reader {
     public List<String> readPath(String source){
 
         File folder = new File(source);
+
+        if(!folder.isDirectory()){
+            this.paths.add(source);
+            return this.getPaths();
+        }
+
         File[] files = folder.listFiles();
 
         for (File file : files) {
