@@ -1,4 +1,4 @@
-package DeadClass_Interface;
+package DeadClass;
 
 import java.io.*;
 
