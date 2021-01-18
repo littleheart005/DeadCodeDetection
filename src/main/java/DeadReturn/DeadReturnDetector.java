@@ -53,9 +53,9 @@ public class DeadReturnDetector {
         @Override
         public void visit(MethodDeclaration n, List<String> collector) {
             super.visit(n,collector);
-//            if (!n.getType().toString().equals("void")) {
+            if (!n.getType().toString().equals("void")) {
                 collector.add(n.getNameAsString());
-//            }
+          }
         }
     }
 
