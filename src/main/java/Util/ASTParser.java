@@ -11,7 +11,7 @@ import java.util.List;
 //class to read source as a project and parse to AST -> store at List<CompilationUnit> cu
 public class ASTParser {
     private static List<String> FILES_PATH = new ArrayList<>();
-    public List<CompilationUnit> cu = new ArrayList<CompilationUnit>();
+    public static List<CompilationUnit> cu = new ArrayList<CompilationUnit>();
 
     public ASTParser(String source) {
         File_Reader file_reader = new File_Reader();
@@ -30,4 +30,6 @@ public class ASTParser {
             e.printStackTrace();
         }
     }
+
+
 }

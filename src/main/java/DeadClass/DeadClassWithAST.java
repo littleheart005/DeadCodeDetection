@@ -1,45 +1,42 @@
 package DeadClass;
 
-import Files_Reader.File_Reader;
-import com.github.javaparser.StaticJavaParser;
+import Util.*;
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.NodeList;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
+import com.github.javaparser.ast.body.Parameter;
+import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import org.checkerframework.checker.units.qual.A;
+import org.w3c.dom.ls.LSException;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DeadClassWithAST {
-    private static List<String> FILES_PATH = new ArrayList<>();
     private static Map<String, Integer> classCount = new HashMap<>();
     private static List<CompilationUnit> cu = new ArrayList<>();
 
-    public DeadClassWithAST(String source){
-        File_Reader reader = new File_Reader();
-        FILES_PATH = reader.readPath(source);
-        parseAST();
+    private static VoidVisitor<List<String>> classVisitor = new ClassNameCollector();
+    private static VoidVisitor<List<String>> classDeclare = new ClassDeclaration();
+    private static VoidVisitor<List<String>> variableCollector = new VariableCollector();
+    private static VoidVisitor<List<String>> parameterCollector = new ParameterCollector();
+
+    private static List<String> className = new ArrayList<>();
+    private static List<String> variableType = new ArrayList<>();
+    private static List<String> parameterType = new ArrayList<>();
+
+    public DeadClassWithAST(List<CompilationUnit> cu){
+       this.cu = cu;
+       parseAST();
     }
 
     // Parsing java files to AST.
     private static void parseAST(){
-        VoidVisitor<?> classVisitor; // Create visitor object
         try {
-            for (String path : FILES_PATH){
-                // parse
-                CompilationUnit cuTmp = StaticJavaParser.parse(new File(path));
-
-                // storing AST parsed object
-                cu.add(cuTmp);
-
+            for (CompilationUnit cuTmp : cu){
                 // visit node in AST for getting classes name
-                classVisitor = new ClassNameCollector();
-                classVisitor.visit(cuTmp,null);
+                classVisitor.visit(cuTmp,className);
+                className.forEach(name->classCount.put(name,1));
             }
         }catch (Exception e){
             System.out.println("Error in DeadClass parseAST()");
@@ -47,62 +44,21 @@ public class DeadClassWithAST {
         }
     }
 
-    // VisitorAdapter for class name collecting
-    public static class ClassNameCollector extends VoidVisitorAdapter<Void>{
-        // use Class/Interface Declaration object
-        @Override
-        public void visit(ClassOrInterfaceDeclaration n, Void arg) {
-            super.visit(n, arg);
-            // check if a class
-            if(n.isClassOrInterfaceDeclaration()&& !n.isInterface()){
-                // Store to map
-                classCount.put(n.getNameAsString(),1);
-            }
-        }
-    }
-
-
     public void detect(){
-
-        VoidVisitor<?> fieldDeclare = new FieldDeclarePrinter();
-        VoidVisitor<?> classDeclare = new ClassDeclare();
 
         for(CompilationUnit tmp : cu){
 
             // Case 1 : Extends, Implement.
+            //classDeclare.visit(tmp,className);
 
-            classDeclare.visit(tmp,null);
+            // Case ? : Variable & Field
+            //variableCollector.visit(tmp,variableType);
 
-            // fieldDeclare.visit(tmp,null);
-
-        }
-
-    }
-
-    private static class ClassDeclare extends VoidVisitorAdapter<Void>{
-        @Override
-        public void visit(ClassOrInterfaceDeclaration n, Void arg) {
-            super.visit(n, arg);
-
-            NodeList implement;
-            implement = n.getImplementedTypes();
-            NodeList extend;
-            extend = n.getExtendedTypes();
-            for(Object node : implement){
-                String tmpStr = node.toString();
-
-                System.out.println(tmpStr);
-            }
+            // Case ? : Parameter
+            //parameterCollector.visit(tmp,parameterType);
 
         }
-    }
 
-    private static class FieldDeclarePrinter extends VoidVisitorAdapter<Void>{
-        @Override
-        public void visit(FieldDeclaration n, Void arg) {
-            super.visit(n, arg);
-            System.out.println("Field: "+n.getVariables().getParentNodeForChildren());
-        }
     }
 
     // Print class count map
