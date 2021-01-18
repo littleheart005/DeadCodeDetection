@@ -18,9 +18,9 @@ import java.util.NoSuchElementException;
 
 public class DeadReturnDetector {
 
-    private  static List<String> FILES_PATH = new ArrayList<>();
-    private  static List<String> methodNames = new ArrayList<>();
-    private static  List<CompilationUnit> cu = new ArrayList<>();
+    private static List<String> FILES_PATH = new ArrayList<>();
+    private static List<String> methodNames = new ArrayList<>();
+    private static List<CompilationUnit> cu = new ArrayList<>();
     private static List<String> callers = new ArrayList<>();
 
     public DeadReturnDetector(String source){
@@ -28,8 +28,8 @@ public class DeadReturnDetector {
         FILES_PATH = reader.readPath(source);
         //FILES_PATH.forEach(n -> System.out.println("Path: "+n));
         parseAST();
-
     }
+
     // Parse file to AST to get method name.
     private void parseAST() {
 

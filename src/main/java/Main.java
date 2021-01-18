@@ -1,9 +1,11 @@
+
 import DeadClass.DeadClassWithAST;
 import DeadInterface.DeadInterfaceDetector;
 
+
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         String source = "/Users/Peeradon/Documents/DesignPatternCode/HF_DP/src/headfirst/strategy";
 
