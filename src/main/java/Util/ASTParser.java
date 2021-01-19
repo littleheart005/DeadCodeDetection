@@ -12,10 +12,12 @@ import java.util.List;
 public class ASTParser {
     private static List<String> FILES_PATH = new ArrayList<>();
     public static List<CompilationUnit> cu = new ArrayList<CompilationUnit>();
+    public static Integer count = 0;
 
     public ASTParser(String source) {
         File_Reader file_reader = new File_Reader();
-        FILES_PATH = file_reader.readPath(source); //read all file in source project
+        file_reader.readPath(source);
+        FILES_PATH = file_reader.getPaths(); //read all file in source project
         parseAST();
     }
 
@@ -25,6 +27,7 @@ public class ASTParser {
             for (String path : FILES_PATH){
                 CompilationUnit cuTmp = StaticJavaParser.parse(new File(path));
                 cu.add(cuTmp);
+                this.count = count + 1;
             }
         }catch (Exception e) {
             e.printStackTrace();

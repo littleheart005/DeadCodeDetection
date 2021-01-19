@@ -12,5 +12,6 @@ public class VariableNameCollector extends VoidVisitorAdapter<List<String>> {
         super.visit(vd, collector);
         collector.add(vd.getNameAsString()); //add variable name to collector
         /*System.out.println(vd.getInitializer());*/
+
     }
 }

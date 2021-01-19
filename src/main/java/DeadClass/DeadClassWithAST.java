@@ -21,9 +21,9 @@ public class DeadClassWithAST {
     private static List<CompilationUnit> cu = new ArrayList<>();
 
     public DeadClassWithAST(String source){
-        File_Reader reader = new File_Reader();
+        /*File_Reader reader = new File_Reader();
         FILES_PATH = reader.readPath(source);
-        parseAST();
+        parseAST();*/
     }
 
     // Parsing java files to AST.
