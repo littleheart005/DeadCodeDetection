@@ -11,13 +11,11 @@ import java.util.List;
 //class to read source as a project and parse to AST -> store at List<CompilationUnit> cu
 public class ASTParser {
     private static List<String> FILES_PATH = new ArrayList<>();
-    public static List<CompilationUnit> cu = new ArrayList<CompilationUnit>();
-    public static Integer count = 0;
+    public static List<CompilationUnit> cu = new ArrayList<>();
 
     public ASTParser(String source) {
         File_Reader file_reader = new File_Reader();
-        file_reader.readPath(source);
-        FILES_PATH = file_reader.getPaths(); //read all file in source project
+        FILES_PATH = file_reader.readPath(source); //read all file in source project
         parseAST();
     }
 
@@ -27,10 +25,12 @@ public class ASTParser {
             for (String path : FILES_PATH){
                 CompilationUnit cuTmp = StaticJavaParser.parse(new File(path));
                 cu.add(cuTmp);
-                this.count = count + 1;
             }
         }catch (Exception e) {
+            System.out.println("Error in Util.ASTParser");
             e.printStackTrace();
         }
     }
+
+
 }

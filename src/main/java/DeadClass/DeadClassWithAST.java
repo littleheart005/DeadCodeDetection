@@ -1,45 +1,60 @@
 package DeadClass;
 
-import Files_Reader.File_Reader;
-import com.github.javaparser.StaticJavaParser;
+import Util.*;
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.NodeList;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
-import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitor;
-import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DeadClassWithAST {
-    private static List<String> FILES_PATH = new ArrayList<>();
-    private static Map<String, Integer> classCount = new HashMap<>();
-    private static List<CompilationUnit> cu = new ArrayList<>();
+    private final Map<String, Integer> classCount = new HashMap<>();
+    private List<CompilationUnit> cu;
 
-    public DeadClassWithAST(String source){
-        /*File_Reader reader = new File_Reader();
-        FILES_PATH = reader.readPath(source);
-        parseAST();*/
+    // Visitors
+    private final VoidVisitor<List<String>> classVisitor = new ClassNameCollector();
+    private final VoidVisitor<List<String>> classDeclare = new ClassDeclarationVisitor();
+    private final VoidVisitor<List<String>> variableTypeCollector = new VariableTypeCollector();
+    private final VoidVisitor<List<String>> parameterCollector = new ParameterCollector();
+    private final VoidVisitor<List<String>> methodTypeCollector = new MethodTypeCollector();
+    private final VoidVisitor<List<String>> objectAssignCollector = new ObjectDeclarationVisitor();
+
+    // List of all class name in source files.
+    private final List<String> className = new ArrayList<>();
+    // List of all extended name.
+    private final List<String> extendedList = new ArrayList<>();
+    // List of all variable type and method type.
+    private final List<String> variableType = new ArrayList<>();
+    private final List<String> methodType = new ArrayList<>();
+    // List of all parameter type.
+    private final List<String> parameterType = new ArrayList<>();
+    // List of all object assignment.
+    private final List<String> objectAssignmentType = new ArrayList<>();
+
+    // Elapse time
+    private float elapseTimeInSecond;
+
+    public DeadClassWithAST(List<CompilationUnit> cu){
+
+        // Calculate Data processing step elapse time.
+        long start = System.currentTimeMillis();
+
+        this.cu = cu;
+        setClassCount();
+        prepareData();
+
+        long end = System.currentTimeMillis();
+        this.elapseTimeInSecond = (end - start)/100F;
+
     }
 
     // Parsing java files to AST.
-    private static void parseAST(){
-        VoidVisitor<?> classVisitor; // Create visitor object
+    private void setClassCount(){
         try {
-            for (String path : FILES_PATH){
-                // parse
-                CompilationUnit cuTmp = StaticJavaParser.parse(new File(path));
-
-                // storing AST parsed object
-                cu.add(cuTmp);
-
+            for (CompilationUnit cuTmp : cu){
                 // visit node in AST for getting classes name
-                classVisitor = new ClassNameCollector();
-                classVisitor.visit(cuTmp,null);
+                classVisitor.visit(cuTmp,className);
+                // Map class name and count
+                className.forEach(name->classCount.put(name,1));
             }
         }catch (Exception e){
             System.out.println("Error in DeadClass parseAST()");
@@ -47,69 +62,40 @@ public class DeadClassWithAST {
         }
     }
 
-    // VisitorAdapter for class name collecting
-    public static class ClassNameCollector extends VoidVisitorAdapter<Void>{
-        // use Class/Interface Declaration object
-        @Override
-        public void visit(ClassOrInterfaceDeclaration n, Void arg) {
-            super.visit(n, arg);
-            // check if a class
-            if(n.isClassOrInterfaceDeclaration()&& !n.isInterface()){
-                // Store to map
-                classCount.put(n.getNameAsString(),1);
-            }
+    // Get all necessary data.
+    public void prepareData(){
+
+        for(CompilationUnit tmp : cu){
+            //Case 1 : Extends, Get all extended class name.
+            classDeclare.visit(tmp,extendedList);
+
+            //Case 2 : Variable Type and Method Type, Get all variable (include array type) and method type.
+            variableTypeCollector.visit(tmp,variableType);
+            methodTypeCollector.visit(tmp,methodType);
+
+            // Case 3 : Object, Get all object assignment type.
+            // Ex. PizzaStore nyStore = new NYPizzaStore(); ->  Type: NYPizzaStore
+            objectAssignCollector.visit(tmp,objectAssignmentType);
+
+            // Case 4 : Parameter, Get all parameter type.
+            parameterCollector.visit(tmp,parameterType);
+
         }
     }
 
 
     public void detect(){
 
-        VoidVisitor<?> fieldDeclare = new FieldDeclarePrinter();
-        VoidVisitor<?> classDeclare = new ClassDeclare();
-
-        for(CompilationUnit tmp : cu){
-
-            // Case 1 : Extends, Implement.
-
-            classDeclare.visit(tmp,null);
-
-            // fieldDeclare.visit(tmp,null);
-
-        }
-
-    }
-
-    private static class ClassDeclare extends VoidVisitorAdapter<Void>{
-        @Override
-        public void visit(ClassOrInterfaceDeclaration n, Void arg) {
-            super.visit(n, arg);
-
-            NodeList implement;
-            implement = n.getImplementedTypes();
-            NodeList extend;
-            extend = n.getExtendedTypes();
-            for(Object node : implement){
-                String tmpStr = node.toString();
-
-                System.out.println(tmpStr);
-            }
-
-        }
-    }
-
-    private static class FieldDeclarePrinter extends VoidVisitorAdapter<Void>{
-        @Override
-        public void visit(FieldDeclaration n, Void arg) {
-            super.visit(n, arg);
-            System.out.println("Field: "+n.getVariables().getParentNodeForChildren());
-        }
     }
 
     // Print class count map
     public void printMap(){
+        System.out.println("Total Class: "+classCount.size());
         classCount.forEach((k, v)->System.out.println("Class: "+k+"  count: "+v));
     }
 
-
+    public float getElapseTimeInSecond() {
+        return elapseTimeInSecond;
+    }
 }
 

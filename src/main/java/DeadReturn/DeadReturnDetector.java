@@ -11,10 +11,9 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import org.checkerframework.checker.units.qual.C;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
+
 
 public class DeadReturnDetector {
 
@@ -24,10 +23,10 @@ public class DeadReturnDetector {
     private static List<String> callers = new ArrayList<>();
 
     public DeadReturnDetector(String source){
-        /*File_Reader reader = new File_Reader();
+        File_Reader reader = new File_Reader();
         FILES_PATH = reader.readPath(source);
-        //FILES_PATH.forEach(n -> System.out.println("Path: "+n));
-        parseAST();*/
+        FILES_PATH.forEach(n -> System.out.println("Path: "+n));
+        parseAST();
     }
 
     // Parse file to AST to get method name.
