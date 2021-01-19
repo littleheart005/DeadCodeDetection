@@ -51,11 +51,11 @@ public class Detector {
             classes.addClassPath(path);
             classes.setCount();
         }
-        if(line.contains("interface")){
-            interfaces.addInterfaceName(getFileName(file));
-            interfaces.addInterfacePath(path);
-            interfaces.setCount();
-        }
+//        if(line.contains("interface")){
+//            interfaces.addInterfaceName(getFileName(file));
+//            interfaces.addInterfacePath(path);
+//            interfaces.setCount();
+//        }
     }
 
     private String getFileName(File file){
@@ -84,7 +84,7 @@ public class Detector {
                     getClassInt(tmp,i);
 
                     searchClass(i,loc.get(i),path); // sending no.of line ,line and path to searching method
-                    searchInterface(i,loc.get(i),path);
+                    //searchInterface(i,loc.get(i),path);
                     i = i+1;
                 }
                 sc.close();
@@ -109,12 +109,12 @@ public class Detector {
             classes.addDeclareLine(line);
         }
 
-        pattern = Pattern.compile(interfacePattern);
-        matcher = pattern.matcher(line);
-        while (matcher.find()){
-            interfaces.addLine(number);
-            interfaces.addDeclareLine(line);
-        }
+//        pattern = Pattern.compile(interfacePattern);
+//        matcher = pattern.matcher(line);
+//        while (matcher.find()){
+//            interfaces.addLine(number);
+//            interfaces.addDeclareLine(line);
+//        }
 
     }
 
@@ -138,19 +138,19 @@ public class Detector {
         }
     }
 
-    private void searchInterface(int number,String line,String path){
-
-        int index = 0;
-        for (String name : interfaces.getInterfaceName()){
-            caseI(name,index,number,line,path,'I');
-            caseII(name,index,number,line,path,'I');
-            caseIII(name,index,number,line,path,'I');
-            caseIV(name,index,number,line,path,'I');
-            caseV(name,index,number,line,path,'I');
-
-            index = index + 1;
-        }
-    }
+//    private void searchInterface(int number,String line,String path){
+//
+//        int index = 0;
+//        for (String name : interfaces.getInterfaceName()){
+//            caseI(name,index,number,line,path,'I');
+//            caseII(name,index,number,line,path,'I');
+//            caseIII(name,index,number,line,path,'I');
+//            caseIV(name,index,number,line,path,'I');
+//            caseV(name,index,number,line,path,'I');
+//
+//            index = index + 1;
+//        }
+//    }
 
     private List<String> foundResult = new ArrayList<>();
 
@@ -174,14 +174,14 @@ public class Detector {
         }
 
         // Checking for implements
-        pattern = Pattern.compile(implementPattern);
-        matcher = pattern.matcher(line);
-        while (matcher.find()){
-            if (type == 'I'){
-                interfaces.increaseCount(index);
-                foundResult.add("interface : "+name+" founded case : implement");
-            }
-        }
+//        pattern = Pattern.compile(implementPattern);
+//        matcher = pattern.matcher(line);
+//        while (matcher.find()){
+//            if (type == 'I'){
+//                interfaces.increaseCount(index);
+//                foundResult.add("interface : "+name+" founded case : implement");
+//            }
+//        }
     }
 
     // case II -> type&method declaration
@@ -207,10 +207,11 @@ public class Detector {
             if (type == 'C'){
                 classes.increaseCount(index);
                 foundResult.add("class : "+name+" founded case : type declaration");
-            }else if (type == 'I'){
-                interfaces.increaseCount(index);
-                foundResult.add("interface : "+name+" founded case : type declaration");
             }
+//            else if (type == 'I'){
+//                interfaces.increaseCount(index);
+//                foundResult.add("interface : "+name+" founded case : type declaration");
+//            }
         }
 
         // Checking Method
@@ -250,10 +251,11 @@ public class Detector {
             if (type == 'C'){
                 classes.increaseCount(index);
                 foundResult.add("class : "+name+" founded case : object creation");
-            }else if (type == 'I'){
-                interfaces.increaseCount(index);
-                foundResult.add("interface : "+name+" founded case : object creation");
             }
+//            else if (type == 'I'){
+//                interfaces.increaseCount(index);
+//                foundResult.add("interface : "+name+" founded case : object creation");
+//            }
         }
 
         pattern = Pattern.compile(objAssPattern);
@@ -262,10 +264,11 @@ public class Detector {
             if (type == 'C'){
                 classes.increaseCount(index);
                 foundResult.add("class : "+name+" founded case : object assignment");
-            }else if (type == 'I'){
-                interfaces.increaseCount(index);
-                foundResult.add("interface : "+name+" founded case : object assignment");
             }
+//            else if (type == 'I'){
+//                interfaces.increaseCount(index);
+//                foundResult.add("interface : "+name+" founded case : object assignment");
+//            }
         }
     }
 
@@ -284,10 +287,11 @@ public class Detector {
             if (type == 'C'){
                 classes.increaseCount(index);
                 foundResult.add("class : "+name+" founded case : parameter");
-            }else if (type == 'I'){
-                interfaces.increaseCount(index);
-                foundResult.add("interface : "+name+" founded case : parameter");
             }
+//            else if (type == 'I'){
+//                interfaces.increaseCount(index);
+//                foundResult.add("interface : "+name+" founded case : parameter");
+//            }
         }
     }
 
@@ -310,10 +314,11 @@ public class Detector {
             if (type == 'C'){
                 classes.increaseCount(index);
                 foundResult.add("class : "+name+" founded case : array");
-            }else if (type == 'I'){
-                interfaces.increaseCount(index);
-                foundResult.add("interface : "+name+" founded case : array");
             }
+//            else if (type == 'I'){
+//                interfaces.increaseCount(index);
+//                foundResult.add("interface : "+name+" founded case : array");
+//            }
         }
     }
 

@@ -13,31 +13,23 @@ public class File_Reader {
 
         File folder = new File(source);
 
-        if(!folder.isDirectory()){
+        if(!folder.isDirectory() && source.matches(".+[.]java")){
             this.paths.add(source);
-            return this.getPaths();
-        }
+        }else {
+            File[] files = folder.listFiles();
 
-        File[] files = folder.listFiles();
-
-        for (File file : files) {
-            if (file.isDirectory()) { // Checking if the current file is directory or not.
-                String path = file.getAbsolutePath();
-                readPath(path);
-            } else {
-                paths.add(file.getAbsolutePath());
+            for (File file : files) {
+                if (file.isDirectory()) { // Checking if the current file is directory or not.
+                    String path = file.getAbsolutePath();
+                    readPath(path);
+                } else {
+                    if (file.getAbsolutePath().matches(".+[.]java")) {
+                        paths.add(file.getAbsolutePath());
+                    }
+                }
             }
         }
         return this.getPaths();
-    }
-
-    public List<File> readFile(List<String> paths) throws FileNotFoundException {
-        List<File> files = new ArrayList<>();
-        for(String p : paths){
-            File file = new File(p);
-            files.add(file);
-        }
-        return files;
     }
 
     public List<String> getPaths() {

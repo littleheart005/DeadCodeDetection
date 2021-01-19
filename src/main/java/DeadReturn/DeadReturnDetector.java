@@ -11,10 +11,9 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import org.checkerframework.checker.units.qual.C;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
+
 
 public class DeadReturnDetector {
 
@@ -26,7 +25,7 @@ public class DeadReturnDetector {
     public DeadReturnDetector(String source){
         File_Reader reader = new File_Reader();
         FILES_PATH = reader.readPath(source);
-        //FILES_PATH.forEach(n -> System.out.println("Path: "+n));
+        FILES_PATH.forEach(n -> System.out.println("Path: "+n));
         parseAST();
     }
 

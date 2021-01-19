@@ -10,7 +10,7 @@ public class VariableTypeCollector extends VoidVisitorAdapter<List<String>> {
     @Override
     public void visit(VariableDeclarator n, List<String> arg) {
         super.visit(n, arg);
-        System.out.println("Variable: "+n.getName()+"   type: "+n.getTypeAsString());
+        //System.out.println("Variable: "+n.getName()+"   type: "+n.getTypeAsString());
         arg.add(n.getTypeAsString());
     }
 }
