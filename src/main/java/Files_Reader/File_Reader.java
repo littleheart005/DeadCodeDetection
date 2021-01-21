@@ -12,7 +12,7 @@ public class File_Reader {
     public List<String> readPath(String source) {
         File folder = new File(source);
 
-        if(!folder.isDirectory() && source.matches(".+[.]java")){
+        if(!folder.isDirectory() && source.matches(".+[.]java$")){
             this.paths.add(source);
         }else {
             File[] files = folder.listFiles();
@@ -22,7 +22,7 @@ public class File_Reader {
                     String path = file.getAbsolutePath();
                     readPath(path);
                 } else {
-                    if (file.getAbsolutePath().matches(".+[.]java")) {
+                    if (file.getAbsolutePath().matches(".+[.]java$")) {
                         paths.add(file.getAbsolutePath());
                     }
                 }

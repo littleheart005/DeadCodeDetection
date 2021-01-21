@@ -7,12 +7,13 @@ import com.github.javaparser.ast.visitor.VoidVisitor;
 import java.util.*;
 
 public class DeadClassWithAST {
+
     private final Map<String, Integer> classCount = new HashMap<>();
-    private List<CompilationUnit> cu;
+    private final List<CompilationUnit> cu;
 
     // Visitors
     private final VoidVisitor<List<String>> classVisitor = new ClassNameCollector();
-    private final VoidVisitor<List<String>> classDeclare = new ClassDeclarationVisitor();
+    private final VoidVisitor<List<String>> classExtension = new ClassExtensionCollector();
     private final VoidVisitor<List<String>> variableTypeCollector = new VariableTypeCollector();
     private final VoidVisitor<List<String>> parameterCollector = new ParameterCollector();
     private final VoidVisitor<List<String>> methodTypeCollector = new MethodTypeCollector();
@@ -29,73 +30,77 @@ public class DeadClassWithAST {
     private final List<String> parameterType = new ArrayList<>();
     // List of all object assignment.
     private final List<String> objectAssignmentType = new ArrayList<>();
-
-    // Elapse time
-    private float elapseTimeInSecond;
+    // List of all Dead Class.
+    private final List<String> deadClass = new ArrayList<>();
 
     public DeadClassWithAST(List<CompilationUnit> cu){
-
-        // Calculate Data processing step elapse time.
-        long start = System.currentTimeMillis();
-
         this.cu = cu;
-        setClassCount();
         prepareData();
-
-        long end = System.currentTimeMillis();
-        this.elapseTimeInSecond = (end - start)/100F;
-
-    }
-
-    // Parsing java files to AST.
-    private void setClassCount(){
-        try {
-            for (CompilationUnit cuTmp : cu){
-                // visit node in AST for getting classes name
-                classVisitor.visit(cuTmp,className);
-                // Map class name and count
-                className.forEach(name->classCount.put(name,1));
-            }
-        }catch (Exception e){
-            System.out.println("Error in DeadClass parseAST()");
-            e.printStackTrace();
-        }
+        detect();
+        getDeadClass();
     }
 
     // Get all necessary data.
     public void prepareData(){
+        try {
+            for (CompilationUnit cuTmp : cu) {
 
-        for(CompilationUnit tmp : cu){
-            //Case 1 : Extends, Get all extended class name.
-            classDeclare.visit(tmp,extendedList);
+                // visit node in AST for getting classes name
+                classVisitor.visit(cuTmp,className);
+                // Map class name and count
+                className.forEach(name->classCount.put(name,0));
 
-            //Case 2 : Variable Type and Method Type, Get all variable (include array type) and method type.
-            variableTypeCollector.visit(tmp,variableType);
-            methodTypeCollector.visit(tmp,methodType);
+                //Case 1 : Extends, Get all extended class name.
+                classExtension.visit(cuTmp, extendedList);
 
-            // Case 3 : Object, Get all object assignment type.
-            // Ex. PizzaStore nyStore = new NYPizzaStore(); ->  Type: NYPizzaStore
-            objectAssignCollector.visit(tmp,objectAssignmentType);
+                //Case 2 : Variable Type and Method Type, Get all variable (include array type) and method type.
+                variableTypeCollector.visit(cuTmp, variableType);
+                methodTypeCollector.visit(cuTmp, methodType);
 
-            // Case 4 : Parameter, Get all parameter type.
-            parameterCollector.visit(tmp,parameterType);
+                // Case 3 : Object, Get all object assignment type.
+                // Ex. PizzaStore nyStore = new NYPizzaStore(); ->  Type: NYPizzaStore
+                objectAssignCollector.visit(cuTmp, objectAssignmentType);
 
+                // Case 4 : Parameter, Get all parameter type.
+                parameterCollector.visit(cuTmp, parameterType);
+
+            }
+        }catch (Exception e){
+            System.out.println("Error in Dead class prepareData.");
+            e.printStackTrace();
         }
     }
 
-
     public void detect(){
+        for(String name : className){
+            if(extendedList.contains(name) || variableType.contains(name) ||
+                    methodType.contains(name) || objectAssignmentType.contains(name) ||
+                    parameterType.contains(name)){
 
+                    classCount.put(name,1);
+            }
+        }
+    }
+
+    private void getDeadClass(){
+        for(Map.Entry<String, Integer> map : classCount.entrySet()){
+            if(map.getValue()==0){
+                deadClass.add(map.getKey());
+            }
+        }
     }
 
     // Print class count map
     public void printMap(){
-        System.out.println("Total Class: "+classCount.size());
+        System.out.println("Total File read: "+cu.size()+" Total Class: "+classCount.size());
         classCount.forEach((k, v)->System.out.println("Class: "+k+"  count: "+v));
     }
 
-    public float getElapseTimeInSecond() {
-        return elapseTimeInSecond;
+    public void printDeadClass(){
+        System.out.println("\n ======== Dead Class ========== \n Total Found: "+deadClass.size());
+        deadClass.forEach(dc -> System.out.println(dc));
     }
+
+
 }
 

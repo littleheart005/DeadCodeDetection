@@ -1,53 +1,43 @@
 
 import DeadClass.DeadClassWithAST;
-import DeadInterface.DeadInterfaceDetector;
-import Files_Reader.File_Reader;
-import Util.ASTParser;
 import DeadClass.Detector;
-import Files_Reader.File_Reader;
-import Util.*;
-import org.checkerframework.checker.units.qual.A;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import DeadInterface.DeadInterfaceDetector;
+import Util.ASTParser;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        long start = System.currentTimeMillis();
-        String source = "C:\\Users\\birdn\\Desktop\\Project\\headfirst\\HF_DP\\src\\headfirst\\combining\\observer";
-
+        String source = "/Users/Peeradon/Documents/DesignPatternCode/HF_DP/src/headfirst/strategy";
         ASTParser astParser = new ASTParser(source);
-        System.out.println("============== Dead Class =============");
+
+        // ===================== Dead Class & Dead Interface =======================
+        long start = System.currentTimeMillis();
+
         DeadClassWithAST deadClassWithAST= new DeadClassWithAST(astParser.cu);
         //deadClassWithAST.printMap();
+        DeadInterfaceDetector deadInterfaceDetector = new DeadInterfaceDetector(astParser.cu);
+        //deadInterfaceDetector.printMap();
 
         long end = System.currentTimeMillis();
-        float elapseTimeInSecond = (end - start)/1000F;
-        System.out.println("\nDeadClass AST Elapse Time: "+elapseTimeInSecond+" seconds");
+        float AstTime = (end - start)/1000F;
 
-
-
-         //Dead Class Detector with regular expression and line splitting. (Commended all dead interface portion)
+        //Dead Class Detector with regular expression and line splitting. (Commended all dead interface portion)
         start = System.currentTimeMillis();
+
         Detector detector = new Detector(source);
         detector.detect();
 
         end = System.currentTimeMillis();
-        elapseTimeInSecond = (end - start)/1000F;
-        System.out.println("\nDeadClass split line Elapse Time: "+elapseTimeInSecond+" seconds");
+        float SplitTime = (end - start)/1000F;
 
+        detector.createReport("StrategyCompareToAST");
 
+        deadClassWithAST.printDeadClass();
+        deadInterfaceDetector.printDeadInterface();
 
-
-
-//        System.out.println("============== Dead Interface =============");
-//        DeadInterfaceDetector deadInterfaceDetector = new DeadInterfaceDetector(astParser.cu);
-//        deadInterfaceDetector.printMap();
-
-
+        System.out.println("\n\nDead class and interface with AST. Total elapse time: "+AstTime+" seconds");
+        System.out.println("Dead Class and interface with regex line splitting: Total elapse time: "+SplitTime+" seconds");
 
     }
 

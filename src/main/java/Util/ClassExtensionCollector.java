@@ -6,7 +6,7 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 import java.util.List;
 
-public  class ClassDeclarationVisitor extends VoidVisitorAdapter<List<String>> {
+public  class ClassExtensionCollector extends VoidVisitorAdapter<List<String>> {
 
 
     @Override
@@ -18,17 +18,9 @@ public  class ClassDeclarationVisitor extends VoidVisitorAdapter<List<String>> {
 
         for(Object node : extend){
             String tmpStr = node.toString();
-           //System.out.println("Extend: "+tmpStr);
             arg.add(tmpStr);
         }
 
-//          NodeList implement;
-//        implement = n.getImplementedTypes();
-
-//        for(Object node : implement){
-//            String tmpStr = node.toString();
-//            System.out.println("Implement: "+tmpStr);
-//        }
     }
 
 

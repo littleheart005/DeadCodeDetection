@@ -1,14 +1,11 @@
 package DeadInterface;
 
-import Files_Reader.File_Reader;
+import Util.ClassImplementationCollector;
 import Util.InterfaceNameCollector;
-import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitor;
-import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import org.checkerframework.checker.units.qual.A;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,37 +13,76 @@ import java.util.Map;
 
 public class DeadInterfaceDetector {
 
-    private static Map<String, Integer> interfaceCount = new HashMap<>();
-    private static List<CompilationUnit> cu = new ArrayList<>();
+    private final Map<String, Integer> interfaceCount = new HashMap<>();
+    private final List<CompilationUnit> cu;
 
     // Create visitor object
-    private static VoidVisitor<List<String>> interfaceVisitor = new InterfaceNameCollector();
+    private final VoidVisitor<List<String>> interfaceVisitor = new InterfaceNameCollector();
+    private final VoidVisitor<List<String>> classImplementation = new ClassImplementationCollector();
 
-    private static List<String> interfaceName = new ArrayList<>();
+    // List of all interface name in source files.
+    private final List<String> interfaceName = new ArrayList<>();
+
+    // List of all implement name.
+    private final List<String> implementedList = new ArrayList<>();
+
+    // List of all dead interfaces.
+    private final List<String> deadInterface = new ArrayList<>();
+
 
     public DeadInterfaceDetector(List<CompilationUnit> cu){
         this.cu = cu;
-        parseAST();
+        prepareData();
+        detect();
+        getDeadInterface();
     }
 
     // Parsing java files to AST.
-    private static void parseAST(){
+    private void prepareData(){
 
         try {
             for (CompilationUnit cuTmp : cu){
+                // Visit node in AST for getting interface name.
                 interfaceVisitor.visit(cuTmp,interfaceName);
-                interfaceName.forEach(name->interfaceCount.put(name,1));
+                // Map interface name and count.
+                interfaceName.forEach(name->interfaceCount.put(name,0));
+
+                // Check of implementation.
+                classImplementation.visit(cuTmp,implementedList);
+
             }
         }catch (Exception e){
-            System.out.println("Error in DeadInterface parseAST()");
+            System.out.println("Error in DeadInterface prepareData");
             e.printStackTrace();
         }
     }
 
+    // Detect dead interface.
+    private void detect(){
+        for (String name : interfaceName){
+            if(implementedList.contains(name)){
+                interfaceCount.put(name,1);
+            }
+        }
+    }
 
     public void printMap(){
+        System.out.println("Total File read: "+cu.size()+" Interfaces: "+interfaceCount.size());
         interfaceCount.forEach((k, v)->System.out.println("Interface: "+k+"  count: "+v));
     }
 
+    private void getDeadInterface(){
+
+        for(Map.Entry<String, Integer> map : interfaceCount.entrySet()){
+            if(map.getValue()==0){
+                deadInterface.add(map.getKey());
+            }
+        }
+    }
+
+    public void printDeadInterface(){
+        System.out.println("\n ======== Dead Interface ========== \n Total Found: "+deadInterface.size());
+        deadInterface.forEach(di -> System.out.println(di));
+    }
 
 }
