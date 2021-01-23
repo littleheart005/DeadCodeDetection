@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ConstructComponent {
     List<CompilationUnit> cu;
-    List<Component> component = new ArrayList<>();
+    List<Component> componentList = new ArrayList<>();
 
     public ConstructComponent(List<CompilationUnit> cu) {
         this.cu = new ArrayList<>(cu);
@@ -43,25 +43,7 @@ public class ConstructComponent {
             setDoStmtToComponentTemp(this.cu.get(i), componentTemp, doStmtCollector); //9
             setSwitchStmtToComponentTemp(this.cu.get(i), componentTemp, switchStmtCollector); //10
             setVariableDeclaratorToComponentTemp(this.cu.get(i), componentTemp, variableDeclaratorCollector); //11
-            this.component.add(componentTemp);
-        }
-
-        //method to print component info
-        for (int i=0; i<this.component.size(); i++) {
-            System.out.println("filename : " + this.component.get(i).getFileName());
-            System.out.println("variables : " + this.component.get(i).getVariableNames());
-            System.out.println("methodCalls : " + this.component.get(i).getMethodCalls());
-            System.out.println("assignExpr : " + this.component.get(i).getAssignExpr());
-            System.out.println("objectCreationExpr : " + this.component.get(i).getObjectCreationExpr());
-            System.out.println("ifStmt : " + this.component.get(i).getIfStmt());
-            System.out.println("forStmt : " + this.component.get(i).getForStmt());
-            System.out.println("foreachStmt : " + this.component.get(i).getForeachStmt());
-            System.out.println("returnStmt : " + this.component.get(i).getReturnStmt());
-            System.out.println("whileStmt : " + this.component.get(i).getWhileStmt());
-            System.out.println("doStmt : " + this.component.get(i).getDoStmt());
-            System.out.println("switchStmt : " + this.component.get(i).getSwitchStmt());
-            System.out.println("variableDeclarator : " + this.component.get(i).getVariableDeclarator());
-            System.out.println();
+            this.componentList.add(componentTemp);
         }
     }
 
@@ -155,4 +137,7 @@ public class ConstructComponent {
         componentTemp.setVariableDeclarator(variableDeclaratorForCollector);
     }
 
+    public List<Component> getComponentList() {
+        return componentList;
+    }
 }
