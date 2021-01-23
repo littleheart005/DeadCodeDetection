@@ -10,7 +10,7 @@ import java.util.List;
 
 //class to read source as a project and parse to AST -> store at List<CompilationUnit> cu
 public class ASTParser {
-    private static List<String> FILES_PATH = new ArrayList<>();
+    protected static List<String> FILES_PATH = new ArrayList<>();
     public static List<CompilationUnit> cu = new ArrayList<>();
 
     public ASTParser(String source) {
@@ -20,7 +20,7 @@ public class ASTParser {
     }
 
     //parse file to AST
-    private void parseAST() {
+    protected void parseAST() {
         try {
             for (String path : FILES_PATH){
                 CompilationUnit cuTmp = StaticJavaParser.parse(new File(path));
