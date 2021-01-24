@@ -10,8 +10,9 @@ public class ConstructComponent {
     List<CompilationUnit> cu;
     List<Component> componentList = new ArrayList<>();
 
-    public ConstructComponent(List<CompilationUnit> cu) {
+    public ConstructComponent(List<CompilationUnit> cu, List<String> location) {
         this.cu = new ArrayList<>(cu);
+
         FileNameCollector fileNameCollector = new FileNameCollector();
         VariableNameCollector variableNameCollector = new VariableNameCollector();
         MethodCallCollector methodCallCollector = new MethodCallCollector();
@@ -26,11 +27,11 @@ public class ConstructComponent {
         SwitchStmtCollector switchStmtCollector = new SwitchStmtCollector();
         VariableDeclaratorCollector variableDeclaratorCollector = new VariableDeclaratorCollector();
 
-
-        //to construct component
+        //loop to construct component
         for (int i=0; i<this.cu.size(); i++) {
             Component componentTemp = new Component();
             setFileNameToComponentTemp(this.cu.get(i), componentTemp, fileNameCollector);
+            setLocation(componentTemp, location.get(i));
             setVariableNamesToComponentTemp(this.cu.get(i), componentTemp, variableNameCollector);
             setMethodCallsToComponentTemp(this.cu.get(i), componentTemp, methodCallCollector);//1
             setAssignExprToComponentTemp(this.cu.get(i), componentTemp, assignExprCollector); //2
@@ -47,17 +48,26 @@ public class ConstructComponent {
         }
     }
 
+    //to set location of file to componentTemp
+    private void setLocation(Component componentTemp, String location) {
+        if (location.contains(componentTemp.getFileName()+".java")) {
+            componentTemp.setLocation(location);
+        }
+    }
+
     //to set fileName in file to componentTemp
     private void setFileNameToComponentTemp(CompilationUnit cu, Component componentTemp, FileNameCollector fileNameCollector) {
         fileNameCollector.visit(cu, null);
         componentTemp.setFileName(fileNameCollector.getFileName());
     }
 
-    //to set all variables in file to componentTemp
+    //to set all variables (with number of line declaration) in file to componentTemp
     private void setVariableNamesToComponentTemp(CompilationUnit cu, Component componentTemp, VariableNameCollector variableNameCollector) {
         List<String> variableNamesForCollector = new ArrayList<>();
+        List<Integer> varDeclarationLine = new ArrayList<>();
         variableNameCollector.visit(cu, variableNamesForCollector);
         componentTemp.setVariableNames(variableNamesForCollector);
+        componentTemp.setVarDeclarationLine(varDeclarationLine);
     }
 
     //to set method call in file to componentTemp

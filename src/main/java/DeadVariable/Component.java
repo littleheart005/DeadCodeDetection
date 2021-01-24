@@ -1,21 +1,27 @@
 package DeadVariable;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Component {
     private String fileName;
-    private List<String> variableNames;
-    private List<String> methodCalls;
-    private List<String> assignExpr;
-    private List<String> objectCreationExpr;
-    private List<String> IfStmt;
-    private List<String> ForStmt;
-    private List<String> ForeachStmt;
-    private List<String> ReturnStmt;
-    private List<String> WhileStmt;
-    private List<String> DoStmt;
-    private List<String> SwitchStmt;
-    private List<String> VariableDeclarator;
+    private String location;
+    private List<String> variableNames = new ArrayList<>();
+    private List<Integer> varDeclarationLine = new ArrayList<>();
+    private List<String> methodCalls = new ArrayList<>();
+    private List<String> assignExpr = new ArrayList<>();
+    private List<String> objectCreationExpr = new ArrayList<>();
+    private List<String> IfStmt = new ArrayList<>();
+    private List<String> ForStmt = new ArrayList<>();
+    private List<String> ForeachStmt = new ArrayList<>();
+    private List<String> ReturnStmt = new ArrayList<>();
+    private List<String> WhileStmt = new ArrayList<>();
+    private List<String> DoStmt = new ArrayList<>();
+    private List<String> SwitchStmt = new ArrayList<>();
+    private List<String> VariableDeclarator = new ArrayList<>();
+    private List<String> AliveVariable = new ArrayList<>();
+    private HashMap<Integer, String> DeadVariable = new HashMap<>();
 
     public String getFileName() {
         return fileName;
@@ -25,12 +31,28 @@ public class Component {
         this.fileName = fileName;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public List<String> getVariableNames() {
         return variableNames;
     }
 
     public void setVariableNames(List<String> variableNames) {
         this.variableNames = variableNames;
+    }
+
+    public List<Integer> getVarDeclarationLine() {
+        return varDeclarationLine;
+    }
+
+    public void setVarDeclarationLine(List<Integer> varDeclarationLine) {
+        this.varDeclarationLine = varDeclarationLine;
     }
 
     public List<String> getMethodCalls() {
@@ -119,5 +141,21 @@ public class Component {
 
     public void setVariableDeclarator(List<String> variableDeclarator) {
         VariableDeclarator = variableDeclarator;
+    }
+
+    public List<String> getAliveVariable() {
+        return AliveVariable;
+    }
+
+    public void setAliveVariable(List<String> aliveVariable) {
+        AliveVariable = aliveVariable;
+    }
+
+    public HashMap<Integer, String> getDeadVariable() {
+        return DeadVariable;
+    }
+
+    public void setDeadVariable(HashMap<Integer, String> deadVariable) {
+        DeadVariable = deadVariable;
     }
 }

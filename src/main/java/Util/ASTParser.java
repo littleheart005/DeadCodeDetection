@@ -11,7 +11,8 @@ import java.util.List;
 //class to read source as a project and parse to AST -> store at List<CompilationUnit> cu
 public class ASTParser {
     protected static List<String> FILES_PATH = new ArrayList<>();
-    public static List<CompilationUnit> cu = new ArrayList<>();
+    public List<CompilationUnit> cu = new ArrayList<>();
+    public static List<String> location = new ArrayList<>();
 
     public ASTParser(String source) {
         File_Reader file_reader = new File_Reader();
@@ -25,6 +26,7 @@ public class ASTParser {
             for (String path : FILES_PATH){
                 CompilationUnit cuTmp = StaticJavaParser.parse(new File(path));
                 cu.add(cuTmp);
+                location.add(path);
             }
         }catch (Exception e) {
             System.out.println("Error in Util.ASTParser");
