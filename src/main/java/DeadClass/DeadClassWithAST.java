@@ -9,6 +9,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.Buffer;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class DeadClassWithAST {
 
@@ -23,6 +25,8 @@ public class DeadClassWithAST {
     private final VoidVisitor<List<String>> methodTypeCollector = new MethodTypeCollector();
     private final VoidVisitor<List<String>> objectAssignCollector = new ObjectDeclarationVisitor();
 
+    private final VoidVisitor<List<String>> methodCallCollector = new MethodCallCollector();
+
     // List of all class name in source files.
     private final List<String> className = new ArrayList<>();
     // List of all extended name.
@@ -34,14 +38,21 @@ public class DeadClassWithAST {
     private final List<String> parameterType = new ArrayList<>();
     // List of all object assignment.
     private final List<String> objectAssignmentType = new ArrayList<>();
+
+    // List of all method call
+    private final List<String> methodCallExpr = new ArrayList<>();
+    private final List<String> methodScope = new ArrayList<>();
+
     // List of all Dead Class.
     private final List<String> deadClass = new ArrayList<>();
+
 
     public DeadClassWithAST(List<CompilationUnit> cu){
         this.cu = cu;
         prepareData();
         detect();
         getDeadClass();
+
     }
 
     // Get all necessary data.
@@ -67,8 +78,14 @@ public class DeadClassWithAST {
 
                 // Case 4 : Parameter, Get all parameter type.
                 parameterCollector.visit(cuTmp, parameterType);
-
+                
+                // Case 5 : Method Call
+                methodCallCollector.visit(cuTmp,methodCallExpr);
             }
+
+            // Getting method scope from MethodCallCollector class.
+            methodScope.addAll(MethodCallCollector.getStaticClassCall());
+
         }catch (Exception e){
             System.out.println("Error in Dead class prepareData.");
             e.printStackTrace();
@@ -79,8 +96,7 @@ public class DeadClassWithAST {
         for(String name : className){
             if(extendedList.contains(name) || variableType.contains(name) ||
                     methodType.contains(name) || objectAssignmentType.contains(name) ||
-                    parameterType.contains(name)){
-
+                    parameterType.contains(name) || methodScope.contains(name)){
                     classCount.put(name,1);
             }
         }
@@ -115,7 +131,7 @@ public class DeadClassWithAST {
             bw = new BufferedWriter(f);
             bw.write("============ Dead Class ===========\n Total Dead class: "+deadClass.size()+"\n");
             for (String dead : deadClass){
-                String tmp = "Class "+dead+" has 0 reference.\n";
+                String tmp = "Class\t"+dead+" has 0 reference.\n";
                 bw.write(tmp);
             }
             System.out.println("\n\nReport Created");
