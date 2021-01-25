@@ -4,6 +4,10 @@ import Util.*;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.Buffer;
 import java.util.*;
 
 public class DeadClassWithAST {
@@ -99,6 +103,27 @@ public class DeadClassWithAST {
     public void printDeadClass(){
         System.out.println("\n ======== Dead Class ========== \n Total Found: "+deadClass.size());
         deadClass.forEach(dc -> System.out.println(dc));
+    }
+
+    private FileWriter f;
+    private BufferedWriter bw;
+
+    public void createReport(String name){
+        String fileName = "src/main/resources/"+name+"_Deadclass.txt";
+        try{
+            f = new FileWriter(fileName);
+            bw = new BufferedWriter(f);
+            bw.write("============ Dead Class ===========\n Total Dead class: "+deadClass.size()+"\n");
+            for (String dead : deadClass){
+                String tmp = "Class "+dead+" has 0 reference.\n";
+                bw.write(tmp);
+            }
+            System.out.println("\n\nReport Created");
+            bw.close();
+        }catch (IOException e){
+            System.out.println("Error in Deadclass createReport");
+            e.printStackTrace();
+        }
     }
 
 
