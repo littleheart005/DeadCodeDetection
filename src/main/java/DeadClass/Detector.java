@@ -1,9 +1,10 @@
 package DeadClass;
 
-import PathReader.PathReader;
+import Files_Reader.File_Reader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -22,8 +23,10 @@ public class Detector {
 
 
     public Detector(String source) {
-        PathReader reader = new PathReader();
+        File_Reader reader = new File_Reader();
+        // PathReader reader = new PathReader();
         // Store files paths
+
         paths = reader.readPath(source);
 
         readFileName(paths);

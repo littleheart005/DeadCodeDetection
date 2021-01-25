@@ -93,7 +93,7 @@ public class DeadInterfaceDetector {
     private BufferedWriter bw;
 
     public void createReport(String name){
-        String fileName = "src/main/resources/"+name+"_DeadInterface.txt";
+        String fileName = "src/main/resources/DeadInterface/DeadInterface.txt";
         try{
             f = new FileWriter(fileName);
             bw = new BufferedWriter(f);
@@ -102,7 +102,7 @@ public class DeadInterfaceDetector {
                 String tmp = "Interface "+dead+" has 0 reference.\n";
                 bw.write(tmp);
             }
-            System.out.println("\n\nReport Created");
+            System.out.println("\nReport Created");
             bw.close();
         }catch (IOException e){
             System.out.println("Error in Dead interface createReport");

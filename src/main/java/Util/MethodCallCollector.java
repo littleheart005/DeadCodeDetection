@@ -21,6 +21,7 @@ public class MethodCallCollector extends VoidVisitorAdapter<List<String>> {
         if(!mc.getScope().isEmpty()){
             this.staticClassCall.add(mc.getScope().get().toString());
         }
+
     }
     public static List<String> getStaticClassCall() {
         return staticClassCall;

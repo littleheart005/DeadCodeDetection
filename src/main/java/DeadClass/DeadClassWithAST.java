@@ -124,8 +124,9 @@ public class DeadClassWithAST {
     private FileWriter f;
     private BufferedWriter bw;
 
-    public void createReport(String name){
-        String fileName = "src/main/resources/"+name+"_Deadclass.txt";
+
+    public void createReport(){
+        String fileName = "src/main/resources/DeadClass/Deadclass.txt";
         try{
             f = new FileWriter(fileName);
             bw = new BufferedWriter(f);
@@ -134,14 +135,12 @@ public class DeadClassWithAST {
                 String tmp = "Class\t"+dead+" has 0 reference.\n";
                 bw.write(tmp);
             }
-            System.out.println("\n\nReport Created");
+            System.out.println("\nReport Created");
             bw.close();
         }catch (IOException e){
             System.out.println("Error in Deadclass createReport");
             e.printStackTrace();
         }
     }
-
-
 }
 
