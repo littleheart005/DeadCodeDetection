@@ -1,12 +1,11 @@
 package Util;
 
-import com.github.javaparser.ast.expr.Expression;
+
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class MethodCallCollector extends VoidVisitorAdapter<List<String>> {
 
