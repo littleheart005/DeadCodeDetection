@@ -12,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        String source = "C:\\Users\\birdn\\Desktop\\Project\\Test Project\\factorypattern";
+        /*String source = "C:\\Users\\birdn\\Desktop\\Project\\Test Project\\factorypattern";
         ASTParser astParser = new ASTParser(source);
 
         // ===================== Dead Class & Dead Interface =======================
@@ -41,12 +41,12 @@ public class Main {
         deadInterfaceDetector.printDeadInterface();
 
         System.out.println("\n\nDead class and interface with AST. Total elapse time: "+AstTime+" seconds");
-        System.out.println("Dead Class and interface with regex line splitting: Total elapse time: "+SplitTime+" seconds");
+        System.out.println("Dead Class and interface with regex line splitting: Total elapse time: "+SplitTime+" seconds");*/
 
-        /*String source = "C:\\Users\\birdn\\Desktop\\Project\\Test Project\\strategypattern";
+        String source = "C:\\Users\\birdn\\Desktop\\Project\\Test Project\\StrategyPattern";
         ASTParser astParser = new ASTParser(source);
         ConstructComponent constructComponent = new ConstructComponent(astParser.cu, astParser.location);
         DeadVariableDetector deadVariableDetector = new DeadVariableDetector(constructComponent.getComponentList());
-        deadVariableDetector.createReport("DeadVariableDetectorStrategyPatternOutput");*/
+        deadVariableDetector.createReport("StrategyPattern");
     }
 }

@@ -87,7 +87,7 @@ public class DeadVariableDetector {
         component.setDeadVariable(deadVariable);
     }
 
-    //method to check regex for method call expr
+    //method to check regex for method call expr -> done
     private List<String> checkDeadVariableInMethodCallExpr(String fileName, List<String> variableNames, List<String> methodCallExpr) {
         List<String> found = new ArrayList<>();
         List<String> aliveVariable = new ArrayList<>();
@@ -97,14 +97,17 @@ public class DeadVariableDetector {
             String methodCallExprPattern = ".*[\\({1}][^\\W]*" + variableNames.get(i) + ".*";
             String methodCallExprPattern2 = ".*[\\({1}].*(\\,)+(\\s)*" + variableNames.get(i) + ".*";
             String methodCallExprPattern3 = ".*(\\+{1})(\\s)*" + variableNames.get(i) + ".*";
+            String methodCallExprPattern4 = "^" + variableNames.get(i) + ".+[\\({1}].*[\\){1}]";
             Pattern pattern = Pattern.compile(methodCallExprPattern);
             Pattern pattern2 = Pattern.compile(methodCallExprPattern2);
             Pattern pattern3 = Pattern.compile(methodCallExprPattern3);
+            Pattern pattern4 = Pattern.compile(methodCallExprPattern4);
 
             for (int j=0; j<methodCallExpr.size(); j++) {
                 Matcher matcher = pattern.matcher(methodCallExpr.get(j));
                 Matcher matcher2 = pattern2.matcher(methodCallExpr.get(j));
                 Matcher matcher3 = pattern3.matcher(methodCallExpr.get(j));
+                Matcher matcher4 = pattern4.matcher(methodCallExpr.get(j));
                 if (matcher.find()) {
 //                    found.add("variable to detect : " + variableNames.get(i) + " // in : " + methodCallExpr.get(j));
                     aliveVariable.add(variableNames.get(i));
@@ -118,6 +121,12 @@ public class DeadVariableDetector {
                     break;
                 }
                 else if (matcher3.find()) {
+//                    found.add("variable to detect : " + variableNames.get(i) + " // in : " + methodCallExpr.get(j));
+                    aliveVariable.add(variableNames.get(i));
+                    toRemove.add(variableNames.get(i));
+                    break;
+                }
+                else if (matcher4.find()) {
 //                    found.add("variable to detect : " + variableNames.get(i) + " // in : " + methodCallExpr.get(j));
                     aliveVariable.add(variableNames.get(i));
                     toRemove.add(variableNames.get(i));
@@ -140,7 +149,7 @@ public class DeadVariableDetector {
         return aliveVariable;
     }
 
-    //method to check regex for assign expr
+    //method to check regex for assign expr -> done
     private List<String> checkDeadVariableInAssignExpr(String fileName, List<String> variableNames, List<String> assignExpr) {
         List<String> found = new ArrayList<>();
         List<String> aliveVariable = new ArrayList<>();
@@ -226,7 +235,7 @@ public class DeadVariableDetector {
         List<String> toRemove = new ArrayList<>();
 
         for (int i=0; i<variableNames.size(); i++) {
-            String ifStmtPattern = "^" + variableNames.get(i);
+            String ifStmtPattern = "^.*" + variableNames.get(i);
             String ifStmtPattern2 = "(\\w)+(\\W{1})(\\w)+[\\({1}].*" + variableNames.get(i) + ".*";
             String ifStmtPattern3 = "(\\w)+(\\s)*(\\W{1,2})(\\s)*" + variableNames.get(i) + ".*";
             String ifStmtPattern4 = "(\\w)+(\\s)*(\\W{1,2})(\\s)*.*(\\+{1})(\\s)*" + variableNames.get(i) + ".*";
@@ -670,8 +679,9 @@ public class DeadVariableDetector {
 
     //method to create report specific file name
     public void createReport(String fileName) throws IOException {
+        String filename = "DeadVariableDetector" + fileName + "ProjectOutput";
         Output output = new Output();
-        output.createFile(fileName);
+        output.createFile(filename);
         output.sendInfo(this.componentList);
         output.write();
     }

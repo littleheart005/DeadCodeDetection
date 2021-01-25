@@ -1,0 +1,5 @@
+Variable ; Variable bytesRead has 0 references ; C:\Users\birdn\Desktop\Project\Test Project\MementoPattern\src\CareTaker.java line 10 ; dead variable
+Variable ; Variable d has 0 references ; C:\Users\birdn\Desktop\Project\Test Project\MementoPattern\src\main.java line 54 ; dead variable
+Variable ; Variable cont has 0 references ; C:\Users\birdn\Desktop\Project\Test Project\MementoPattern\src\Menu.java line 195 ; dead variable
+Variable ; Variable newPrice has 0 references ; C:\Users\birdn\Desktop\Project\Test Project\MementoPattern\src\Menu.java line 115 ; dead variable
+Variable ; Variable copy has 0 references ; C:\Users\birdn\Desktop\Project\Test Project\MementoPattern\src\Menu.java line 196 ; dead variable

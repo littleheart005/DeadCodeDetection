@@ -1,0 +1,4 @@
+Variable ; Variable dough has 0 references ; C:\Users\birdn\Desktop\Project\Test Project\FactoryPattern\Pizza.java line 5 ; dead variable
+Variable ; Variable sauce has 0 references ; C:\Users\birdn\Desktop\Project\Test Project\FactoryPattern\Pizza.java line 6 ; dead variable
+Variable ; Variable toppings has 0 references ; C:\Users\birdn\Desktop\Project\Test Project\FactoryPattern\Pizza.java line 7 ; dead variable
+Variable ; Variable factory has 0 references ; C:\Users\birdn\Desktop\Project\Test Project\FactoryPattern\PizzaStore.java line 4 ; dead variable
