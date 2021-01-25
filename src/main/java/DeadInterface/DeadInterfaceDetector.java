@@ -6,6 +6,9 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.visitor.VoidVisitor;
 import org.checkerframework.checker.units.qual.A;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,6 +86,28 @@ public class DeadInterfaceDetector {
     public void printDeadInterface(){
         System.out.println("\n ======== Dead Interface ========== \n Total Found: "+deadInterface.size());
         deadInterface.forEach(di -> System.out.println(di));
+    }
+
+
+    private FileWriter f;
+    private BufferedWriter bw;
+
+    public void createReport(String name){
+        String fileName = "src/main/resources/"+name+"_DeadInterface.txt";
+        try{
+            f = new FileWriter(fileName);
+            bw = new BufferedWriter(f);
+            bw.write("============ Dead Class ===========\n Total Dead class: "+deadInterface.size()+"\n");
+            for (String dead : deadInterface){
+                String tmp = "Interface "+dead+" has 0 reference.\n";
+                bw.write(tmp);
+            }
+            System.out.println("\n\nReport Created");
+            bw.close();
+        }catch (IOException e){
+            System.out.println("Error in Dead interface createReport");
+            e.printStackTrace();
+        }
     }
 
 }
