@@ -1,6 +1,1 @@
-Class ; Class RedHeadDuck has 0 references ; /Users/Peeradon/Documents/DesignPatternCode/HF_DP/src/headfirst/strategy/RedHeadDuck.java line 3 ; dead class
-Class ; Class FakeQuack has 0 references ; /Users/Peeradon/Documents/DesignPatternCode/HF_DP/src/headfirst/strategy/FakeQuack.java line 3 ; dead class
-Class ; Class MiniDuckSimulator has 0 references ; /Users/Peeradon/Documents/DesignPatternCode/HF_DP/src/headfirst/strategy/MiniDuckSimulator.java line 3 ; dead class
-Class ; Class MiniDuckSimulator1 has 0 references ; /Users/Peeradon/Documents/DesignPatternCode/HF_DP/src/headfirst/strategy/MiniDuckSimulator1.java line 3 ; dead class
-Interface ; Interface SleepBehavior has 0 references ; /Users/Peeradon/Documents/DesignPatternCode/HF_DP/src/headfirst/strategy/SleepBehavior.java line 3; dead interface
-Interface ; Interface EatBehavior has 0 references ; /Users/Peeradon/Documents/DesignPatternCode/HF_DP/src/headfirst/strategy/EatBehavior.java line 3; dead interface
+Class ; Class main has 0 references ; C:\Users\birdn\Desktop\Project\Test Project\factorypattern\main.java line 3 ; dead class

@@ -1,15 +1,18 @@
+import DeadVariable.ConstructComponent;
 
 import DeadClass.DeadClassWithAST;
 import DeadClass.Detector;
 import DeadInterface.DeadInterfaceDetector;
+import DeadVariable.DeadVariableDetector;
 import Util.ASTParser;
+
+import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         String source = "/Users/Peeradon/Documents/OpenSourceProject/SpringBoot/spring-boot-master/spring-boot-project/spring-boot/src";
-
         // ===================== Dead Class & Dead Interface =======================
 
         long start = System.currentTimeMillis();
@@ -44,6 +47,10 @@ public class Main {
         System.out.println("\n\nDead class and interface with AST. Total elapse time: "+AstTime+" seconds");
         //System.out.println("Dead Class and interface with regex line splitting: Total elapse time: "+SplitTime+" seconds");
 
+        /*String source = "C:\\Users\\birdn\\Desktop\\Project\\Test Project\\strategypattern";
+        ASTParser astParser = new ASTParser(source);
+        ConstructComponent constructComponent = new ConstructComponent(astParser.cu, astParser.location);
+        DeadVariableDetector deadVariableDetector = new DeadVariableDetector(constructComponent.getComponentList());
+        deadVariableDetector.createReport("DeadVariableDetectorStrategyPatternOutput");*/
     }
-
 }
