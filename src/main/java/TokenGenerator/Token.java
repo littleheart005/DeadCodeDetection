@@ -1,10 +1,10 @@
-package DeadVariable;
+package TokenGenerator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Component {
+public class Token {
     private String fileName;
     private String location;
     private List<String> variableNames = new ArrayList<>();

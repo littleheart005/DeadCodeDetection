@@ -1,8 +1,5 @@
-import DeadVariable.ConstructComponent;
+import TokenGenerator.ConstructToken;
 
-import DeadClass.DeadClassWithAST;
-import DeadClass.Detector;
-import DeadInterface.DeadInterfaceDetector;
 import DeadVariable.DeadVariableDetector;
 import Util.ASTParser;
 
@@ -47,10 +44,10 @@ public class Main {
         System.out.println("Dead Class and interface with regex line splitting: Total elapse time: "+SplitTime+" seconds");*/
 
 
-        String source = "C:\\Users\\birdn\\Desktop\\Project\\Test Project\\StrategyPattern";
+        String source = "C:\\Users\\birdn\\Desktop\\Project\\Test Project\\MementoPattern\\src";
         ASTParser astParser = new ASTParser(source);
-        ConstructComponent constructComponent = new ConstructComponent(astParser.cu, astParser.location);
-        DeadVariableDetector deadVariableDetector = new DeadVariableDetector(constructComponent.getComponentList());
-        deadVariableDetector.createReport("StrategyPattern");
+        ConstructToken constructToken = new ConstructToken(astParser.cu, astParser.location);
+        DeadVariableDetector deadVariableDetector = new DeadVariableDetector(constructToken.getComponentList());
+        deadVariableDetector.createReport("MementoPattern");
     }
 }
