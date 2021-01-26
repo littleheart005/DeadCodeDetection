@@ -1,6 +1,0 @@
-============ Dead Class ===========
- Total Dead class: 4
-Class	RedHeadDuck has 0 reference.
-Class	MiniDuckSimulator has 0 reference.
-Class	FakeQuack has 0 reference.
-Class	MiniDuckSimulator1 has 0 reference.

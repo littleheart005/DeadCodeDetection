@@ -12,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        String source = "C:\\Users\\Punch\\Desktop\\DeadCode_workspace\\DesignPatternCode\\HF_DP\\src\\headfirst\\strategy";
+        String source = "/Users/Peeradon/Documents/DesignPatternCode/HF_DP/src/TestElapse/combined";
 
         // ===================== Dead Class & Dead Interface =======================
         long start = System.currentTimeMillis();
@@ -20,14 +20,10 @@ public class Main {
         ASTParser astParser = new ASTParser(source);
 
         DeadClassWithAST deadClassWithAST= new DeadClassWithAST(astParser.cu);
-        //deadClassWithAST.printMap();
-        //        deadClassWithAST.printDeadClass();
         deadClassWithAST.createReport();
 
         DeadInterfaceDetector deadInterfaceDetector = new DeadInterfaceDetector(astParser.cu);
-//        deadInterfaceDetector.printMap();
-//        deadInterfaceDetector.printDeadInterface();
-        deadInterfaceDetector.createReport("Arduino");
+       deadInterfaceDetector.createReport();
 
         long end = System.currentTimeMillis();
 

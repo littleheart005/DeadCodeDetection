@@ -92,7 +92,7 @@ public class DeadInterfaceDetector {
     private FileWriter f;
     private BufferedWriter bw;
 
-    public void createReport(String name){
+    public void createReport(){
         String fileName = "src/main/resources/DeadInterface/DeadInterface.txt";
         try{
             f = new FileWriter(fileName);
