@@ -1,28 +1,30 @@
 package Util;
 
-
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MethodCallCollector extends VoidVisitorAdapter<List<String>> {
+public class MethodCallCollector extends VoidVisitorAdapter<Void> {
+    private List<String> MethodCall = new ArrayList<>();
+    private Integer beginLine;
+    private Integer endLine;
 
-    // List for store class name of static method -> ex. Main.Create() -> store Main as String.
-    private static List<String> staticClassCall = new ArrayList<>();
+    public MethodCallCollector(Integer beginLine, Integer endLine) {
+        this.beginLine = beginLine;
+        this.endLine = endLine;
+    }
 
     @Override
-    public void visit(MethodCallExpr mc, List<String> collector) {
-        super.visit(mc, collector);
-        collector.add(mc.getParentNodeForChildren().toString());
-
-        // Get Scope and parse to string
-        if(!mc.getScope().isEmpty()){
-            this.staticClassCall.add(mc.getScope().get().toString());
+    public void visit(MethodCallExpr vd, Void arg) {
+        super.visit(vd, arg);
+        if (vd.getRange().get().begin.line >= beginLine && vd.getRange().get().begin.line <= endLine) {
+            this.MethodCall.add(vd.getParentNodeForChildren().toString());
         }
     }
-    public static List<String> getStaticClassCall() {
-        return staticClassCall;
+
+    public List<String> getMethodCall() {
+        return MethodCall;
     }
 }

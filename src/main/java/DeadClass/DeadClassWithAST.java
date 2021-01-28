@@ -25,7 +25,7 @@ public class DeadClassWithAST {
     private final VoidVisitor<List<String>> methodTypeCollector = new MethodTypeCollector();
     private final VoidVisitor<List<String>> objectAssignCollector = new ObjectDeclarationVisitor();
 
-    private final VoidVisitor<List<String>> methodCallCollector = new MethodCallCollector();
+//    private final VoidVisitor<List<String>> methodCallCollector = new MethodCallCollector();
 
     // List of all class name in source files.
     private final List<String> className = new ArrayList<>();
@@ -80,11 +80,11 @@ public class DeadClassWithAST {
                 parameterCollector.visit(cuTmp, parameterType);
                 
                 // Case 5 : Method Call
-                methodCallCollector.visit(cuTmp,methodCallExpr);
+//                methodCallCollector.visit(cuTmp,methodCallExpr);
             }
 
             // Getting method scope from MethodCallCollector class.
-            methodScope.addAll(MethodCallCollector.getStaticClassCall());
+//            methodScope.addAll(MethodCallCollector.getStaticClassCall());
 
         }catch (Exception e){
             System.out.println("Error in Dead class prepareData.");

@@ -1,6 +1,6 @@
-import TokenGenerator.ConstructToken;
-
 import DeadVariable.DeadVariableDetector;
+import TokenGenerator.ConstructFileToken;
+
 import Util.ASTParser;
 
 import java.io.IOException;
@@ -46,8 +46,8 @@ public class Main {
 
         String source = "C:\\Users\\birdn\\Desktop\\Project\\Test Project\\MementoPattern\\src";
         ASTParser astParser = new ASTParser(source);
-        ConstructToken constructToken = new ConstructToken(astParser.cu, astParser.location);
-        DeadVariableDetector deadVariableDetector = new DeadVariableDetector(constructToken.getComponentList());
+        ConstructFileToken constructFileToken = new ConstructFileToken(astParser.cu);
+        DeadVariableDetector deadVariableDetector = new DeadVariableDetector(constructFileToken.getFileTokenList());
         deadVariableDetector.createReport("MementoPattern");
     }
 }
