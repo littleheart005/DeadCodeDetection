@@ -54,7 +54,7 @@ public class DeadVariableDetector {
             this.fileTokenList.get(i).setDeadVariable(AllDeadVariable);
         }
 
-//        printAllDeadVariableInfo();
+        printAllDeadVariableInfo();
     }
 
     //method to operate algorithm for checking regex for file token
@@ -704,7 +704,7 @@ public class DeadVariableDetector {
     //method to print All dead variable info
     private void printAllDeadVariableInfo() {
         for (int i=0; i<this.fileTokenList.size(); i++) {
-//            System.out.println("file : " + this.fileTokenList.get(i).getFileName() + " has " + this.fileTokenList.get(i).getDeadVariable().size() + " Dead variables");
+            System.out.println("file : " + this.fileTokenList.get(i).getFileName() + " has " + this.fileTokenList.get(i).getDeadVariable().size() + " Dead variables");
             Set<Integer> line = this.fileTokenList.get(i).getDeadVariable().keySet();
             Iterator<Integer> iterator = line.iterator();
             while (iterator.hasNext()) {
