@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Token {
+public class FileToken {
     private String fileName;
     private String location;
     private List<String> variableNames = new ArrayList<>();
-    private List<Integer> varDeclarationLine = new ArrayList<>();
     private List<String> methodCalls = new ArrayList<>();
     private List<String> assignExpr = new ArrayList<>();
     private List<String> objectCreationExpr = new ArrayList<>();
@@ -20,6 +19,9 @@ public class Token {
     private List<String> DoStmt = new ArrayList<>();
     private List<String> SwitchStmt = new ArrayList<>();
     private List<String> VariableDeclarator = new ArrayList<>();
+
+    private List<MethodToken> methodTokenList = new ArrayList<>();
+
     private List<String> AliveVariable = new ArrayList<>();
     private HashMap<Integer, String> DeadVariable = new HashMap<>();
 
@@ -39,20 +41,20 @@ public class Token {
         this.location = location;
     }
 
+    public List<MethodToken> getMethodTokenList() {
+        return methodTokenList;
+    }
+
+    public void setMethodTokenList(List<MethodToken> methodTokenList) {
+        this.methodTokenList = methodTokenList;
+    }
+
     public List<String> getVariableNames() {
         return variableNames;
     }
 
     public void setVariableNames(List<String> variableNames) {
         this.variableNames = variableNames;
-    }
-
-    public List<Integer> getVarDeclarationLine() {
-        return varDeclarationLine;
-    }
-
-    public void setVarDeclarationLine(List<Integer> varDeclarationLine) {
-        this.varDeclarationLine = varDeclarationLine;
     }
 
     public List<String> getMethodCalls() {
