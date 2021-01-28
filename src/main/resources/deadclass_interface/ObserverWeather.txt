@@ -1,2 +1,0 @@
-Class ; Class WeatherStation has 0 references ; C:\Users\Punch\Desktop\DeadCode_workspace\DesignPatternCode\HF_DP\src\headfirst\observer\weather\WeatherStation.java line 5 ; dead class
-Class ; Class WeatherStationHeatIndex has 0 references ; C:\Users\Punch\Desktop\DeadCode_workspace\DesignPatternCode\HF_DP\src\headfirst\observer\weather\WeatherStationHeatIndex.java line 5 ; dead class

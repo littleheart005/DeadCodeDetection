@@ -1,5 +1,0 @@
-============ Dead Class ===========
- Total Dead class: 3
-Interface CompilerProgressListener has 0 reference.
-Interface TextStorage has 0 reference.
-Interface ExtUser32 has 0 reference.

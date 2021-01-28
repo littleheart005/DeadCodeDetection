@@ -22,6 +22,7 @@ public class MethodCallCollector extends VoidVisitorAdapter<Void> {
         if (vd.getRange().get().begin.line >= beginLine && vd.getRange().get().begin.line <= endLine) {
             this.MethodCall.add(vd.getParentNodeForChildren().toString());
         }
+
     }
 
     public List<String> getMethodCall() {

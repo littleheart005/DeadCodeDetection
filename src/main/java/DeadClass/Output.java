@@ -10,7 +10,7 @@ public class Output {
     private BufferedWriter bw;
 
     public void createFile(String name) {
-        fileName = "src/main/resources/deadclass_interface/" + name + ".txt";
+        fileName = "src/main/resources/" + name + ".txt";
         try {
             f = new FileWriter(fileName);
         } catch (IOException e) {

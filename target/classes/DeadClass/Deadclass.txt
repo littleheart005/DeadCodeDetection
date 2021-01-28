@@ -1,0 +1,18 @@
+============ Dead Class ===========
+ Total Dead class: 16
+Class	DuckTestDrive has 0 reference.
+Class	DimmerLightOnCommand has 0 reference.
+Class	DimmerLightOffCommand has 0 reference.
+Class	HeartTestDrive has 0 reference.
+Class	EI has 0 reference.
+Class	DJTestDrive has 0 reference.
+Class	LivingroomLightOnCommand has 0 reference.
+Class	LivingroomLightOffCommand has 0 reference.
+Class	IteratorEnumerationTestDrive has 0 reference.
+Class	EnumerationIteratorTestDrive has 0 reference.
+Class	DecoyDuck has 0 reference.
+Class	RemoteControlTest has 0 reference.
+Class	TurkeyTestDrive has 0 reference.
+Class	RemoteLoader has 0 reference.
+Class	DuckFactory has 0 reference.
+Class	CeilingFanLowCommand has 0 reference.

@@ -1,3 +1,7 @@
+import DeadClass.DeadClassWithAST;
+import DeadClass.Detector;
+import DeadInterface.DeadInterfaceDetector;
+
 import DeadVariable.DeadVariableDetector;
 import TokenGenerator.ConstructFileToken;
 
@@ -9,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        /*String source = "C:\\Users\\Punch\\Desktop\\DeadCode_workspace\\OpenSource\\Arduino\\arduino-core\\src";
+        String source = "/Users/Peeradon/Documents/DesignPatternCode/HF_DP/src/TestElapse/combined";
 
         // ===================== Dead Class & Dead Interface =======================
         long start = System.currentTimeMillis();
@@ -17,16 +21,13 @@ public class Main {
         ASTParser astParser = new ASTParser(source);
 
         DeadClassWithAST deadClassWithAST= new DeadClassWithAST(astParser.cu);
-        deadClassWithAST.printMap();
-        deadClassWithAST.printDeadClass();
-        deadClassWithAST.createReport("Arduino_2");
+        deadClassWithAST.createReport();
 
         DeadInterfaceDetector deadInterfaceDetector = new DeadInterfaceDetector(astParser.cu);
-        deadInterfaceDetector.printMap();
-        deadInterfaceDetector.printDeadInterface();
-        deadInterfaceDetector.createReport("Arduino");
+        deadInterfaceDetector.createReport();
 
         long end = System.currentTimeMillis();
+
         float AstTime = (end - start)/1000F;
 
         // Dead Class Detector with regular expression and line splitting. (Commended all dead interface portion)
@@ -38,16 +39,15 @@ public class Main {
         end = System.currentTimeMillis();
         float SplitTime = (end - start)/1000F;
 
-        detector.createReport("ArduinoDetection");
+        detector.createReport("Sample");
 
-        System.out.println("\n\nDead class and interface with AST. Total elapse time: "+AstTime+" seconds");
-        System.out.println("Dead Class and interface with regex line splitting: Total elapse time: "+SplitTime+" seconds");*/
+        //System.out.println("\n\nDead class and interface with AST. Total elapse time: "+AstTime+" seconds");
+        System.out.println("Dead Class and interface with regex line splitting: Total elapse time: "+SplitTime+" seconds");
 
-
-        String source = "C:\\Users\\birdn\\Desktop\\Project\\Test Project\\MementoPattern\\src";
+        /*String source = "C:\\Users\\birdn\\Desktop\\Project\\Test Project\\MementoPattern\\src";
         ASTParser astParser = new ASTParser(source);
         ConstructFileToken constructFileToken = new ConstructFileToken(astParser.cu);
         DeadVariableDetector deadVariableDetector = new DeadVariableDetector(constructFileToken.getFileTokenList());
-        deadVariableDetector.createReport("MementoPattern");
+        deadVariableDetector.createReport("MementoPattern");*/
     }
 }

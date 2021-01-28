@@ -1,7 +1,6 @@
 package DeadReturn;
 
 import Files_Reader.File_Reader;
-import PathReader.PathReader;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
