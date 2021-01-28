@@ -49,5 +49,6 @@ public class Main {
         ConstructFileToken constructFileToken = new ConstructFileToken(astParser.cu);
         DeadVariableDetector deadVariableDetector = new DeadVariableDetector(constructFileToken.getFileTokenList());
         deadVariableDetector.createReport("MementoPattern");
+        System.out.println();
     }
 }
