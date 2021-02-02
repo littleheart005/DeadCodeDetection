@@ -10,7 +10,11 @@ import java.util.List;
 public class MethodCallCollector extends VoidVisitorAdapter<List<String>> {
 
     // List for store class name of static method -> ex. Main.Create() -> store Main as String.
-    private static List<String> staticClassCall = new ArrayList<>();
+    private List<String> methodScope = new ArrayList<>();
+
+    // Method argument ex. model.registerObserver((BeatObserver)this);
+    // argument is (BeatObserver)this
+    private List<String> methodArgument = new ArrayList<>();
 
     @Override
     public void visit(MethodCallExpr mc, List<String> collector) {
@@ -19,11 +23,18 @@ public class MethodCallCollector extends VoidVisitorAdapter<List<String>> {
 
         // Get Scope and parse to string
         if(!mc.getScope().isEmpty()){
-            this.staticClassCall.add(mc.getScope().get().toString());
+            this.methodScope.add(mc.getScope().get().toString());
         }
 
+        methodArgument.add(mc.getArguments().toString());
+
+
     }
-    public static List<String> getStaticClassCall() {
-        return staticClassCall;
+    public List<String> getMethodScope() {
+        return methodScope;
+    }
+
+    public List<String> getMethodArgument() {
+        return methodArgument;
     }
 }

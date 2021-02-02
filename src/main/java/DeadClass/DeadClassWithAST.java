@@ -7,10 +7,7 @@ import com.github.javaparser.ast.visitor.VoidVisitor;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.Buffer;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class DeadClassWithAST {
 
@@ -24,8 +21,7 @@ public class DeadClassWithAST {
     private final VoidVisitor<List<String>> parameterCollector = new ParameterCollector();
     private final VoidVisitor<List<String>> methodTypeCollector = new MethodTypeCollector();
     private final VoidVisitor<List<String>> objectAssignCollector = new ObjectDeclarationVisitor();
-
-    private final VoidVisitor<List<String>> methodCallCollector = new MethodCallCollector();
+    private final MethodCallCollector methodCallCollector = new MethodCallCollector();
 
     // List of all class name in source files.
     private final List<String> className = new ArrayList<>();
@@ -84,7 +80,7 @@ public class DeadClassWithAST {
             }
 
             // Getting method scope from MethodCallCollector class.
-            methodScope.addAll(MethodCallCollector.getStaticClassCall());
+            methodScope.addAll(methodCallCollector.getMethodScope());
 
         }catch (Exception e){
             System.out.println("Error in Dead class prepareData.");

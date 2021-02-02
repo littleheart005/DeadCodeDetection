@@ -27,7 +27,6 @@ public class Output {
                     String tmp = "Class ; Class "+classes.getClassName(i)+" has 0 references"
                             + " ; "+classes.getClassPath(i)+" line "+classes.getLine(i)+" ; dead class\n";
                     bw.write(tmp);
-                    System.out.print(tmp);
                 }
             }
             for (int i = 0; i < interfaces.getInterfaceName().size(); i++) {
@@ -35,7 +34,6 @@ public class Output {
                     String tmp = "Interface ; Interface "+interfaces.getInterfaceName(i)+" has 0 references"
                             + " ; "+interfaces.getInterfacePath(i)+" line "+interfaces.getLine(i)+"; dead interface\n";
                     bw.write(tmp);
-                    System.out.print(tmp);
                 }
             }
             bw.close();
