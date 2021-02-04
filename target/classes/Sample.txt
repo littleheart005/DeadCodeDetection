@@ -1,2 +1,0 @@
-Class ; Class DJTestDrive has 0 references ; /Users/Peeradon/Documents/DesignPatternCode/HF_DP/src/TestElapse/combined/djview/DJTestDrive.java line 3 ; dead class
-Class ; Class HeartTestDrive has 0 references ; /Users/Peeradon/Documents/DesignPatternCode/HF_DP/src/TestElapse/combined/djview/HeartTestDrive.java line 3 ; dead class

@@ -34,6 +34,8 @@ public class FileToken {
     private final List<String> ifStm = new ArrayList<>();
     private final List<String> forStm = new ArrayList<>();
     private final List<String> forEachStm = new ArrayList<>();
+    private final List<String> switchStm = new ArrayList<>();
+
 
 
     public FileToken(CompilationUnit cu) {
@@ -109,6 +111,10 @@ public class FileToken {
         forStmtCollector.visit(cu,forStm);
         ForeachStmtCollector foreachStmtCollector = new ForeachStmtCollector();
         foreachStmtCollector.visit(cu,forEachStm);
+        SwitchStmtCollector switchStmtCollector = new SwitchStmtCollector();
+        switchStmtCollector.visit(cu,new ArrayList<>());
+        switchStm.addAll(switchStmtCollector.getBody());
+
     }
 
     public String getFileName() {
@@ -190,5 +196,9 @@ public class FileToken {
 
     public List<String> getForEachStm() {
         return forEachStm;
+    }
+
+    public List<String> getSwitchStm() {
+        return switchStm;
     }
 }

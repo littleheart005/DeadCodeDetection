@@ -5,7 +5,7 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        String openSource = "/Users/Peeradon/Documents/OpenSourceProject/Arduino/Arduino-master/arduino-core/src";
+        String openSource = "/Users/Peeradon/Documents/OpenSourceProject/portfolio-master/name.abuchen.portfolio/src";
         String source = "/Users/Peeradon/Documents/DesignPatternCode/HF_DP/src/TestElapse/combined";
 
         long start = System.currentTimeMillis();
@@ -15,7 +15,7 @@ public class Main {
         long end = System.currentTimeMillis();
         float AstTime = (end - start)/1000F;
 
-        astDetector.createReport();
+        astDetector.createReport(AstTime);
 
         // Dead Class Detector with regular expression and line splitting. (Commended all dead interface portion)
 //        start = System.currentTimeMillis();

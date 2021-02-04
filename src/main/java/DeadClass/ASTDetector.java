@@ -16,6 +16,7 @@ public class ASTDetector {
     List<FileToken> fileTokenList = new ArrayList<>();
     List<ClassToken> classTokens = new ArrayList<>();
     List<InterfaceToken> interfaceTokens = new ArrayList<>();
+    private String reportLocation = "/Users/Peeradon/Desktop/Detecting Result/Dead_class_interface.txt";
 
     public ASTDetector(List<CompilationUnit> cu){
         setToken(cu);
@@ -50,20 +51,27 @@ public class ASTDetector {
         for(FileToken fileToken : fileTokenList){
             // Classes
             for(ClassToken classToken : classTokens){
-                if(isNotOwnFile(fileToken.getFileName(),classToken.getName())){
+//                if(isNotOwnFile(fileToken.getFileName(),classToken.getName())){
                     // Check if class is already used.
                     if(classToken.getDead().equals(true)){
-                        if(fileToken.getExtendedList().contains(classToken.getName())
-                                || fileToken.getVariableType().contains(classToken.getName())
-                                || fileToken.getMethodType().contains(classToken.getName())
-                                || fileToken.getObjectAssignmentType().contains(classToken.getName())
-                                || fileToken.getParameterType().contains(classToken.getName())
-                                || fileToken.getMethodScope().contains(classToken.getName())
+                        if(checkContain(fileToken.getExtendedList(),classToken.getName())
+//                                || fileToken.getExtendedList().contains(classToken.getName())
+//                                || fileToken.getVariableType().contains(classToken.getName())
+//                                || fileToken.getMethodType().contains(classToken.getName())
+//                                || fileToken.getObjectAssignmentType().contains(classToken.getName())
+//                                || fileToken.getParameterType().contains(classToken.getName())
+//                                || fileToken.getMethodScope().contains(classToken.getName())
+                                || checkContain(fileToken.getVariableType(),classToken.getName())
+                                || checkContain(fileToken.getMethodType(),classToken.getName())
+                                || checkContain(fileToken.getObjectAssignmentType(),classToken.getName())
+                                || checkContain(fileToken.getParameterType(),classToken.getName())
+                                || checkContain(fileToken.getMethodScope(),classToken.getName())
                                 || checkReturn(fileToken.getReturnStm(),classToken.getName())
                                 || checkMethodArg(fileToken.getMethodArgument(),classToken.getName())
                                 || checkIfStatement(fileToken.getIfStm(),classToken.getName())
                                 || checkForStatement(fileToken.getForStm(),classToken.getName())
-                                || checkForEachStatement(fileToken.getForEachStm(),classToken.getName())){
+                                || checkForEachStatement(fileToken.getForEachStm(),classToken.getName())
+                                || checkContain(fileToken.getSwitchStm(),classToken.getName())){
                             // If class is in the same package and if not.
                             if(fileToken.getPackageName().equals(classToken.getPackageName())){
                                 classToken.setDead(false);
@@ -74,25 +82,32 @@ public class ASTDetector {
                                 }
                             }
                         }
-                    }
+//                    }
                 }
             }
             // Interfaces.
             for(InterfaceToken interfaceToken : interfaceTokens){
-                if(isNotOwnFile(fileToken.getFileName(),interfaceToken.getName())){
+//                if(isNotOwnFile(fileToken.getFileName(),interfaceToken.getName())){
                     // check if interface is already used.
                     if(interfaceToken.getDead().equals(true)){
-                        if(fileToken.getImplementList().contains(interfaceToken.getName())
-                                || fileToken.getVariableType().contains(interfaceToken.getName())
-                                || fileToken.getMethodType().contains(interfaceToken.getName())
-                                || fileToken.getObjectAssignmentType().contains(interfaceToken.getName())
-                                || fileToken.getParameterType().contains(interfaceToken.getName())
-                                || fileToken.getMethodScope().contains(interfaceToken.getName())
+                        if(checkContain(fileToken.getImplementList(),interfaceToken.getName())
+//                                || fileToken.getImplementList().contains(interfaceToken.getName())
+//                                || fileToken.getVariableType().contains(interfaceToken.getName())
+//                                || fileToken.getMethodType().contains(interfaceToken.getName())
+//                                || fileToken.getObjectAssignmentType().contains(interfaceToken.getName())
+//                                || fileToken.getParameterType().contains(interfaceToken.getName())
+//                                || fileToken.getMethodScope().contains(interfaceToken.getName())
+                                || checkContain(fileToken.getVariableType(),interfaceToken.getName())
+                                || checkContain(fileToken.getMethodType(),interfaceToken.getName())
+                                || checkContain(fileToken.getObjectAssignmentType(),interfaceToken.getName())
+                                || checkContain(fileToken.getParameterType(),interfaceToken.getName())
+                                || checkContain(fileToken.getMethodScope(),interfaceToken.getName())
                                 || checkReturn(fileToken.getReturnStm(),interfaceToken.getName())
                                 || checkMethodArg(fileToken.getMethodArgument(),interfaceToken.getName())
                                 || checkIfStatement(fileToken.getIfStm(),interfaceToken.getName())
                                 || checkForStatement(fileToken.getForStm(),interfaceToken.getName())
-                                || checkForEachStatement(fileToken.getForEachStm(),interfaceToken.getName())) {
+                                || checkForEachStatement(fileToken.getForEachStm(),interfaceToken.getName())
+                                || checkContain(fileToken.getSwitchStm(),interfaceToken.getName())) {
                             // If interface is in the same package and if not.
                             if(fileToken.getPackageName().equals(interfaceToken.getPackageName())){
                                 interfaceToken.setDead(false);
@@ -104,9 +119,20 @@ public class ASTDetector {
                             }
                         }
                     }
-                }
+             //   }
             }
         }
+    }
+
+    private boolean checkContain(List<String> list, String name){
+            Pattern pattern = Pattern.compile(name);
+            for (String tmp : list){
+                Matcher matcher = pattern.matcher(tmp);
+                if (matcher.find()){
+                    return true;
+                }
+            }
+        return false;
     }
 
     private boolean checkReturn(List<String> returnList, String name){
@@ -211,23 +237,23 @@ public class ASTDetector {
         System.out.println("Total DeadInterface: "+count);
     }
 
-    public void createReport(){
+    public void createReport(float elapseTime){
         FileWriter f;
         BufferedWriter bw;
-        String fileName = "src/main/resources/Dead_class_interface.txt";
         try{
-            f = new FileWriter(fileName);
+            f = new FileWriter(this.reportLocation);
             bw = new BufferedWriter(f);
+            System.out.println("Total detect time: "+elapseTime+" seconds.");
             for (ClassToken classToken : classTokens){
                 if(classToken.getDead().equals(true)) {
-                    String tmp = "Class: "+classToken.getName()+"\tat line: "+classToken.getLine()+
+                    String tmp = "Class\t"+classToken.getName()+"\tat line: "+classToken.getLine()+
                             "\tin: "+classToken.getPackageName()+"\n";
                     bw.write(tmp);
                 }
             }
             for (InterfaceToken interfaceToken : interfaceTokens){
                 if(interfaceToken.getDead().equals(true)) {
-                    String tmp = "Interface: "+interfaceToken.getName()+"\tat line: "+interfaceToken.getLine()+
+                    String tmp = "Interface\t"+interfaceToken.getName()+"\tat line: "+interfaceToken.getLine()+
                             "\tin: "+interfaceToken.getPackageName()+"\n";
                     bw.write(tmp);
                 }
@@ -240,15 +266,7 @@ public class ASTDetector {
         }
     }
 
-    public List<FileToken> getFileTokenList() {
-        return fileTokenList;
-    }
-
-    public List<ClassToken> getClassTokens() {
-        return classTokens;
-    }
-
-    public List<InterfaceToken> getInterfaceTokens() {
-        return interfaceTokens;
+    public void setReportLocation(String reportLocation) {
+        this.reportLocation = reportLocation;
     }
 }
