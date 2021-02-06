@@ -4,11 +4,13 @@ public class ClassToken {
     private String name;
     private String packageName;
     private String path;
+    private String fileName;
     private int line;
     private Boolean isDead;
 
-    public ClassToken(String name, String packageName, String path,int line) {
+    public ClassToken(String name, String fileName, String packageName, String path,int line) {
         this.name = name;
+        this.fileName = fileName;
         this.packageName = packageName;
         this.path = path;
         this.line = line;
@@ -38,5 +40,9 @@ public class ClassToken {
 
     public void setDead(Boolean dead) {
         isDead = dead;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 }

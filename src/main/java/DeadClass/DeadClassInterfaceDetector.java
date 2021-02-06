@@ -11,14 +11,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ASTDetector {
+public class DeadClassInterfaceDetector {
 
     List<FileToken> fileTokenList = new ArrayList<>();
     List<ClassToken> classTokens = new ArrayList<>();
     List<InterfaceToken> interfaceTokens = new ArrayList<>();
     private String reportLocation = "/Users/Peeradon/Desktop/Detecting Result/Dead_class_interface.txt";
 
-    public ASTDetector(List<CompilationUnit> cu){
+    public DeadClassInterfaceDetector(List<CompilationUnit> cu){
         setToken(cu);
     }
 
@@ -29,6 +29,7 @@ public class ASTDetector {
             List<String> classes = fileToken.getClassName();
             for(String name : classes){
                 ClassToken classToken = new ClassToken(name,
+                        fileToken.getFileName(),
                         fileToken.getPackageName(),
                         fileToken.getLocation(),
                         fileToken.getClassLine(name));
@@ -38,6 +39,7 @@ public class ASTDetector {
             List<String> interfaces = fileToken.getInterfaceName();
             for (String name : interfaces){
                 InterfaceToken interfaceToken = new InterfaceToken(name,
+                        fileToken.getFileName(),
                         fileToken.getPackageName(),
                         fileToken.getLocation(),
                         fileToken.getInterfaceLine(name));
@@ -51,16 +53,10 @@ public class ASTDetector {
         for(FileToken fileToken : fileTokenList){
             // Classes
             for(ClassToken classToken : classTokens){
-//                if(isNotOwnFile(fileToken.getFileName(),classToken.getName())){
+               if(isNotOwnFile(fileToken.getFileName(),classToken.getName())){
                     // Check if class is already used.
                     if(classToken.getDead().equals(true)){
                         if(checkContain(fileToken.getExtendedList(),classToken.getName())
-//                                || fileToken.getExtendedList().contains(classToken.getName())
-//                                || fileToken.getVariableType().contains(classToken.getName())
-//                                || fileToken.getMethodType().contains(classToken.getName())
-//                                || fileToken.getObjectAssignmentType().contains(classToken.getName())
-//                                || fileToken.getParameterType().contains(classToken.getName())
-//                                || fileToken.getMethodScope().contains(classToken.getName())
                                 || checkContain(fileToken.getVariableType(),classToken.getName())
                                 || checkContain(fileToken.getMethodType(),classToken.getName())
                                 || checkContain(fileToken.getObjectAssignmentType(),classToken.getName())
@@ -71,32 +67,30 @@ public class ASTDetector {
                                 || checkIfStatement(fileToken.getIfStm(),classToken.getName())
                                 || checkForStatement(fileToken.getForStm(),classToken.getName())
                                 || checkForEachStatement(fileToken.getForEachStm(),classToken.getName())
-                                || checkContain(fileToken.getSwitchStm(),classToken.getName())){
+                                || checkContain(fileToken.getSwitchStm(),classToken.getName())
+                                || checkContain(fileToken.getValueAssign(),classToken.getName())){
                             // If class is in the same package and if not.
-                            if(fileToken.getPackageName().equals(classToken.getPackageName())){
+                            if(classToken.getPackageName().matches(fileToken.getPackageName())){
                                 classToken.setDead(false);
                             }
-                            if(!fileToken.getPackageName().equals(classToken.getPackageName())){
-                                if(checkImport(fileToken.getImportStm(), classToken.getPackageName())){
+                            if(!classToken.getPackageName().matches(fileToken.getPackageName())){
+                                if(checkImport(fileToken.getImportStm()
+                                        ,classToken.getPackageName()
+                                        ,classToken.getName()
+                                        ,classToken.getFileName())){
                                     classToken.setDead(false);
                                 }
                             }
                         }
-//                    }
+                   }
                 }
             }
             // Interfaces.
             for(InterfaceToken interfaceToken : interfaceTokens){
-//                if(isNotOwnFile(fileToken.getFileName(),interfaceToken.getName())){
+               if(isNotOwnFile(fileToken.getFileName(),interfaceToken.getName())){
                     // check if interface is already used.
                     if(interfaceToken.getDead().equals(true)){
                         if(checkContain(fileToken.getImplementList(),interfaceToken.getName())
-//                                || fileToken.getImplementList().contains(interfaceToken.getName())
-//                                || fileToken.getVariableType().contains(interfaceToken.getName())
-//                                || fileToken.getMethodType().contains(interfaceToken.getName())
-//                                || fileToken.getObjectAssignmentType().contains(interfaceToken.getName())
-//                                || fileToken.getParameterType().contains(interfaceToken.getName())
-//                                || fileToken.getMethodScope().contains(interfaceToken.getName())
                                 || checkContain(fileToken.getVariableType(),interfaceToken.getName())
                                 || checkContain(fileToken.getMethodType(),interfaceToken.getName())
                                 || checkContain(fileToken.getObjectAssignmentType(),interfaceToken.getName())
@@ -107,19 +101,23 @@ public class ASTDetector {
                                 || checkIfStatement(fileToken.getIfStm(),interfaceToken.getName())
                                 || checkForStatement(fileToken.getForStm(),interfaceToken.getName())
                                 || checkForEachStatement(fileToken.getForEachStm(),interfaceToken.getName())
-                                || checkContain(fileToken.getSwitchStm(),interfaceToken.getName())) {
+                                || checkContain(fileToken.getSwitchStm(),interfaceToken.getName())
+                                || checkContain(fileToken.getValueAssign(),interfaceToken.getName())) {
                             // If interface is in the same package and if not.
                             if(fileToken.getPackageName().equals(interfaceToken.getPackageName())){
                                 interfaceToken.setDead(false);
                             }
                             if(!fileToken.getPackageName().equals(interfaceToken.getPackageName())){
-                                if (checkImport(fileToken.getImportStm(), interfaceToken.getPackageName())){
+                                if (checkImport(fileToken.getImportStm()
+                                        ,interfaceToken.getPackageName()
+                                        ,interfaceToken.getName()
+                                        ,interfaceToken.getFileName())){
                                     interfaceToken.setDead(false);
                                 }
                             }
                         }
                     }
-             //   }
+               }
             }
         }
     }
@@ -192,15 +190,28 @@ public class ASTDetector {
         return false;
     }
 
-    private boolean checkImport(List<String> importStm, String classPackage){
-        Pattern pattern = Pattern.compile(classPackage);
+    private boolean checkImport(List<String> importStm, String classPackage,
+                                String className, String fileName){
+
+        // remove .java from file name.
+        String tmpFileName = fileName.replace(".java","");
+
+        String packageWithName = classPackage+"\\."+className+"$";
+        String packageAll = classPackage+"$";
+        String packageWithFileName = classPackage+"\\."+tmpFileName+"$";
+
+        Pattern pattern = Pattern.compile(packageWithName);
+        Pattern pattern1 = Pattern.compile(packageAll);
+        Pattern pattern2 = Pattern.compile(packageWithFileName);
+
         for (String stm : importStm){
             Matcher matcher = pattern.matcher(stm);
-            if(matcher.find()) {
+            Matcher matcher1 = pattern1.matcher(stm);
+            Matcher matcher2 = pattern2.matcher(stm);
+            if(matcher.find() || matcher1.find() || matcher2.find()) {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -243,18 +254,18 @@ public class ASTDetector {
         try{
             f = new FileWriter(this.reportLocation);
             bw = new BufferedWriter(f);
-            System.out.println("Total detect time: "+elapseTime+" seconds.");
+            bw.write("Total detect time: "+elapseTime+" seconds.\n");
             for (ClassToken classToken : classTokens){
                 if(classToken.getDead().equals(true)) {
                     String tmp = "Class\t"+classToken.getName()+"\tat line: "+classToken.getLine()+
-                            "\tin: "+classToken.getPackageName()+"\n";
+                            "\tin: "+classToken.getPackageName()+"."+classToken.getFileName()+"\n";
                     bw.write(tmp);
                 }
             }
             for (InterfaceToken interfaceToken : interfaceTokens){
                 if(interfaceToken.getDead().equals(true)) {
                     String tmp = "Interface\t"+interfaceToken.getName()+"\tat line: "+interfaceToken.getLine()+
-                            "\tin: "+interfaceToken.getPackageName()+"\n";
+                            "\tin: "+interfaceToken.getPackageName()+"."+interfaceToken.getFileName()+"\n";
                     bw.write(tmp);
                 }
             }

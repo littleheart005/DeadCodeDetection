@@ -35,6 +35,7 @@ public class FileToken {
     private final List<String> forStm = new ArrayList<>();
     private final List<String> forEachStm = new ArrayList<>();
     private final List<String> switchStm = new ArrayList<>();
+    private final List<String> valueAssign = new ArrayList<>();
 
 
 
@@ -107,13 +108,20 @@ public class FileToken {
         // Case 7 : For, If, While Loop.
         IfStmtCollector ifStmtCollector = new IfStmtCollector();
         ifStmtCollector.visit(cu,ifStm);
+
         ForStmtCollector forStmtCollector = new ForStmtCollector();
         forStmtCollector.visit(cu,forStm);
+
         ForeachStmtCollector foreachStmtCollector = new ForeachStmtCollector();
         foreachStmtCollector.visit(cu,forEachStm);
+
         SwitchStmtCollector switchStmtCollector = new SwitchStmtCollector();
         switchStmtCollector.visit(cu,new ArrayList<>());
         switchStm.addAll(switchStmtCollector.getBody());
+
+        // Case 8 : Value Assignment
+        AssignExprCollector assignExprCollector = new AssignExprCollector();
+        assignExprCollector.visit(cu,valueAssign);
 
     }
 
@@ -200,5 +208,9 @@ public class FileToken {
 
     public List<String> getSwitchStm() {
         return switchStm;
+    }
+
+    public List<String> getValueAssign() {
+        return valueAssign;
     }
 }

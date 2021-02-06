@@ -5,17 +5,17 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        String openSource = "/Users/Peeradon/Documents/OpenSourceProject/portfolio-master/name.abuchen.portfolio/src";
+        String openSource = "/Users/Peeradon/Documents/OpenSourceProject/iceberg-apache-iceberg-0.11.0/core/src/main";
         String source = "/Users/Peeradon/Documents/DesignPatternCode/HF_DP/src/TestElapse/combined";
 
         long start = System.currentTimeMillis();
         ASTParser astParser = new ASTParser(openSource);
-        ASTDetector astDetector = new ASTDetector(astParser.cu);
-        astDetector.detect();
+        DeadClassInterfaceDetector deadClassInterfaceDetector = new DeadClassInterfaceDetector(astParser.cu);
+        deadClassInterfaceDetector.detect();
         long end = System.currentTimeMillis();
         float AstTime = (end - start)/1000F;
 
-        astDetector.createReport(AstTime);
+        deadClassInterfaceDetector.createReport(AstTime);
 
         // Dead Class Detector with regular expression and line splitting. (Commended all dead interface portion)
 //        start = System.currentTimeMillis();

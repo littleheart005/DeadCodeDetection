@@ -28,4 +28,5 @@ public class CNameCollector extends VoidVisitorAdapter<Void> {
     public List<Integer> getDeclarationLine() {
         return declarationLine;
     }
+
 }
