@@ -13,9 +13,9 @@ import java.util.regex.Pattern;
 
 public class DeadClassInterfaceDetector {
 
-    List<FileToken> fileTokenList = new ArrayList<>();
-    List<ClassToken> classTokens = new ArrayList<>();
-    List<InterfaceToken> interfaceTokens = new ArrayList<>();
+    private List<FileToken> fileTokenList = new ArrayList<>();
+    private List<ClassToken> classTokens = new ArrayList<>();
+    private List<InterfaceToken> interfaceTokens = new ArrayList<>();
     private String reportLocation = "/Users/Peeradon/Desktop/Detecting Result/Dead_class_interface.txt";
 
     public DeadClassInterfaceDetector(List<CompilationUnit> cu){
