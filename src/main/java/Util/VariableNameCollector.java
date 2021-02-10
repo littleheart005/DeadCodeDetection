@@ -1,5 +1,6 @@
 package Util;
 
+import DeadVariable.Variable;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VariableNameCollector extends VoidVisitorAdapter<Void> {
-    private List<String> variableNames = new ArrayList<>();
+    private List<Variable> variableList = new ArrayList<>();
     private Integer beginLine;
     private Integer endLine;
 
@@ -20,11 +21,15 @@ public class VariableNameCollector extends VoidVisitorAdapter<Void> {
     public void visit(VariableDeclarator vd, Void arg) {
         super.visit(vd, arg);
         if (vd.getRange().get().begin.line >= beginLine && vd.getRange().get().begin.line <= endLine) {
-            this.variableNames.add(vd.getNameAsString());
+            Variable variable = new Variable();
+            variable.setVariableName(vd.getNameAsString());
+            variable.setBeginLine(vd.getRange().get().begin.line);
+            variable.setModifier("local");
+            this.variableList.add(variable);
         }
     }
 
-    public List<String> getVariableNames() {
-        return variableNames;
+    public List<Variable> getVariableList() {
+        return variableList;
     }
 }

@@ -1,14 +1,14 @@
 package Util;
 
 import TokenGenerator.MethodToken;
+import DeadVariable.Variable;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class FieldNameCollector extends VoidVisitorAdapter<Void> {
-    private List<String> fieldName = new ArrayList<>();
+    private List<Variable> variableList = new ArrayList<>();
     private List<MethodToken> methodTokenList;
     private boolean accept;
 
@@ -19,26 +19,34 @@ public class FieldNameCollector extends VoidVisitorAdapter<Void> {
     @Override
     public void visit(VariableDeclarator vd, Void arg) {
         super.visit(vd, arg);
-//        System.out.println("Check for : " + vd.getParentNodeForChildren().toString() + " at line : " + vd.getRange().get().begin.line);
-        for (int i=0; i<this.methodTokenList.size(); i++) {
-            if (vd.getRange().get().begin.line >= this.methodTokenList.get(i).getBeginLine() && vd.getRange().get().begin.line <= this.methodTokenList.get(i).getEndLine()) {
-                this.accept = false;
-//                System.out.println("String is in method line between " + this.methodTokenList.get(i).getBeginLine() + " - " + this.methodTokenList.get(i).getEndLine());
-                break;
+
+        Variable variable = new Variable();
+
+        if (this.methodTokenList.size() > 0) {
+            for (int j = 0; j < this.methodTokenList.size(); j++) {
+                if (vd.getRange().get().begin.line >= this.methodTokenList.get(j).getBeginLine() && vd.getRange().get().begin.line <= this.methodTokenList.get(j).getEndLine()) {
+                    this.accept = false;
+                    break;
+                } else if (vd.getRange().get().begin.line <= this.methodTokenList.get(j).getBeginLine() || vd.getRange().get().begin.line >= this.methodTokenList.get(j).getEndLine()) {
+                    this.accept = true;
+                }
             }
-            else if (vd.getRange().get().begin.line <= this.methodTokenList.get(i).getBeginLine() || vd.getRange().get().begin.line >= this.methodTokenList.get(i).getEndLine()){
-                this.accept = true;
-//                System.out.println("String is not in method line between " + this.methodTokenList.get(i).getBeginLine() + " - " + this.methodTokenList.get(i).getEndLine());
-            }
+        } else if (this.methodTokenList.size() == 0) {
+            variable.setVariableName(vd.getNameAsString());
+            variable.setBeginLine(vd.getRange().get().begin.line);
+            variable.setModifier("common");
+            this.variableList.add(variable);
         }
-//        System.out.println("accept = " + this.accept);
-//        System.out.println();
+
         if (this.accept == true) {
-            this.fieldName.add(vd.getNameAsString());
+            variable.setVariableName(vd.getNameAsString());
+            variable.setBeginLine(vd.getRange().get().begin.line);
+            variable.setModifier("common");
+            this.variableList.add(variable);
         }
     }
 
-    public List<String> getFieldName() {
-        return fieldName;
+    public List<Variable> getVariableList() {
+        return variableList;
     }
 }

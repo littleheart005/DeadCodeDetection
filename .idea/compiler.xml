@@ -10,7 +10,6 @@
         <module name="DeadcodeDetection" />
         <module name="SeniorProject" />
         <module name="DeadCodeDetection Git" />
-        <module name="New folder" />
       </profile>
     </annotationProcessing>
   </component>

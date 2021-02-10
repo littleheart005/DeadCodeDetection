@@ -1,13 +1,16 @@
 package TokenGenerator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import DeadVariable.Variable;
+
+import java.util.*;
 
 public class FileToken {
     private String fileName;
     private String location;
-    private List<String> variableNames = new ArrayList<>();
+    private List<String> parentClass;
+    private List<Variable> field = new ArrayList<>();
+    private List<Variable> staticField = new ArrayList<>();
+    private List<Variable> fieldFromParentClass = new ArrayList<>();
     private List<String> methodCalls = new ArrayList<>();
     private List<String> assignExpr = new ArrayList<>();
     private List<String> objectCreationExpr = new ArrayList<>();
@@ -22,8 +25,15 @@ public class FileToken {
 
     private List<MethodToken> methodTokenList = new ArrayList<>();
 
-    private List<String> AliveVariable = new ArrayList<>();
-    private HashMap<Integer, String> DeadVariable = new HashMap<>();
+    private List<Variable> AliveVariable = new ArrayList<>();
+    private List<Variable> DeadVariable = new ArrayList<>();
+    private List<Variable> AliveField = new ArrayList<>();
+    private List<Variable> DeadField = new ArrayList<>();
+    private List<Variable> AliveStaticField = new ArrayList<>();
+    private List<Variable> DeadStaticField = new ArrayList<>();
+    private List<Variable> AliveFieldFromParentClass = new ArrayList<>();
+    private List<Variable> AllAliveVariable = new ArrayList<>();
+    private List<Variable> AllDeadVariable = new ArrayList<>();
 
     public String getFileName() {
         return fileName;
@@ -41,6 +51,14 @@ public class FileToken {
         this.location = location;
     }
 
+    public List<String> getParentClass() {
+        return parentClass;
+    }
+
+    public void setParentClass(List<String> parentClass) {
+        this.parentClass = parentClass;
+    }
+
     public List<MethodToken> getMethodTokenList() {
         return methodTokenList;
     }
@@ -49,12 +67,44 @@ public class FileToken {
         this.methodTokenList = methodTokenList;
     }
 
-    public List<String> getVariableNames() {
-        return variableNames;
+    public List<Variable> getField() {
+        return field;
     }
 
-    public void setVariableNames(List<String> variableNames) {
-        this.variableNames = variableNames;
+    public void setField(List<Variable> field) {
+        this.field = field;
+    }
+
+    public List<Variable> getFieldFromParentClass() {
+        return fieldFromParentClass;
+    }
+
+    public void setFieldFromParentClass(List<Variable> fieldFromParentClass) {
+        this.fieldFromParentClass = fieldFromParentClass;
+    }
+
+    public List<Variable> getAliveStaticField() {
+        return AliveStaticField;
+    }
+
+    public void setAliveStaticField(List<Variable> aliveStaticField) {
+        AliveStaticField = aliveStaticField;
+    }
+
+    public List<Variable> getDeadStaticField() {
+        return DeadStaticField;
+    }
+
+    public void setDeadStaticField(List<Variable> deadStaticField) {
+        DeadStaticField = deadStaticField;
+    }
+
+    public List<Variable> getStaticField() {
+        return staticField;
+    }
+
+    public void setStaticField(List<Variable> staticFieldList) {
+        this.staticField = staticFieldList;
     }
 
     public List<String> getMethodCalls() {
@@ -145,19 +195,63 @@ public class FileToken {
         VariableDeclarator = variableDeclarator;
     }
 
-    public List<String> getAliveVariable() {
+    public List<Variable> getAliveVariable() {
         return AliveVariable;
     }
 
-    public void setAliveVariable(List<String> aliveVariable) {
+    public void setAliveVariable(List<Variable> aliveVariable) {
         AliveVariable = aliveVariable;
     }
 
-    public HashMap<Integer, String> getDeadVariable() {
+    public List<Variable> getDeadVariable() {
         return DeadVariable;
     }
 
-    public void setDeadVariable(HashMap<Integer, String> deadVariable) {
+    public void setDeadVariable(List<Variable> deadVariable) {
         DeadVariable = deadVariable;
+    }
+
+    public List<Variable> getAllAliveVariable() {
+        return AllAliveVariable;
+    }
+
+    public void setAllAliveVariable(List<Variable> allAliveVariable) {
+        AllAliveVariable = allAliveVariable;
+    }
+
+    public List<Variable> getAllDeadVariable() {
+        return AllDeadVariable;
+    }
+
+    public void setAllDeadVariable(List<Variable> allDeadVariable) {
+        AllDeadVariable = allDeadVariable;
+    }
+
+    public List<Variable> getAliveFieldFromParentClass() {
+        return AliveFieldFromParentClass;
+    }
+
+    public void setAliveFieldFromParentClass(List<Variable> aliveFieldFromParentClass) {
+        AliveFieldFromParentClass = aliveFieldFromParentClass;
+    }
+
+    public List<Variable> getAliveField() {
+        return AliveField;
+    }
+
+    public void setAliveField(List<Variable> aliveField) {
+        AliveField = aliveField;
+    }
+
+    public List<Variable> getDeadField() {
+        return DeadField;
+    }
+
+    public void setDeadField(List<Variable> deadField) {
+        DeadField = deadField;
+    }
+
+    public void addDeadField(List<Variable> deadField) {
+        this.DeadField.addAll(deadField);
     }
 }

@@ -1,5 +1,7 @@
 package TokenGenerator;
 
+import DeadVariable.Variable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +9,7 @@ public class MethodToken {
     private String methodName;
     private Integer beginLine;
     private Integer endLine;
-    private List<String> variableNames = new ArrayList<>();
+    private List<Variable> variable = new ArrayList<>();
     private List<String> methodCalls = new ArrayList<>();
     private List<String> assignExpr = new ArrayList<>();
     private List<String> objectCreationExpr = new ArrayList<>();
@@ -44,12 +46,12 @@ public class MethodToken {
         this.endLine = endLine;
     }
 
-    public List<String> getVariableNames() {
-        return variableNames;
+    public List<Variable> getVariable() {
+        return variable;
     }
 
-    public void setVariableNames(List<String> variableNames) {
-        this.variableNames = variableNames;
+    public void setVariable(List<Variable> variableList) {
+        this.variable = variableList;
     }
 
     public List<String> getMethodCalls() {

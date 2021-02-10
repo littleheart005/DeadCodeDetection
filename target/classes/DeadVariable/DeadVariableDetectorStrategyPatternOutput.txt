@@ -1,4 +1,0 @@
-Variable ; Variable flybehavior has 0 references ; C:\Users\birdn\Desktop\Project\Test Project\strategypattern\duck.java line 4 ; dead variable
-Variable ; Variable quackbehavior has 0 references ; C:\Users\birdn\Desktop\Project\Test Project\strategypattern\duck.java line 5 ; dead variable
-Variable ; Variable d1 has 0 references ; C:\Users\birdn\Desktop\Project\Test Project\strategypattern\main.java line 6 ; dead variable
-Variable ; Variable d2 has 0 references ; C:\Users\birdn\Desktop\Project\Test Project\strategypattern\main.java line 10 ; dead variable
