@@ -5,9 +5,10 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        String openSource = "/Users/Peeradon/Documents/OpenSourceProject/iceberg-apache-iceberg-0.11.0/core/src/main";
-        String source = "/Users/Peeradon/Documents/DesignPatternCode/HF_DP/src/TestElapse/combined";
+        String openSource = "/Users/Peeradon/Documents/OpenSourceProject/spring-framework-5.3.3/spring-core/src/main/java";
 
+//        String source = "/Users/Peeradon/Documents/DesignPatternCode/HF_DP/src/TestElapse/combined";
+        
         long start = System.currentTimeMillis();
         ASTParser astParser = new ASTParser(openSource);
         DeadClassInterfaceDetector deadClassInterfaceDetector = new DeadClassInterfaceDetector(astParser.cu);
