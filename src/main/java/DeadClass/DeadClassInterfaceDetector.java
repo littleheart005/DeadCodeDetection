@@ -16,7 +16,7 @@ public class DeadClassInterfaceDetector {
     private List<FileToken> fileTokenList = new ArrayList<>();
     private List<ClassToken> classTokens = new ArrayList<>();
     private List<InterfaceToken> interfaceTokens = new ArrayList<>();
-    private String reportLocation = "/Users/Peeradon/Desktop/Detecting Result/Dead_class_interface.txt";
+    private String reportName = "DeadClassInterface";
 
     public DeadClassInterfaceDetector(List<CompilationUnit> cu){
         setToken(cu);
@@ -91,6 +91,7 @@ public class DeadClassInterfaceDetector {
                     // check if interface is already used.
                     if(interfaceToken.getDead().equals(true)){
                         if(checkContain(fileToken.getImplementList(),interfaceToken.getName())
+                                || checkContain(fileToken.getExtendedList(),interfaceToken.getName())
                                 || checkContain(fileToken.getVariableType(),interfaceToken.getName())
                                 || checkContain(fileToken.getMethodType(),interfaceToken.getName())
                                 || checkContain(fileToken.getObjectAssignmentType(),interfaceToken.getName())
@@ -252,7 +253,7 @@ public class DeadClassInterfaceDetector {
         FileWriter f;
         BufferedWriter bw;
         try{
-            f = new FileWriter(this.reportLocation);
+            f = new FileWriter("/Users/Peeradon/Desktop/Detecting Result/"+reportName+".txt");
             bw = new BufferedWriter(f);
             bw.write("Total detect time: "+elapseTime+" seconds.\n");
             for (ClassToken classToken : classTokens){
@@ -277,7 +278,7 @@ public class DeadClassInterfaceDetector {
         }
     }
 
-    public void setReportLocation(String reportLocation) {
-        this.reportLocation = reportLocation;
+    public void setReportName(String reportName) {
+        this.reportName = reportName;
     }
 }

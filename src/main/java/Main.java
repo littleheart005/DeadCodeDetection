@@ -5,8 +5,7 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        String openSource = "/Users/Peeradon/Documents/OpenSourceProject/spring-framework-5.3.3/spring-core/src/main/java";
-
+        String openSource = "/Users/Peeradon/Documents/OpenSourceProject/Signal-Android-5.3.10/libsignal/service/src/main/java/org";
 //        String source = "/Users/Peeradon/Documents/DesignPatternCode/HF_DP/src/TestElapse/combined";
         
         long start = System.currentTimeMillis();
@@ -16,6 +15,7 @@ public class Main {
         long end = System.currentTimeMillis();
         float AstTime = (end - start)/1000F;
 
+        deadClassInterfaceDetector.setReportName("Signal");
         deadClassInterfaceDetector.createReport(AstTime);
 
         // Dead Class Detector with regular expression and line splitting. (Commended all dead interface portion)
