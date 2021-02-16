@@ -22,7 +22,7 @@ public class ConstructFileToken {
 
             //Second step : construct File Token -> put Method Token to File Token
             FileToken fileToken = new FileToken();
-            fileToken.setFileName(getFilename(this.cu.get(i)));
+            fileToken.setFileName(replaceExtention(this.cu.get(i).getStorage().get().getFileName()));
             fileToken.setLocation(this.cu.get(i).getStorage().get().getPath().toString());
             fileToken.setParentClass(getParentClass(this.cu.get(i)));
             fileToken.setMethodTokenList(methodTokenTemp);
@@ -183,13 +183,11 @@ public class ConstructFileToken {
         return variableDeclarator;
     }
 
-    //method to get Filename of cu (file that parsed)
-    private String getFilename(CompilationUnit cu) {
-        FileNameCollector fileNameCollector = new FileNameCollector();
-        fileNameCollector.visit(cu, null);
-        String filename = fileNameCollector.getFileName();
-        return filename;
+    //method to replace fileNameExtention
+    private String replaceExtention(String fileName) {
+        return fileName.replaceAll("[.].*", "");
     }
+
 
     //method to get parent class
     private List<String> getParentClass(CompilationUnit cu) {

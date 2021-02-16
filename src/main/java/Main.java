@@ -3,11 +3,6 @@ import TokenGenerator.ConstructFileToken;
 import Util.ASTParser;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Main {
 
@@ -44,12 +39,22 @@ public class Main {
         //System.out.println("\n\nDead class and interface with AST. Total elapse time: "+AstTime+" seconds");
         System.out.println("Dead Class and interface with regex line splitting: Total elapse time: "+SplitTime+" seconds");*/
 
-        String source = "C:\\Users\\birdn\\Desktop\\Project\\openSource\\Arduino-master\\arduino-core\\src";
-//        String source = "C:\\Users\\birdn\\Desktop\\Project\\Test Project\\DecoratorPattern";
-//        String source = "C:\\Users\\birdn\\Desktop\\Project\\Test Project\\FactoryPattern";
-//        String source = "C:\\Users\\birdn\\Desktop\\Project\\Test Project\\MementoPattern\\src";
-//        String source = "C:\\Users\\birdn\\Desktop\\Project\\Test Project\\ObserverPattern";
-//        String source = "C:\\Users\\birdn\\Desktop\\Project\\Test Project\\StrategyPattern";
+        /* test project */
+//        String source = "D:\\Project\\Test Project\\DecoratorPattern";
+//        String source = "D:\\Project\\Test Project\\FactoryPattern";
+//        String source = "D:\\Project\\Test Project\\MementoPattern\\src";
+//        String source = "D:\\Project\\Test Project\\ObserverPattern";
+//        String source = "D:\\Project\\Test Project\\StrategyPattern";
+
+        /* Open Source */
+        String source = "D:\\Project\\openSource\\Arduino-1.8.13\\arduino-core\\src";
+//        String source = "D:\\Project\\openSource\\iceberg-apache-iceberg-0.11.0\\core\\src\\main";
+//        String source = "D:\\Project\\openSource\\portfolio-master\\name.abuchen.portfolio\\src";
+//        String source = "D:\\Project\\openSource\\Signal-Android-5.3.10\\libsignal\\service\\src\\main";
+//        String source = "D:\\Project\\openSource\\bitcoin-wallet-5.45\\wallet\\src\\de\\schildbach\\wallet";
+//        String source = "D:\\Project\\openSource\\openapi-generator-5.0.1\\modules\\openapi-generator-core\\src\\main";
+//        String source = "D:\\Project\\openSource\\OpenRefine-3.4.1\\main\\src";
+//        String source = "D:\\Project\\openSource\\spring-framework-5.3.3\\spring-core\\src\\main";
 
         long start = System.currentTimeMillis();
 
@@ -60,7 +65,7 @@ public class Main {
         long end = System.currentTimeMillis();
         float AstTime = (end - start)/1000F;
 
-        deadVariableDetector.createReport("StrategyPattern");
+        deadVariableDetector.createReport("Arduino");
 
         System.out.println("Dead Variable with AST. Total elapse time: " + AstTime + " seconds");
     }

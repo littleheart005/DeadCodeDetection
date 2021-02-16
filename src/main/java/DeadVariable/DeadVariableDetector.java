@@ -18,6 +18,7 @@ public class DeadVariableDetector {
         for (int i = 0; i < this.fileTokenList.size(); i++) {
 //            System.out.println("=======================================================================================================");
 //            System.out.println("loop file : " + this.fileTokenList.get(i).getFileName());
+            System.out.println("location : " + this.fileTokenList.get(i).getLocation());
             List<Variable> aliveStaticField = new ArrayList<>(); // set aliveStaticField to FileToken
             List<Variable> aliveField = new ArrayList<>(); // add aliveField to aliveVariable
             List<Variable> aliveVariable = new ArrayList<>(); // contains aliveField and aliveVariable
@@ -28,6 +29,7 @@ public class DeadVariableDetector {
             if (this.fileTokenList.get(i).getStaticField().size() > 0) {
                 for (int j = 0; j < this.fileTokenList.size(); j++) {
                     if (this.fileTokenList.get(i).getStaticField().size() > 0) {
+                        System.out.println("check static field with : " + this.fileTokenList.get(j).getLocation());
                         checkRegexForStaticField(this.fileTokenList.get(i), aliveStaticField, this.fileTokenList.get(j), this.fileTokenList.get(i).getStaticField());
                     }
                 }
@@ -183,13 +185,12 @@ public class DeadVariableDetector {
         Iterator iterator1 = mapToDeleteDeadVariable.keySet().iterator();
         while (iterator1.hasNext()) {
             String fileName = (String) iterator1.next();
-            for (int j=0; j<mapToDeleteDeadVariable.size(); j++) {
-                for (int k=0; k<this.fileTokenList.size(); k++) {
-                    if (this.fileTokenList.get(k).getFileName().equals(fileName)) {
-                        this.fileTokenList.get(k).getAllDeadVariable().removeAll(mapToDeleteDeadVariable.get(fileName));
-                    }
+            for (int k=0; k<this.fileTokenList.size(); k++) {
+                if (this.fileTokenList.get(k).getFileName().equals(fileName)) {
+                    this.fileTokenList.get(k).getAllDeadVariable().removeAll(mapToDeleteDeadVariable.get(fileName));
                 }
             }
+
         }
         //========================================================================================================================================================
 

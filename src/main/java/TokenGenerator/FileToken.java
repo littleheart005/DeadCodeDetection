@@ -83,10 +83,6 @@ public class FileToken {
         this.fieldFromParentClass = fieldFromParentClass;
     }
 
-    public List<Variable> getAliveStaticField() {
-        return AliveStaticField;
-    }
-
     public void setAliveStaticField(List<Variable> aliveStaticField) {
         AliveStaticField = aliveStaticField;
     }
@@ -195,10 +191,6 @@ public class FileToken {
         VariableDeclarator = variableDeclarator;
     }
 
-    public List<Variable> getAliveVariable() {
-        return AliveVariable;
-    }
-
     public void setAliveVariable(List<Variable> aliveVariable) {
         AliveVariable = aliveVariable;
     }
@@ -209,10 +201,6 @@ public class FileToken {
 
     public void setDeadVariable(List<Variable> deadVariable) {
         DeadVariable = deadVariable;
-    }
-
-    public List<Variable> getAllAliveVariable() {
-        return AllAliveVariable;
     }
 
     public void setAllAliveVariable(List<Variable> allAliveVariable) {
@@ -235,20 +223,8 @@ public class FileToken {
         AliveFieldFromParentClass = aliveFieldFromParentClass;
     }
 
-    public List<Variable> getAliveField() {
-        return AliveField;
-    }
-
-    public void setAliveField(List<Variable> aliveField) {
-        AliveField = aliveField;
-    }
-
     public List<Variable> getDeadField() {
         return DeadField;
-    }
-
-    public void setDeadField(List<Variable> deadField) {
-        DeadField = deadField;
     }
 
     public void addDeadField(List<Variable> deadField) {

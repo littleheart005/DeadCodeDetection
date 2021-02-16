@@ -13,7 +13,7 @@ public class Output {
     private List<FileToken> fileTokenList;
 
     public void createFile(String name) {
-        this.fileLocation = "src/main/resources/deadvariable/" + name + ".txt";
+        this.fileLocation = "src/main/resources/DeadVariable/OpenSource/" + name + ".txt";
 
         try {
             this.fileWriter = new FileWriter(fileLocation);
