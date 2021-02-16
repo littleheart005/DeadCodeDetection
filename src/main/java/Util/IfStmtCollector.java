@@ -6,10 +6,12 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IfStmtCollector extends VoidVisitorAdapter<Void> {
+public class IfStmtCollector extends VoidVisitorAdapter<List<String>> {
     private List<String> ifStmt = new ArrayList<>();
     private Integer beginLine;
     private Integer endLine;
+
+    public IfStmtCollector() { }
 
     public IfStmtCollector(Integer beginLine, Integer endLine) {
         this.beginLine = beginLine;
@@ -17,11 +19,16 @@ public class IfStmtCollector extends VoidVisitorAdapter<Void> {
     }
 
     @Override
-    public void visit(IfStmt vd, Void arg) {
+    public void visit(IfStmt vd, List<String> arg) {
         super.visit(vd, arg);
-        if (vd.getRange().get().begin.line >= beginLine && vd.getRange().get().begin.line <= endLine) {
-            this.ifStmt.add(vd.getCondition().toString());
+
+        if (this.beginLine != null && this.endLine != null) {
+            if (vd.getRange().get().begin.line >= beginLine && vd.getRange().get().begin.line <= endLine) {
+                this.ifStmt.add(vd.getCondition().toString());
+            }
         }
+
+        arg.add(vd.getCondition().toString());
     }
 
     public List<String> getIfStmt() {

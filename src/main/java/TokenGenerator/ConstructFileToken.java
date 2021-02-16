@@ -108,14 +108,14 @@ public class ConstructFileToken {
 
     //method to get MethodCall within method (range begin-end)
     private List<String> getMethodCallForMethodTokenTemp(CompilationUnit cu, MethodCallCollector methodCallCollector) {
-        methodCallCollector.visit(cu, null);
+        methodCallCollector.visit(cu, new ArrayList<>());
         List<String> methodcall = methodCallCollector.getMethodCall();
         return methodcall;
     }
 
     //method to get AssignExpr within method (range begin-end)
     private List<String> getAssignExprForMethodTokenTemp(CompilationUnit cu, AssignExprCollector assignExprCollector) {
-        assignExprCollector.visit(cu, null);
+        assignExprCollector.visit(cu, new ArrayList<>());
         List<String> assignExpr = assignExprCollector.getAssignExpr();
         return assignExpr;
     }
@@ -129,28 +129,28 @@ public class ConstructFileToken {
 
     //method to get IfStmt within method (range begin-end)
     private List<String> getIfStmtForMethodTokenTemp(CompilationUnit cu, IfStmtCollector ifStmtCollector) {
-        ifStmtCollector.visit(cu, null);
+        ifStmtCollector.visit(cu, new ArrayList<>());
         List<String> ifStmt = ifStmtCollector.getIfStmt();
         return ifStmt;
     }
 
     //method to get ForStmt within method (range begin-end)
     private List<String> getForStmtForMethodTokenTemp(CompilationUnit cu, ForStmtCollector forStmtCollector) {
-        forStmtCollector.visit(cu, null);
+        forStmtCollector.visit(cu, new ArrayList<>());
         List<String> forStmt = forStmtCollector.getForStmt();
         return forStmt;
     }
 
     //method to get ForeachStmt within method (range begin-end)
     private List<String> getForeachStmtForMethodTokenTemp(CompilationUnit cu, ForeachStmtCollector foreachStmtCollector) {
-        foreachStmtCollector.visit(cu, null);
+        foreachStmtCollector.visit(cu, new ArrayList<>());
         List<String> foreachStmt = foreachStmtCollector.getForeachStmt();
         return foreachStmt;
     }
 
     //method to get ReturnStmt within method (range begin-end)
     private List<String> getReturnStmtForMethodTokenTemp(CompilationUnit cu, ReturnStmtCollector returnStmtCollector) {
-        returnStmtCollector.visit(cu, null);
+        returnStmtCollector.visit(cu, new ArrayList<>());
         List<String> returnStmt = returnStmtCollector.getReturnStmt();
         return returnStmt;
     }
@@ -171,7 +171,7 @@ public class ConstructFileToken {
 
     //method to get SwitchStmt within method (range begin-end)
     private List<String> getSwitchStmtForMethodTokenTemp(CompilationUnit cu, SwitchStmtCollector switchStmtCollector) {
-        switchStmtCollector.visit(cu, null);
+        switchStmtCollector.visit(cu, new ArrayList<>());
         List<String> switchStmt = switchStmtCollector.getSwitchStmt();
         return switchStmt;
     }

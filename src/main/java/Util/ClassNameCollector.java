@@ -3,6 +3,7 @@ package Util;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // VisitorAdapter for class name collecting

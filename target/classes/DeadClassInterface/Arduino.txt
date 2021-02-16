@@ -1,0 +1,19 @@
+Total detect time: 2.788 seconds.
+Class	ConsoleProgressListener	at line: 34	in: cc.arduino.contributions.ConsoleProgressListener.java
+Class	DownloadableContributionVersionComparator	at line: 34	in: cc.arduino.contributions.DownloadableContributionVersionComparator.java
+Class	LibraryInstaller	at line: 59	in: cc.arduino.contributions.libraries.LibraryInstaller.java
+Class	NoopProgressListener	at line: 34	in: cc.arduino.contributions.NoopProgressListener.java
+Class	ContributionInstaller	at line: 67	in: cc.arduino.contributions.packages.ContributionInstaller.java
+Class	DefaultUncaughtExceptionHandler	at line: 32	in: cc.arduino.DefaultUncaughtExceptionHandler.java
+Class	BoardReachabilityFilter	at line: 40	in: cc.arduino.packages.discoverers.network.BoardReachabilityFilter.java
+Class	MergeSketchWithBooloader	at line: 39	in: cc.arduino.packages.uploaders.MergeSketchWithBooloader.java
+Class	UploaderUtils	at line: 45	in: cc.arduino.UploaderUtils.java
+Class	Pair	at line: 32	in: cc.arduino.utils.Pair.java
+Class	ReverseComparator	at line: 34	in: cc.arduino.utils.ReverseComparator.java
+Class	Sizer	at line: 34	in: processing.app.debug.Sizer.java
+Class	Platform	at line: 38	in: processing.app.linux.Platform.java
+Class	UDevAdmParser	at line: 7	in: processing.app.linux.UDevAdmParser.java
+Class	Platform	at line: 48	in: processing.app.macosx.Platform.java
+Class	SystemProfilerParser	at line: 11	in: processing.app.macosx.SystemProfilerParser.java
+Class	ListComPortsParser	at line: 43	in: processing.app.windows.ListComPortsParser.java
+Class	Platform	at line: 44	in: processing.app.windows.Platform.java
