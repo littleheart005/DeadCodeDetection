@@ -1,2 +1,0 @@
-============ Dead Class ===========
- Total Dead class: 0

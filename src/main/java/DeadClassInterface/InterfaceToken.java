@@ -1,20 +1,20 @@
-package DeadClass;
+package DeadClassInterface;
 
-public class ClassToken {
+public class InterfaceToken {
     private String name;
+    private String fileName;
     private String packageName;
     private String path;
-    private String fileName;
     private int line;
     private Boolean isDead;
 
-    public ClassToken(String name, String fileName, String packageName, String path,int line) {
+    public InterfaceToken(String name, String fileName, String packageName, String path, int line){
         this.name = name;
         this.fileName = fileName;
         this.packageName = packageName;
         this.path = path;
         this.line = line;
-        // First set all the class dead.
+        // First set all the interface dead.
         this.isDead = true;
     }
 

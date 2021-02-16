@@ -1,4 +1,4 @@
-package DeadClass;
+package DeadClassInterface;
 
 
 import com.github.javaparser.ast.CompilationUnit;
@@ -253,7 +253,7 @@ public class DeadClassInterfaceDetector {
         FileWriter f;
         BufferedWriter bw;
         try{
-            f = new FileWriter("/Users/Peeradon/Desktop/Detecting Result/"+reportName+".txt");
+            f = new FileWriter("src/main/resources/DeadClassInterface/"+reportName+".txt");
             bw = new BufferedWriter(f);
             bw.write("Total detect time: "+elapseTime+" seconds.\n");
             for (ClassToken classToken : classTokens){
