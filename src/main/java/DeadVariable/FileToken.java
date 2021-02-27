@@ -7,8 +7,8 @@ public class FileToken {
     private String location;
     private String packageName;
 
-    private List<String> extendsClass;
-    private List<String> importClass;
+    private List<FileToken> extendsClass;
+    private List<FileToken> importClass;
 
     private List<Variable> field = new ArrayList<>();
     private List<Variable> staticField = new ArrayList<>();
