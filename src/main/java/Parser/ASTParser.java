@@ -1,4 +1,4 @@
-package Util;
+package Parser;
 
 import Files_Reader.File_Reader;
 import com.github.javaparser.StaticJavaParser;

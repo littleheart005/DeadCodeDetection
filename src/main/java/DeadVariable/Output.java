@@ -1,7 +1,5 @@
 package DeadVariable;
 
-import TokenGenerator.FileToken;
-
 import java.io.*;
 import java.util.*;
 

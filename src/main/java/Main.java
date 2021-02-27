@@ -1,16 +1,15 @@
-import DeadClassInterface.*;
-import DeadVariable.DeadVariableDetector;
-import TokenGenerator.ConstructFileToken;
-import Util.ASTParser;
+import DeadVariable.ConstructFileToken;
+import Parser.ASTParser;
 import java.io.IOException;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        String openSource = "D:\\Project\\openSource\\Arduino-1.8.13\\arduino-core\\src";
+//        String openSource = "D:\\Project\\openSource\\Arduino-1.8.13\\arduino-core\\src";
+        String openSource = "D:\\Project\\openSource\\openapi-generator-5.0.1\\modules\\openapi-generator-core\\src\\main\\java";
 
-//       Dead Class/Interface Detector
+/*//       Dead Class/Interface Detector
         long start = System.currentTimeMillis();
 
         ASTParser astParser = new ASTParser(openSource);
@@ -22,21 +21,22 @@ public class Main {
 
         deadClassInterfaceDetector.setReportName("Arduino");
         deadClassInterfaceDetector.createReport(AstTime);
-        System.out.println("\n\nDead class and interface total elapse time: "+AstTime+" seconds");
+        System.out.println("\nDead class and interface total elapse time: "+AstTime+" seconds");*/
 
-
+        
         // Dead variable
-        start = System.currentTimeMillis();
+        long start = System.currentTimeMillis();
 
+        ASTParser astParser = new ASTParser(openSource);
         ConstructFileToken constructFileToken = new ConstructFileToken(astParser.cu);
-        DeadVariableDetector deadVariableDetector = new DeadVariableDetector(constructFileToken.getFileTokenList());
+        /*DeadVariableDetector deadVariableDetector = new DeadVariableDetector(constructFileToken.getFileTokenList());
 
-        end = System.currentTimeMillis();
-        AstTime = (end - start)/1000F;
+        long end = System.currentTimeMillis();
+        float AstTime = (end - start)/1000F;
 
         deadVariableDetector.createReport("Arduino");
 
-        System.out.println("Dead Variable with AST. Total elapse time: " + AstTime + " seconds");
+        System.out.println("Dead Variable with AST. Total elapse time: " + AstTime + " seconds");*/
 
         // Dead Class Detector with regular expression and line splitting. (Commended all dead interface portion)
 //        start = System.currentTimeMillis();
@@ -46,5 +46,7 @@ public class Main {
 //        float SplitTime = (end - start)/1000F;
 //        detector.createReport("Sample");
 //        System.out.println("Dead Class and interface with regex line splitting: Total elapse time: "+SplitTime+" seconds");
+
+
     }
 }

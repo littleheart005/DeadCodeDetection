@@ -1,4 +1,4 @@
-package TokenGenerator;
+package DeadVariable;
 
 import DeadVariable.Variable;
 

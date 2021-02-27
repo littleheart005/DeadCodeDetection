@@ -1,7 +1,5 @@
 package DeadVariable;
 
-import TokenGenerator.FileToken;
-
 import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -113,7 +111,7 @@ public class DeadVariableDetector {
         //หาว่าไฟล์ไหนมี parent class บ้าง
         List<FileToken> fileThatHasParentClass = new ArrayList<>();
         for (int i=0; i<this.fileTokenList.size(); i++) {
-            if (this.fileTokenList.get(i).getParentClass().size() > 0) {
+            if (this.fileTokenList.get(i).getExtendsClass().size() > 0) {
                 fileThatHasParentClass.add(this.fileTokenList.get(i));
             }
         }
@@ -122,8 +120,8 @@ public class DeadVariableDetector {
         HashMap<String, List<FileToken>> ParentAndChild = new HashMap<>();
         for (int i=0; i<fileThatHasParentClass.size(); i++) {
             for (int j=0; j<fileThatHasDeadField.size(); j++) {
-                for (int k=0; k<fileThatHasParentClass.get(i).getParentClass().size(); k++) {
-                    if (fileThatHasParentClass.get(i).getParentClass().get(k).equals(fileThatHasDeadField.get(j).getFileName())) {
+                for (int k = 0; k<fileThatHasParentClass.get(i).getExtendsClass().size(); k++) {
+                    if (fileThatHasParentClass.get(i).getExtendsClass().get(k).equals(fileThatHasDeadField.get(j).getFileName())) {
                         List<FileToken> temp = new ArrayList<>();
                         if (ParentAndChild.isEmpty()) {
                             fileThatHasParentClass.get(i).setFieldFromParentClass(fileThatHasDeadField.get(j).getDeadField());

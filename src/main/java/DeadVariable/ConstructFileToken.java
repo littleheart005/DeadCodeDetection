@@ -1,6 +1,5 @@
-package TokenGenerator;
+package DeadVariable;
 
-import DeadVariable.Variable;
 import Util.*;
 import com.github.javaparser.ast.CompilationUnit;
 
@@ -24,8 +23,13 @@ public class ConstructFileToken {
             FileToken fileToken = new FileToken();
             fileToken.setFileName(replaceExtention(this.cu.get(i).getStorage().get().getFileName()));
             fileToken.setLocation(this.cu.get(i).getStorage().get().getPath().toString());
-            fileToken.setParentClass(getParentClass(this.cu.get(i)));
+            fileToken.setPackageName(this.cu.get(i).getPackageDeclaration().get().getNameAsString());
+
+            fileToken.setExtendsClass(getExtendsClass(this.cu.get(i)));
+            fileToken.setImportClass(getImportClass(this.cu.get(i)));
+
             fileToken.setMethodTokenList(methodTokenTemp);
+
             fileToken.setStaticField(getStaticFieldForFileTokenTemp(this.cu.get(i)));
             fileToken.setField(getFieldNameForFileTokenTemp(this.cu.get(i), methodTokenTemp, fileToken.getStaticField()));
             fileToken.setMethodCalls(getMethodCallForFileTokenTemp(this.cu.get(i), methodTokenTemp));
@@ -190,12 +194,22 @@ public class ConstructFileToken {
 
 
     //method to get parent class
-    private List<String> getParentClass(CompilationUnit cu) {
-        List<String> parentClass = new ArrayList<>();
+    private List<String> getExtendsClass(CompilationUnit cu) {
+        List<String> extendsClass = new ArrayList<>();
         ClassExtensionCollector classExtensionCollector = new ClassExtensionCollector();
-        classExtensionCollector.visit(cu, parentClass);
-        return parentClass;
+        classExtensionCollector.visit(cu, extendsClass);
+        return extendsClass;
     }
+
+    //method to get import class
+    private List<String> getImportClass(CompilationUnit cu) {
+        List<String> importClass = new ArrayList<>();
+        ImportCollector importCollector = new ImportCollector();
+        importCollector.visit(cu, null);
+        importClass = importCollector.getImportStm();
+        return importClass;
+    }
+
 
     //method to get static field (not in method)
     private List<Variable> getStaticFieldForFileTokenTemp(CompilationUnit cu) {
@@ -317,74 +331,6 @@ public class ConstructFileToken {
         variableDeclaratorForFileTokenCollector.visit(cu, null);
         List<String> variableDeclarator = variableDeclaratorForFileTokenCollector.getVariableDeclarator();
         return variableDeclarator;
-    }
-
-    private void printInfo() {
-        System.out.println("file count : " + this.fileTokenList.size());
-        for (int i=0; i<this.fileTokenList.size(); i++) {
-            System.out.println("Filename : " + this.fileTokenList.get(i).getFileName());
-            System.out.println("Location : " + this.fileTokenList.get(i).getLocation());
-            System.out.println("parentClass : " + this.fileTokenList.get(i).getParentClass());
-            System.out.println();
-            System.out.println("========== File Token ==========");
-
-            System.out.print("static field : [");
-            if (this.fileTokenList.get(i).getStaticField().size() != 0) {
-                for (Variable var : fileTokenList.get(i).getStaticField()) {
-                    System.out.print(var.getParent() + "." + var.getVariableName() + ", ");
-                }
-            }
-            System.out.println("]");
-
-            System.out.print("field : [");
-            if (this.fileTokenList.get(i).getField().size() != 0) {
-                for (Variable var : fileTokenList.get(i).getField()) {
-                    System.out.print(var.getVariableName() + ", ");
-                }
-            }
-            System.out.println("]");
-
-            System.out.println("methodCall : " + this.fileTokenList.get(i).getMethodCalls());
-            System.out.println("assignExpr : " + this.fileTokenList.get(i).getAssignExpr());
-            System.out.println("objectCreationExpr : " + this.fileTokenList.get(i).getObjectCreationExpr());
-            System.out.println("ifStmt : " + this.fileTokenList.get(i).getIfStmt());
-            System.out.println("forStmt : " + this.fileTokenList.get(i).getForStmt());
-            System.out.println("foreachStmt : " + this.fileTokenList.get(i).getForeachStmt());
-            System.out.println("returnStmt : " + this.fileTokenList.get(i).getReturnStmt());
-            System.out.println("whileStmt : " + this.fileTokenList.get(i).getWhileStmt());
-            System.out.println("doStmt : " + this.fileTokenList.get(i).getDoStmt());
-            System.out.println("switchStmt : " + this.fileTokenList.get(i).getSwitchStmt());
-            System.out.println("variableDeclarator : " + this.fileTokenList.get(i).getVariableDeclarator());
-            System.out.println();
-
-            System.out.println("========== Method Token ==========");
-            for (int j = 0; j<this.fileTokenList.get(i).getMethodTokenList().size(); j++) {
-                System.out.println("method name : " + this.fileTokenList.get(i).getMethodTokenList().get(j).getMethodName());
-                System.out.println("begin line : " + this.fileTokenList.get(i).getMethodTokenList().get(j).getBeginLine());
-                System.out.println("end line : " + this.fileTokenList.get(i).getMethodTokenList().get(j).getEndLine());
-
-                System.out.print("variable : [");
-                if (this.fileTokenList.get(i).getMethodTokenList().get(j).getVariable().size() != 0) {
-                    for (Variable var : fileTokenList.get(i).getMethodTokenList().get(j).getVariable()) {
-                        System.out.print(var.getVariableName() + ", ");
-                    }
-                }
-                System.out.println("]");
-
-                System.out.println("methodCall : " + this.fileTokenList.get(i).getMethodTokenList().get(j).getMethodCalls());
-                System.out.println("assignExpr : " + this.fileTokenList.get(i).getMethodTokenList().get(j).getAssignExpr());
-                System.out.println("objectCreationExpr : " + this.fileTokenList.get(i).getMethodTokenList().get(j).getObjectCreationExpr());
-                System.out.println("ifStmt : " + this.fileTokenList.get(i).getMethodTokenList().get(j).getIfStmt());
-                System.out.println("forStmt : " + this.fileTokenList.get(i).getMethodTokenList().get(j).getForStmt());
-                System.out.println("foreachStmt : " + this.fileTokenList.get(i).getMethodTokenList().get(j).getForeachStmt());
-                System.out.println("returnStmt : " + this.fileTokenList.get(i).getMethodTokenList().get(j).getReturnStmt());
-                System.out.println("whileStmt : " + this.fileTokenList.get(i).getMethodTokenList().get(j).getWhileStmt());
-                System.out.println("doStmt : " + this.fileTokenList.get(i).getMethodTokenList().get(j).getDoStmt());
-                System.out.println("switchStmt : " + this.fileTokenList.get(i).getMethodTokenList().get(j).getSwitchStmt());
-                System.out.println("variableDeclarator : " + this.fileTokenList.get(i).getMethodTokenList().get(j).getVariableDeclarator());
-                System.out.println();
-            }
-        }
     }
 
     public List<FileToken> getFileTokenList() {

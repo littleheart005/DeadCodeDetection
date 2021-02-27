@@ -1,16 +1,21 @@
-package TokenGenerator;
-
-import DeadVariable.Variable;
+package DeadVariable;
 
 import java.util.*;
 
 public class FileToken {
     private String fileName;
     private String location;
-    private List<String> parentClass;
+    private String packageName;
+
+    private List<String> extendsClass;
+    private List<String> importClass;
+
     private List<Variable> field = new ArrayList<>();
     private List<Variable> staticField = new ArrayList<>();
     private List<Variable> fieldFromParentClass = new ArrayList<>();
+
+    private List<MethodToken> methodTokenList = new ArrayList<>();
+
     private List<String> methodCalls = new ArrayList<>();
     private List<String> assignExpr = new ArrayList<>();
     private List<String> objectCreationExpr = new ArrayList<>();
@@ -22,8 +27,6 @@ public class FileToken {
     private List<String> DoStmt = new ArrayList<>();
     private List<String> SwitchStmt = new ArrayList<>();
     private List<String> VariableDeclarator = new ArrayList<>();
-
-    private List<MethodToken> methodTokenList = new ArrayList<>();
 
     private List<Variable> AliveVariable = new ArrayList<>();
     private List<Variable> DeadVariable = new ArrayList<>();
@@ -51,13 +54,33 @@ public class FileToken {
         this.location = location;
     }
 
-    public List<String> getParentClass() {
-        return parentClass;
+    public String getPackageName() {
+        return packageName;
     }
 
-    public void setParentClass(List<String> parentClass) {
-        this.parentClass = parentClass;
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
+
+
+
+    public List<String> getExtendsClass() {
+        return extendsClass;
+    }
+
+    public void setExtendsClass(List<String> extendsClass) {
+        this.extendsClass = extendsClass;
+    }
+
+    public List<String> getImportClass() {
+        return importClass;
+    }
+
+    public void setImportClass(List<String> importClass) {
+        this.importClass = importClass;
+    }
+
+
 
     public List<MethodToken> getMethodTokenList() {
         return methodTokenList;
@@ -66,6 +89,7 @@ public class FileToken {
     public void setMethodTokenList(List<MethodToken> methodTokenList) {
         this.methodTokenList = methodTokenList;
     }
+
 
     public List<Variable> getField() {
         return field;

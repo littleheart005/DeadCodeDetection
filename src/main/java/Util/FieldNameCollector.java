@@ -1,6 +1,6 @@
 package Util;
 
-import TokenGenerator.MethodToken;
+import DeadVariable.MethodToken;
 import DeadVariable.Variable;
 import com.github.javaparser.ast.body.VariableDeclarator;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
