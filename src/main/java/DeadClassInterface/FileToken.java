@@ -36,8 +36,8 @@ public class FileToken {
     private final List<String> forEachStm = new ArrayList<>();
     private final List<String> switchStm = new ArrayList<>();
     private final List<String> valueAssign = new ArrayList<>();
-
-
+    private final List<String> methodCall = new ArrayList<>();
+    private final List<String> instanceOf = new ArrayList<>();
 
     public FileToken(CompilationUnit cu) {
 
@@ -57,7 +57,7 @@ public class FileToken {
         this.importStm.addAll(importCollector.getImportStm());
 
         // visit node in AST for getting classes and interfaces name and line.
-        CNameCollector classVisitor = new CNameCollector();
+        ClassNameCollector classVisitor = new ClassNameCollector();
         InterfaceNameCollector interfaceVisitor = new InterfaceNameCollector();
         classVisitor.visit(cu,null);
         interfaceVisitor.visit(cu,interfaceName);
@@ -96,7 +96,7 @@ public class FileToken {
 
         // Case 5 : Method Call and Method Argument.
         MethodCallCollector methodCallCollector = new MethodCallCollector();
-        methodCallCollector.visit(cu, new ArrayList<>());
+        methodCallCollector.visit(cu,methodCall);
         methodScope.addAll(methodCallCollector.getMethodScope());
         methodArgument.addAll(methodCallCollector.getMethodArgument());
 
@@ -121,6 +121,10 @@ public class FileToken {
         // Case 8 : Value Assignment
         AssignExprCollector assignExprCollector = new AssignExprCollector();
         assignExprCollector.visit(cu,valueAssign);
+
+        // Case 9 : Instance of
+        InstanceOfCollector instanceOfCollector = new InstanceOfCollector();
+        instanceOfCollector.visit(cu,instanceOf);
 
     }
 
@@ -211,5 +215,13 @@ public class FileToken {
 
     public List<String> getValueAssign() {
         return valueAssign;
+    }
+
+    public List<String> getMethodCall() {
+        return methodCall;
+    }
+
+    public List<String> getInstanceOf() {
+        return instanceOf;
     }
 }

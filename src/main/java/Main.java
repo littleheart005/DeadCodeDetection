@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        String openSource = "D:\\Project\\openSource\\Arduino-1.8.13\\arduino-core\\src";
+        String openSource = "/Users/Peeradon/Documents/OpenSourceProject/spring-framework-5.3.3/spring-core/src/main/java";
 
 //       Dead Class/Interface Detector
         long start = System.currentTimeMillis();
@@ -20,23 +20,10 @@ public class Main {
         long end = System.currentTimeMillis();
         float AstTime = (end - start)/1000F;
 
-        deadClassInterfaceDetector.setReportName("Arduino");
-        deadClassInterfaceDetector.createReport(AstTime);
+//        deadClassInterfaceDetector.setReportName("SpringFrameWork");
+//        deadClassInterfaceDetector.createReport(AstTime);
         System.out.println("\n\nDead class and interface total elapse time: "+AstTime+" seconds");
 
-
-        // Dead variable
-        start = System.currentTimeMillis();
-
-        ConstructFileToken constructFileToken = new ConstructFileToken(astParser.cu);
-        DeadVariableDetector deadVariableDetector = new DeadVariableDetector(constructFileToken.getFileTokenList());
-
-        end = System.currentTimeMillis();
-        AstTime = (end - start)/1000F;
-
-        deadVariableDetector.createReport("Arduino");
-
-        System.out.println("Dead Variable with AST. Total elapse time: " + AstTime + " seconds");
 
         // Dead Class Detector with regular expression and line splitting. (Commended all dead interface portion)
 //        start = System.currentTimeMillis();

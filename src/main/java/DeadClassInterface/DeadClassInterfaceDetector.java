@@ -56,13 +56,15 @@ public class DeadClassInterfaceDetector {
                if(isNotOwnFile(fileToken.getFileName(),classToken.getName())){
                     // Check if class is already used.
                     if(classToken.getDead().equals(true)){
-                        if(checkContain(fileToken.getExtendedList(),classToken.getName())
-                                || checkContain(fileToken.getVariableType(),classToken.getName())
+                        if(checkMatch(fileToken.getExtendedList(),classToken.getName())
+                                || checkMatch(fileToken.getVariableType(),classToken.getName())
+                                || checkContain(fileToken.getMethodCall(),classToken.getName())
                                 || checkContain(fileToken.getMethodType(),classToken.getName())
                                 || checkContain(fileToken.getObjectAssignmentType(),classToken.getName())
                                 || checkContain(fileToken.getParameterType(),classToken.getName())
                                 || checkContain(fileToken.getMethodScope(),classToken.getName())
                                 || checkReturn(fileToken.getReturnStm(),classToken.getName())
+                                || checkMatch(fileToken.getInstanceOf(),classToken.getName())
                                 || checkMethodArg(fileToken.getMethodArgument(),classToken.getName())
                                 || checkIfStatement(fileToken.getIfStm(),classToken.getName())
                                 || checkForStatement(fileToken.getForStm(),classToken.getName())
@@ -90,13 +92,15 @@ public class DeadClassInterfaceDetector {
                if(isNotOwnFile(fileToken.getFileName(),interfaceToken.getName())){
                     // check if interface is already used.
                     if(interfaceToken.getDead().equals(true)){
-                        if(checkContain(fileToken.getImplementList(),interfaceToken.getName())
-                                || checkContain(fileToken.getExtendedList(),interfaceToken.getName())
-                                || checkContain(fileToken.getVariableType(),interfaceToken.getName())
+                        if(checkMatch(fileToken.getImplementList(),interfaceToken.getName())
+                                || checkMatch(fileToken.getExtendedList(),interfaceToken.getName())
+                                || checkMatch(fileToken.getVariableType(),interfaceToken.getName())
+                                || checkContain(fileToken.getMethodCall(),interfaceToken.getName())
                                 || checkContain(fileToken.getMethodType(),interfaceToken.getName())
                                 || checkContain(fileToken.getObjectAssignmentType(),interfaceToken.getName())
                                 || checkContain(fileToken.getParameterType(),interfaceToken.getName())
                                 || checkContain(fileToken.getMethodScope(),interfaceToken.getName())
+                                || checkMatch(fileToken.getInstanceOf(),interfaceToken.getName())
                                 || checkReturn(fileToken.getReturnStm(),interfaceToken.getName())
                                 || checkMethodArg(fileToken.getMethodArgument(),interfaceToken.getName())
                                 || checkIfStatement(fileToken.getIfStm(),interfaceToken.getName())
@@ -121,6 +125,20 @@ public class DeadClassInterfaceDetector {
                }
             }
         }
+    }
+
+    private boolean checkMatch(List<String> list, String name){
+        // Pattern1 : starting with class/interface Name
+        String pat1 = "^"+name;
+        Pattern pattern1 = Pattern.compile(pat1);
+
+        for (String stm : list){
+            Matcher matcher1 = pattern1.matcher(stm);
+            if(matcher1.find()){
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean checkContain(List<String> list, String name){
@@ -224,31 +242,6 @@ public class DeadClassInterfaceDetector {
         return true;
     }
 
-    public void printClassAndInterface(){
-        System.out.println("Total class: "+classTokens.size());
-        System.out.println("Total interface: "+interfaceTokens.size());
-        System.out.println("Total File: "+fileTokenList.size()+"\n============= Dead classes ==========");
-        int count = 0;
-        for (ClassToken classToken : classTokens){
-            if(classToken.getDead().equals(true)){
-                System.out.println("Class: "+classToken.getName()+" at: "
-                        +classToken.getPath()+" line: "+classToken.getLine());
-                count++;
-            }
-        }
-        System.out.println("Total DeadClass: "+count);
-        count=0;
-        System.out.println("================== Dead interface ==================");
-        for (InterfaceToken interfaceToken : interfaceTokens){
-            if(interfaceToken.getDead().equals(true)){
-                System.out.println("Interface: "+interfaceToken.getName()+" at: "
-                        +interfaceToken.getPath()+" line: "+interfaceToken.getLine());
-                count++;
-            }
-        }
-        System.out.println("Total DeadInterface: "+count);
-    }
-
     public void createReport(float elapseTime){
         FileWriter f;
         BufferedWriter bw;
@@ -280,5 +273,13 @@ public class DeadClassInterfaceDetector {
 
     public void setReportName(String reportName) {
         this.reportName = reportName;
+    }
+
+    public List<ClassToken> getClassTokens() {
+        return classTokens;
+    }
+
+    public List<InterfaceToken> getInterfaceTokens() {
+        return interfaceTokens;
     }
 }

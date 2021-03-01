@@ -2,21 +2,31 @@ package Util;
 
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.List;
 
-// VisitorAdapter for class name collecting
+public class ClassNameCollector extends VoidVisitorAdapter<Void> {
 
-public class ClassNameCollector extends VoidVisitorAdapter<List<String>> {
+    private List<String> className = new ArrayList<>();
+    private List<Integer> declarationLine = new ArrayList<>();
 
-    // use Class/Interface Declaration object
     @Override
-    public void visit(ClassOrInterfaceDeclaration n, List<String> arg) {
+    public void visit(ClassOrInterfaceDeclaration n, Void arg) {
         super.visit(n, arg);
         if(n.isClassOrInterfaceDeclaration()&& !n.isInterface()){
-            arg.add(n.getNameAsString());
+            className.add(n.getNameAsString());
+            declarationLine.add(n.getRange().get().begin.line);
         }
+    }
+
+    public List<String> getClassName() {
+        return className;
+    }
+
+    public List<Integer> getDeclarationLine() {
+        return declarationLine;
     }
 
 }
