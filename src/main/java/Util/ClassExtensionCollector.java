@@ -1,6 +1,7 @@
 package Util;
 
 import com.github.javaparser.ast.NodeList;
+import com.github.javaparser.ast.PackageDeclaration;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
@@ -20,8 +21,5 @@ public  class ClassExtensionCollector extends VoidVisitorAdapter<List<String>> {
             String tmpStr = node.toString();
             arg.add(tmpStr);
         }
-
     }
-
-
 }

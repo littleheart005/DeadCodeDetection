@@ -8,9 +8,24 @@ import java.util.*;
 public class ConstructFileToken {
     List<CompilationUnit> cu;
     List<FileToken> fileTokenList = new ArrayList<>();
+    List<String> packageNameList = new ArrayList<>();
 
     public ConstructFileToken(List<CompilationUnit> cu) {
         this.cu = new ArrayList<>(cu);
+
+        for (int i=0; i<this.cu.size(); i++) {
+            //if packageName is not in packageNameList -> add to it -> result show all packageName
+            if (!this.cu.get(i).getPackageDeclaration().isEmpty()) {
+                if (!this.packageNameList.contains(this.cu.get(i).getPackageDeclaration().get().getNameAsString())) {
+                    this.packageNameList.add(this.cu.get(i).getPackageDeclaration().get().getNameAsString());
+                }
+            }
+            else if (this.cu.get(i).getPackageDeclaration().isEmpty()) {
+                if (!this.packageNameList.contains("default")) {
+                    this.packageNameList.add("default");
+                }
+            }
+        }
 
         //loop to construct Token
         for (int i=0; i<this.cu.size(); i++) {
@@ -23,10 +38,16 @@ public class ConstructFileToken {
             FileToken fileToken = new FileToken();
             fileToken.setFileName(replaceExtention(this.cu.get(i).getStorage().get().getFileName()));
             fileToken.setLocation(this.cu.get(i).getStorage().get().getPath().toString());
-            fileToken.setPackageName(this.cu.get(i).getPackageDeclaration().get().getNameAsString());
 
-            fileToken.setExtendsClass(getExtendsClass(this.cu.get(i)));
-            fileToken.setImportClass(getImportClass(this.cu.get(i)));
+            if (this.cu.get(i).getPackageDeclaration().isEmpty()) {
+                fileToken.setPackageName("default");
+            }
+            else if (!this.cu.get(i).getPackageDeclaration().isEmpty()) {
+                fileToken.setPackageName(this.cu.get(i).getPackageDeclaration().get().getNameAsString());
+            }
+
+            fileToken.setExtendsClassStmt(getExtendsClassStmt(this.cu.get(i)));
+            fileToken.setImportClassStmt(getImportClassStmt(this.cu.get(i)));
 
             fileToken.setMethodTokenList(methodTokenTemp);
 
@@ -47,7 +68,53 @@ public class ConstructFileToken {
             this.fileTokenList.add(fileToken);
         }
 
-//        printInfo();
+        //to set extendsClass
+        for (int i=0; i<this.fileTokenList.size(); i++) {
+            if (!this.fileTokenList.get(i).getExtendsClassStmt().isEmpty()) {
+                this.fileTokenList.get(i).setExtendsClass(getExtendsClass(this.fileTokenList.get(i)));
+            }
+        }
+
+        //to set ImportClass
+        for (int i=0; i<this.fileTokenList.size(); i++) {
+            if (!this.fileTokenList.get(i).getImportClassStmt().isEmpty()) {
+                this.fileTokenList.get(i).setImportClass(getImportClass(this.fileTokenList.get(i)));
+            }
+        }
+
+        //to add childClassThatExtendsToDetect to parent
+        for (int i=0; i<this.fileTokenList.size(); i++) {
+            if (!this.fileTokenList.get(i).getExtendsClass().isEmpty()) {
+                for (int j = 0; j<this.fileTokenList.get(i).getExtendsClass().size(); j++) {
+                    this.fileTokenList.get(i).getExtendsClass().get(j).addChildClassToDetect(this.fileTokenList.get(i));
+                }
+            }
+        }
+
+        //to add classThatImportToDetect to parent
+        for (int i=0; i<this.fileTokenList.size(); i++) {
+            if (!this.fileTokenList.get(i).getImportClass().isEmpty()) {
+                for (int j = 0; j<this.fileTokenList.get(i).getImportClass().size(); j++) {
+                    this.fileTokenList.get(i).getImportClass().get(j).addClassThatImportToDetect(this.fileTokenList.get(i));
+                }
+            }
+        }
+
+        //to set FileInSamePackageToDetect
+        for (int i=0; i<this.fileTokenList.size(); i++) {
+            String packageName = this.fileTokenList.get(i).getPackageName();
+            List<FileToken> AllFileInPackage = new ArrayList<>();
+
+            for (int j=0; j<this.fileTokenList.size(); j++) {
+                if (this.fileTokenList.get(j).getPackageName().equals(packageName)) {
+                    if (!this.fileTokenList.get(j).getFileName().equals(this.fileTokenList.get(i).getFileName())) {
+                        AllFileInPackage.add(this.fileTokenList.get(j));
+                    }
+                }
+            }
+
+            this.fileTokenList.get(i).setFileInSamePackageToDetect(getFileInSamePackageToDetect(this.fileTokenList.get(i), AllFileInPackage));
+        }
     }
 
     //method to set MethodTokenTemp
@@ -192,32 +259,166 @@ public class ConstructFileToken {
         return fileName.replaceAll("[.].*", "");
     }
 
-
     //method to get parent class
-    private List<String> getExtendsClass(CompilationUnit cu) {
+    private List<String> getExtendsClassStmt(CompilationUnit cu) {
         List<String> extendsClass = new ArrayList<>();
         ClassExtensionCollector classExtensionCollector = new ClassExtensionCollector();
         classExtensionCollector.visit(cu, extendsClass);
         return extendsClass;
     }
 
+    //method to get extends file token (not duplicate with import file token)
+    private List<FileToken> getExtendsClass(FileToken fileToken) {
+        List<FileToken> extendsClass = new ArrayList<>();
+
+        for (int i=0; i<fileToken.getExtendsClassStmt().size(); i++) {
+            for (int j=0; j<this.fileTokenList.size(); j++) {
+                if (fileToken.getExtendsClassStmt().get(i).equals(this.fileTokenList.get(j).getFileName())) {
+                    if (!extendsClass.contains(this.fileTokenList.get(j))) {
+                        extendsClass.add(this.fileTokenList.get(j));
+                    }
+                }
+            }
+        }
+
+        return extendsClass;
+    }
+
     //method to get import class
-    private List<String> getImportClass(CompilationUnit cu) {
-        List<String> importClass = new ArrayList<>();
+    private List<String> getImportClassStmt(CompilationUnit cu) {
         ImportCollector importCollector = new ImportCollector();
         importCollector.visit(cu, null);
-        importClass = importCollector.getImportStm();
+        List<String> fullImportStmt = importCollector.getFullImportStmt();
+        List<String> importStmt = new ArrayList<>();
+
+        for (int i=0; i<fullImportStmt.size(); i++) {
+            StringTokenizer tokenizer = new StringTokenizer(fullImportStmt.get(i), ".");
+            List<String> tokens = new ArrayList<>();
+
+            while (tokenizer.hasMoreTokens()) {
+                tokens.add(tokenizer.nextToken());
+            }
+
+            String packageNameToken = ""; // import package (not include class)
+            String lastToken = ""; // import class
+
+            for (int j=0; j<tokens.size(); j++) {
+                if (j != tokens.size()-1 && j != tokens.size()-2) {
+                    packageNameToken = packageNameToken + tokens.get(j) + ".";
+                }
+                else if (j != tokens.size()-1 && j == tokens.size()-2) {
+                    packageNameToken = packageNameToken + tokens.get(j);
+                }
+                else if (j == tokens.size()-1) {
+                    lastToken = tokens.get(j).replaceAll("\\s", "");
+                }
+            }
+
+            for (int j=0; j<packageNameList.size(); j++) {
+                if (packageNameToken.equals(packageNameList.get(j))) {
+                    importStmt.add(packageNameToken + "." + lastToken);
+                }
+            }
+        }
+
+        return importStmt;
+    }
+
+    //method to get import file token
+    private List<FileToken> getImportClass(FileToken fileToken) {
+        List<FileToken> importClass = new ArrayList<>();
+        List<String> fullImportStmt = fileToken.getImportClassStmt();
+
+        for (int i=0; i<fullImportStmt.size(); i++) {
+            StringTokenizer tokenizer = new StringTokenizer(fullImportStmt.get(i), ".");
+            List<String> tokens = new ArrayList<>();
+
+            while (tokenizer.hasMoreTokens()) {
+                tokens.add(tokenizer.nextToken());
+            }
+
+            String packageNameToken = ""; // import package (not include class)
+            String lastToken = ""; // import class
+
+            for (int j=0; j<tokens.size(); j++) {
+                if (j != tokens.size()-1 && j != tokens.size()-2) {
+                    packageNameToken = packageNameToken + tokens.get(j) + ".";
+                }
+                else if (j != tokens.size()-1 && j == tokens.size()-2) {
+                    packageNameToken = packageNameToken + tokens.get(j);
+                }
+                else if (j == tokens.size()-1) {
+                    lastToken = tokens.get(j).replaceAll("\\s", "");
+                }
+            }
+
+            if (lastToken.equals("*")) {
+                for (int j=0; j<this.fileTokenList.size(); j++) {
+                    if (packageNameToken.equals(this.fileTokenList.get(j).getPackageName())) {
+                        if (!fileToken.getExtendsClass().isEmpty()) {
+                            for (int k=0; k<fileToken.getExtendsClass().size(); k++) {
+                                if (!fileToken.getExtendsClass().get(k).equals(this.fileTokenList.get(j))) {
+                                    if (!importClass.contains(this.fileTokenList.get(j))) {
+                                        importClass.add(this.fileTokenList.get(j));
+                                    }
+                                }
+                            }
+                        }
+                        else if (fileToken.getExtendsClass().isEmpty()) {
+                            if (!importClass.contains(this.fileTokenList.get(j))) {
+                                importClass.add(this.fileTokenList.get(j));
+                            }
+                        }
+                    }
+                }
+            }
+            else if (!lastToken.equals("*")) {
+                for (int j=0; j<this.fileTokenList.size(); j++) {
+                    if (lastToken.equals(this.fileTokenList.get(j).getFileName()) && packageNameToken.equals(this.fileTokenList.get(j).getPackageName())) {
+                        if (!fileToken.getExtendsClass().isEmpty()) {
+                            for (int k=0; k<fileToken.getExtendsClass().size(); k++) {
+                                if (!fileToken.getExtendsClass().get(k).equals(this.fileTokenList.get(j))) {
+                                    if (!importClass.contains(this.fileTokenList.get(j))) {
+                                        importClass.add(this.fileTokenList.get(j));
+                                    }
+                                }
+                            }
+                        }
+                        else if (fileToken.getExtendsClass().isEmpty()) {
+                            if (!importClass.contains(this.fileTokenList.get(j))) {
+                                importClass.add(this.fileTokenList.get(j));
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return importClass;
     }
 
+    //method to get fileInSamePackageToDetect (not include extendsClass in same package)
+    private List<FileToken> getFileInSamePackageToDetect(FileToken fileToken, List<FileToken> AllFileInPackage) {
+        List<FileToken> AllFileInPackageToDetect = new ArrayList<>();
+        //check extendsClass not in AllFileInPackage
+        if (!fileToken.getChildClassToDetect().isEmpty()) {
+            for (int i = 0; i<fileToken.getChildClassToDetect().size(); i++) {
+                for (int j=0; j<AllFileInPackage.size(); j++) {
+                    if (AllFileInPackage.contains(fileToken.getChildClassToDetect().get(i))) {
+                        AllFileInPackage.remove(fileToken.getChildClassToDetect().get(i));
+                    }
+                }
+            }
+        }
+
+        AllFileInPackageToDetect.addAll(AllFileInPackage);
+        return AllFileInPackageToDetect;
+    }
 
     //method to get static field (not in method)
     private List<Variable> getStaticFieldForFileTokenTemp(CompilationUnit cu) {
         StaticFieldCollector staticFieldCollector = new StaticFieldCollector();
         staticFieldCollector.visit(cu, null);
-
         List<Variable> variable = staticFieldCollector.getVariableList();
-
         return variable;
     }
 
