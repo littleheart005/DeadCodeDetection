@@ -1,17 +1,19 @@
-Variable ; BOARDS_LIBS_UPDATABLE_CHECK_START_PERIOD has 0 references ; D:\Project\openSource\Arduino-1.8.13\arduino-core\src\cc\arduino\Constants.java(line:48) ; dead variable
-Variable ; NOTIFICATION_POPUP_AUTOCLOSE_DELAY has 0 references ; D:\Project\openSource\Arduino-1.8.13\arduino-core\src\cc\arduino\Constants.java(line:49) ; dead variable
-Variable ; PROXY_MANUAL_TYPE_HTTP has 0 references ; D:\Project\openSource\Arduino-1.8.13\arduino-core\src\cc\arduino\Constants.java(line:54) ; dead variable
-Variable ; PROXY_MANUAL_TYPE_SOCKS has 0 references ; D:\Project\openSource\Arduino-1.8.13\arduino-core\src\cc\arduino\Constants.java(line:55) ; dead variable
-Variable ; CASE_INSENSITIVE_ORDER has 0 references ; D:\Project\openSource\Arduino-1.8.13\arduino-core\src\cc\arduino\contributions\libraries\ContributedLibrary.java(line:100) ; dead variable
-Variable ; uploadInProgress has 0 references ; D:\Project\openSource\Arduino-1.8.13\arduino-core\src\cc\arduino\packages\discoverers\serial\SerialDiscovery.java(line:47) ; dead variable
-Variable ; VERSION_NAME_LONG has 0 references ; D:\Project\openSource\Arduino-1.8.13\arduino-core\src\processing\app\BaseNoGui.java(line:47) ; dead variable
-Variable ; PROMPT_YES has 0 references ; D:\Project\openSource\Arduino-1.8.13\arduino-core\src\processing\app\I18n.java(line:47) ; dead variable
-Variable ; PROMPT_NO has 0 references ; D:\Project\openSource\Arduino-1.8.13\arduino-core\src\processing\app\I18n.java(line:48) ; dead variable
-Variable ; PROMPT_CANCEL has 0 references ; D:\Project\openSource\Arduino-1.8.13\arduino-core\src\processing\app\I18n.java(line:49) ; dead variable
-Variable ; PROMPT_OK has 0 references ; D:\Project\openSource\Arduino-1.8.13\arduino-core\src\processing\app\I18n.java(line:50) ; dead variable
-Variable ; PROMPT_BROWSE has 0 references ; D:\Project\openSource\Arduino-1.8.13\arduino-core\src\processing\app\I18n.java(line:51) ; dead variable
-Variable ; DPI_AWARENESS_INVALID has 0 references ; D:\Project\openSource\Arduino-1.8.13\arduino-core\src\processing\app\windows\Platform.java(line:256) ; dead variable
-Variable ; DPI_AWARENESS_UNAWARE has 0 references ; D:\Project\openSource\Arduino-1.8.13\arduino-core\src\processing\app\windows\Platform.java(line:257) ; dead variable
-Variable ; DPI_AWARENESS_PER_MONITOR_AWARE has 0 references ; D:\Project\openSource\Arduino-1.8.13\arduino-core\src\processing\app\windows\Platform.java(line:259) ; dead variable
-Variable ; DPI_AWARENESS_CONTEXT_UNAWARE has 0 references ; D:\Project\openSource\Arduino-1.8.13\arduino-core\src\processing\app\windows\Platform.java(line:263) ; dead variable
-Variable ; DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE has 0 references ; D:\Project\openSource\Arduino-1.8.13\arduino-core\src\processing\app\windows\Platform.java(line:265) ; dead variable
+Dead Variable with AST. Total elapse time: 7.316 seconds.
+Variable ; BOARDS_LIBS_UPDATABLE_CHECK_START_PERIOD has 0 references ; cc.arduino.Constants (line:48) ; dead variable
+Variable ; NOTIFICATION_POPUP_AUTOCLOSE_DELAY has 0 references ; cc.arduino.Constants (line:49) ; dead variable
+Variable ; PROXY_MANUAL_TYPE_HTTP has 0 references ; cc.arduino.Constants (line:54) ; dead variable
+Variable ; PROXY_MANUAL_TYPE_SOCKS has 0 references ; cc.arduino.Constants (line:55) ; dead variable
+Variable ; CASE_INSENSITIVE_ORDER has 0 references ; cc.arduino.contributions.libraries.ContributedLibrary (line:100) ; dead variable
+Variable ; uploadInProgress has 0 references ; cc.arduino.packages.discoverers.serial.SerialDiscovery (line:47) ; dead variable
+Variable ; VERSION_NAME_LONG has 0 references ; processing.app.BaseNoGui (line:47) ; dead variable
+Variable ; PROMPT_YES has 0 references ; processing.app.I18n (line:47) ; dead variable
+Variable ; PROMPT_NO has 0 references ; processing.app.I18n (line:48) ; dead variable
+Variable ; PROMPT_CANCEL has 0 references ; processing.app.I18n (line:49) ; dead variable
+Variable ; PROMPT_OK has 0 references ; processing.app.I18n (line:50) ; dead variable
+Variable ; PROMPT_BROWSE has 0 references ; processing.app.I18n (line:51) ; dead variable
+Variable ; DPI_AWARENESS_INVALID has 0 references ; processing.app.windows.Platform (line:256) ; dead variable
+Variable ; DPI_AWARENESS_UNAWARE has 0 references ; processing.app.windows.Platform (line:257) ; dead variable
+Variable ; DPI_AWARENESS_PER_MONITOR_AWARE has 0 references ; processing.app.windows.Platform (line:259) ; dead variable
+Variable ; DPI_AWARENESS_CONTEXT_UNAWARE has 0 references ; processing.app.windows.Platform (line:263) ; dead variable
+Variable ; DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE has 0 references ; processing.app.windows.Platform (line:265) ; dead variable
+Total Dead Variable Count : 17

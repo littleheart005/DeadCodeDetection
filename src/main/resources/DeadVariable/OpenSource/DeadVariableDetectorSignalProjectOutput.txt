@@ -1,0 +1,34 @@
+Dead Variable with AST. Total elapse time: 21.082 seconds.
+Variable ; MAX_POSSIBLE_NAME_LENGTH has 0 references ; org.whispersystems.signalservice.api.crypto.ProfileCipher (line:30) ; dead variable
+Variable ; MAX_POSSIBLE_ABOUT_LENGTH has 0 references ; org.whispersystems.signalservice.api.crypto.ProfileCipher (line:31) ; dead variable
+Variable ; TAG has 0 references ; org.whispersystems.signalservice.api.crypto.SignalServiceCipher (line:63) ; dead variable
+Variable ; detailsLength has 0 references ; org.whispersystems.signalservice.api.messages.multidevice.DeviceContactsInputStream (line:34) ; dead variable
+Variable ; detailsLength has 0 references ; org.whispersystems.signalservice.api.messages.multidevice.DeviceGroupsInputStream (line:29) ; dead variable
+Variable ; MAC_KEY_SIZE has 0 references ; org.whispersystems.signalservice.api.messages.SignalServiceEnvelope (line:48) ; dead variable
+Variable ; commitment has 0 references ; org.whispersystems.signalservice.api.profiles.SignalServiceProfileWrite (line:24) ; dead variable
+Variable ; userAgent has 0 references ; org.whispersystems.signalservice.api.SignalServiceAccountManager (line:111) ; dead variable
+Variable ; SGX_FLAGS_PROVISION_KEY has 0 references ; org.whispersystems.signalservice.internal.contacts.crypto.Quote (line:11) ; dead variable
+Variable ; SGX_FLAGS_EINITTOKEN_KEY has 0 references ; org.whispersystems.signalservice.internal.contacts.crypto.Quote (line:12) ; dead variable
+Variable ; SGX_XFRM_LEGACY has 0 references ; org.whispersystems.signalservice.internal.contacts.crypto.Quote (line:14) ; dead variable
+Variable ; SGX_XFRM_AVX has 0 references ; org.whispersystems.signalservice.internal.contacts.crypto.Quote (line:15) ; dead variable
+Variable ; isSigLinkable has 0 references ; org.whispersystems.signalservice.internal.contacts.crypto.Quote (line:19) ; dead variable
+Variable ; gid has 0 references ; org.whispersystems.signalservice.internal.contacts.crypto.Quote (line:20) ; dead variable
+Variable ; qeSvn has 0 references ; org.whispersystems.signalservice.internal.contacts.crypto.Quote (line:21) ; dead variable
+Variable ; pceSvn has 0 references ; org.whispersystems.signalservice.internal.contacts.crypto.Quote (line:22) ; dead variable
+Variable ; isvProdId has 0 references ; org.whispersystems.signalservice.internal.contacts.crypto.Quote (line:29) ; dead variable
+Variable ; isvSvn has 0 references ; org.whispersystems.signalservice.internal.contacts.crypto.Quote (line:30) ; dead variable
+Variable ; TAG has 0 references ; org.whispersystems.signalservice.internal.crypto.ProvisioningCipher (line:33) ; dead variable
+Variable ; reason has 0 references ; org.whispersystems.signalservice.internal.push.ContactDiscoveryFailureReason (line:8) ; dead variable
+Variable ; destinationDeviceId has 0 references ; org.whispersystems.signalservice.internal.push.OutgoingPushMessage (line:17) ; dead variable
+Variable ; destinationRegistrationId has 0 references ; org.whispersystems.signalservice.internal.push.OutgoingPushMessage (line:19) ; dead variable
+Variable ; preKeys has 0 references ; org.whispersystems.signalservice.internal.push.PreKeyState (line:21) ; dead variable
+Variable ; DIRECTORY_FEEDBACK_PATH has 0 references ; org.whispersystems.signalservice.internal.push.PushServiceSocket (line:184) ; dead variable
+Variable ; webSocketChannel has 0 references ; org.whispersystems.signalservice.internal.push.PushServiceSocket (line:1891) ; dead variable
+Variable ; backupCredentials has 0 references ; org.whispersystems.signalservice.internal.push.PushServiceSocket (line:1931) ; dead variable
+Variable ; paddingStart has 0 references ; org.whispersystems.signalservice.internal.push.PushTransportDetails (line:26) ; dead variable
+Variable ; ASCII_TEXT_START has 0 references ; org.whispersystems.signalservice.internal.util.Hex (line:17) ; dead variable
+Variable ; idx has 0 references ; org.whispersystems.signalservice.internal.util.Hex (line:100) ; dead variable
+Variable ; idx has 0 references ; org.whispersystems.signalservice.internal.util.Hex (line:113) ; dead variable
+Variable ; uri has 0 references ; org.whispersystems.signalservice.internal.websocket.WebSocketConnection (line:91) ; dead variable
+Variable ; len34 has 0 references ; org.whispersystems.util.Base64 (line:1187) ; dead variable
+Total Dead Variable Count : 32

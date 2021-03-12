@@ -8,28 +8,28 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        //Arduino
-        String openSource = "D:\\Project\\openSource\\Arduino-1.8.13\\arduino-core\\src";
+        //Arduino 7 sec - 17 dead
+//        String openSource = "D:\\Project\\openSource\\Arduino-1.8.13\\arduino-core\\src";
 
-        //Bitcoin
+        //Bitcoin 32 sec - 47 dead
 //        String openSource = "D:\\Project\\openSource\\bitcoin-wallet-5.45\\wallet\\src";
 
-        //Iceberg
+        //Iceberg 134 sec - 118 dead
 //        String openSource = "D:\\Project\\openSource\\iceberg-apache-iceberg-0.11.0\\core\\src\\main\\java\\org\\apache\\iceberg";
 
-        //OpenApi
+        //OpenApi 2 sec - 10 dead
 //        String openSource = "D:\\Project\\openSource\\openapi-generator-5.0.1\\modules\\openapi-generator-core\\src\\main\\java";
 
-        //OpenRefine
+        //OpenRefine 23 sec - 159 dead
 //        String openSource = "D:\\Project\\openSource\\OpenRefine-3.4.1\\main\\src";
 
-        //portfolio
+        //Portfolio 921 sec - 89 dead
 //        String openSource = "D:\\Project\\openSource\\portfolio-master\\name.abuchen.portfolio\\src\\name\\abuchen\\portfolio";
 
-        //Signal-android
+        //Signal-android 21 sec - 32 dead
 //        String openSource = "D:\\Project\\openSource\\Signal-Android-5.3.10\\libsignal\\service\\src\\main";
 
-        //spring-framework
+        //Spring-framework 150 sec - 390 dead
 //        String openSource = "D:\\Project\\openSource\\spring-framework-5.3.3\\spring-core\\src\\main\\java";
 
         //Test Project
@@ -42,15 +42,14 @@ public class Main {
         ConstructFileToken constructFileToken = new ConstructFileToken(astParser.cu);
         Printer printer = new Printer();
         DeadVariableDetector deadVariableDetector = new DeadVariableDetector(constructFileToken.getFileTokenList());
-        printer.printDetectInFo(constructFileToken.getFileTokenList());
+        printer.printFileTokenInfo(constructFileToken.getFileTokenList());
+//        printer.printDetectInFo(constructFileToken.getFileTokenList());
 
         long end = System.currentTimeMillis();
         float AstTime = (end - start)/1000F;
 
-//        deadVariableDetector.createReport("");
+//        deadVariableDetector.createReport("", AstTime);
 
         System.out.println("Dead Variable with AST. Total elapse time: " + AstTime + " seconds");
-
-
     }
 }

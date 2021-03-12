@@ -24,24 +24,30 @@ public class Output {
         this.fileTokenList = fileTokenList;
     }
 
-    public void write() throws IOException {
+    public void write(float AstTime) throws IOException {
         this.bufferedWriter = new BufferedWriter(this.fileWriter);
+        bufferedWriter.write("Dead Variable with AST. Total elapse time: " + AstTime + " seconds.\n");
+
+        Integer count = 0;
 
         for (int i = 0; i<this.fileTokenList.size(); i++) {
             if (this.fileTokenList.get(i).getAllDeadVariable().size() > 0) {
+                count = count + this.fileTokenList.get(i).getAllDeadVariable().size();
                 try {
                     for (int j=0; j<this.fileTokenList.get(i).getAllDeadVariable().size(); j++) {
                         String tmp = "Variable ; " + this.fileTokenList.get(i).getAllDeadVariable().get(j).getVariableName() + " has 0 references"
-                                + " ; " + this.fileTokenList.get(i).getLocation() + "(line:" + this.fileTokenList.get(i).getAllDeadVariable().get(j).getBeginLine() + ") ; dead variable\n";
+                                + " ; " + this.fileTokenList.get(i).getPackageName() + "." + this.fileTokenList.get(i).getFileName()
+                                + " (line:" + this.fileTokenList.get(i).getAllDeadVariable().get(j).getBeginLine() + ") ; dead variable\n";
                         bufferedWriter.write(tmp);
                     }
-
                 }catch (IOException e){
                     System.out.print("Print Error!");
                     e.printStackTrace();
                 }
             }
         }
+
+        bufferedWriter.write("Total Dead Variable Count : " + count);
         this.bufferedWriter.close();
     }
 }

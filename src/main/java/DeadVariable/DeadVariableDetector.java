@@ -12,6 +12,7 @@ public class DeadVariableDetector {
         detectDeadStaticField();
         detectDeadField();
         detectDeadVariable();
+        setAllDeadVariable();
     }
 
     //method to detect alive/dead static field -> set to FileToken
@@ -141,12 +142,32 @@ public class DeadVariableDetector {
         }
     }
 
+    //to set all dead variable to filetoken
+    private void setAllDeadVariable() {
+        for (int i=0; i<this.fileTokenList.size(); i++) {
+            List<Variable> AllDeadVariable = new ArrayList<>();
+
+            if (!this.fileTokenList.get(i).getDeadStaticField().isEmpty()) {
+                AllDeadVariable.addAll(this.fileTokenList.get(i).getDeadStaticField());
+            }
+            if (!this.fileTokenList.get(i).getDeadField().isEmpty()) {
+                AllDeadVariable.addAll(this.fileTokenList.get(i).getDeadField());
+
+            }
+            if (!this.fileTokenList.get(i).getDeadVariable().isEmpty()) {
+                AllDeadVariable.addAll(this.fileTokenList.get(i).getDeadVariable());
+            }
+
+            this.fileTokenList.get(i).setAllDeadVariable(AllDeadVariable);
+        }
+    }
+
     //method to create report specific file name
-    public void createReport (String fileName) throws IOException {
+    public void createReport (String fileName, float AstTime) throws IOException {
         String filename = "DeadVariableDetector" + fileName + "ProjectOutput";
         Output output = new Output();
         output.createFile(filename);
         output.sendInfo(this.fileTokenList);
-        output.write();
+        output.write(AstTime);
     }
 }

@@ -1,0 +1,12 @@
+Dead Variable with AST. Total elapse time: 2.183 seconds.
+Variable ; APIS has 0 references ; org.openapitools.codegen.api.TemplateFileType (line:53) ; dead variable
+Variable ; MODELS has 0 references ; org.openapitools.codegen.api.TemplateFileType (line:54) ; dead variable
+Variable ; SUPPORTING_FILES has 0 references ; org.openapitools.codegen.api.TemplateFileType (line:55) ; dead variable
+Variable ; MODEL_TESTS has 0 references ; org.openapitools.codegen.api.TemplateFileType (line:56) ; dead variable
+Variable ; MODEL_DOCS has 0 references ; org.openapitools.codegen.api.TemplateFileType (line:57) ; dead variable
+Variable ; API_TESTS has 0 references ; org.openapitools.codegen.api.TemplateFileType (line:58) ; dead variable
+Variable ; API_DOCS has 0 references ; org.openapitools.codegen.api.TemplateFileType (line:59) ; dead variable
+Variable ; lastWarning has 0 references ; org.openapitools.codegen.config.WorkflowSettings (line:39) ; dead variable
+Variable ; DEFAULT_TEMPLATING_ENGINE_NAME has 0 references ; org.openapitools.codegen.config.WorkflowSettings (line:51) ; dead variable
+Variable ; DEFAULT_GLOBAL_PROPERTIES has 0 references ; org.openapitools.codegen.config.WorkflowSettings (line:52) ; dead variable
+Total Dead Variable Count : 10
